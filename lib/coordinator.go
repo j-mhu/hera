@@ -385,10 +385,13 @@ func (crd *Coordinator) handleMux(request *netstring.Netstring) (bool, error) {
 			if isMySQL {
 				isPrepareStmt = ns.Cmd == COM_STMT_PREPARE
 			} else {
-				isPrepareStmt = (ns.Cmd == common.CmdPrepare)
-							|| (ns.Cmd == common.CmdPrepareV2)
-							|| (ns.Cmd == common.CmdPrepareSpecial)
+				isPrepareStmt = (ns.Cmd == common.CmdPrepare) || (ns.Cmd == common.CmdPrepareV2) || (ns.Cmd == common.CmdPrepareSpecial)
+
+				// Set which prepare it is from the ns.Cmd for nonMySQL protocol
+				PROTOCOL_PREPARE = ns.Cmd
 			}
+
+
 
 			if prepare {
 			/* JULIETTE: 300719TAIL */
@@ -430,10 +433,13 @@ func (crd *Coordinator) handleMux(request *netstring.Netstring) (bool, error) {
 	if isMySQL {
 		isPrepareStmt = ns.Cmd == COM_STMT_PREPARE
 	} else {
-		isPrepareStmt = (ns.Cmd == common.CmdPrepare)
-					|| (ns.Cmd == common.CmdPrepareV2)
-					|| (ns.Cmd == common.CmdPrepareSpecial)
+		isPrepareStmt = (ns.Cmd == common.CmdPrepare) || (ns.Cmd == common.CmdPrepareV2) || (ns.Cmd == common.CmdPrepareSpecial)
+
+		// Set which prepare it is from the ns.Cmd for nonMySQL protocol
+		PROTOCOL_PREPARE = ns.Cmd
 	}
+
+
 
 	if isPrepareStmt {
 	/* JULIETTE: 300719TAIL */
@@ -475,7 +481,9 @@ func (crd *Coordinator) processMuxCommand(request *netstring.Netstring) (bool, e
 	* statement. It's executed via COM_STMT_EXECUTE, and results
 	* are fetched via COM_STMT_PREPARE_RESPONSE. You can get back results
 	* as a TextProtocol::BinaryRS. */
-	case common.CmdCommit, common.CmdRollback:
+
+	// case common.CmdCommit, common.CmdRollback:
+	case PROTOCOL_COMMIT, PROTOCOL_ROLLBACK:
 		if crd.worker != nil {
 			// in transaction, it will be handled by the worker
 			return false, nil
@@ -489,14 +497,16 @@ func (crd *Coordinator) processMuxCommand(request *netstring.Netstring) (bool, e
 	// TODO: add all other case ...
 
 	// COM_STMT_PREPARE_RESPONSE, requires ColumnDefinition, Rows, etc.
-	case common.CmdFetch:
+	// case common.CmdFetch:
+	case PROTOCOL_FETCH:
 		if crd.worker != nil {
 			return false, nil
 		}
 		crd.respond([]byte("41:2 fetch requested but no statement exists,"))
 
 	// COM_STMT_PREPARE
-	case common.CmdPrepare, common.CmdPrepareV2, common.CmdPrepareSpecial:
+	// case common.CmdPrepare, common.CmdPrepareV2, common.CmdPrepareSpecial:
+	case PROTOCOL_PREPARE:
 		return false, nil
 	// sharding commands -- SPECIAL HERA/OCC
 	case common.CmdSetShardID:
@@ -539,6 +549,10 @@ func (crd *Coordinator) processClientInfoMuxCommand(clientInfo string) {
 	}
 	serverInfo := fmt.Sprintf("%s:load_saved_sessions*CalThreadId=0*TopLevelTxnStartTime=TopLevelTxn not set*Host=%s",
 		cal.GetCalClientInstance().GetPoolName(), hostname)
+
+	// Need to edit the packets so that they send OK packet instead?
+	// Will still follow netstring and the golang on the other side
+	// will have to take care of that.
 	ns := netstring.NewNetstringFrom(common.RcOK, []byte(serverInfo))
 	crd.respond(ns.Serialized)
 	var poolName string
