@@ -36,6 +36,23 @@ import (
 	"github.com/paypal/hera/utility/logger"
 )
 
+/* Juliette: 300719HEAD */
+// The overlapping command bytes between MySQL protocol and Hera custom protocol
+// are defined up here, because each protocol has its own command bytes defined.
+// These variables are set when NewCoordinator is called and the isMySQL
+// boolean is set to true.
+
+// NOTE TO SELF: look up commit and rollback and how they're done by
+// mysql protocol via database/sql
+var PROTOCOL_COMMIT, PROTOCOL_ROLLBACK, PROTOCOL_FETCH, PROTOCOL_PREPARE int
+/* Juliette: 300719TAIL */
+
+
+/*
+* Coordinator needs to keep track of sequence_ids between client and server
+* exchange. Reset each time a new command is received.
+*/
+
 // Coordinator is the entity managing a client session. It receives commands from the client connection and allocates
 // one or more workers to execute the request. After the request is completed it will free the worker(s) if they are not needed.
 // It is possible that a request will start a transaction, in which case the worker will staty allocated until the transaction
@@ -69,6 +86,8 @@ type Coordinator struct {
 
 	// if this handles an internal client like rac maintenance config or shard config
 	isInternal bool
+	// if we're operating under the assumption that clientchannel requests are MySQL protocol packets
+	isMySQL bool
 }
 
 // NewCoordinator creates a coordinator, clientchannel is used to read the requests, conn is used to write responses
@@ -83,6 +102,29 @@ func NewCoordinator(ctx context.Context, clientchannel <-chan *netstring.Netstri
 	if conn.RemoteAddr().Network() == "pipe" {
 		coordinator.isInternal = true
 	}
+
+
+	/* JULIETTE: 300719HEAD */
+	isMYSQL := false // temporary for compilation
+
+	// Set globals for the client so that Mux will use either MySQL protocol
+	// command bytes or Hera custom protocol command bytes.
+	if isMySQL {
+		PROTOCOL_FETCH = common.COM_STMT_FETCH
+		PROTOCOL_PREPARE = common.COM_STMT_PREPARE
+		PROTOCOL_COMMIT = -1   // There isn't specific command byte
+		PROTOCOL_ROLLBACK = -1 // There isn't specific command byte
+	} else {
+		PROTOCOL_FETCH = common.CmdFetch
+		PROTOCOL_COMMIT = common.CmdCommit
+		PROTOCOL_ROLLBACK = common.CmdRollback
+
+		// PROTOCOL_PREPARE is set when the request is received in handleMux
+		// because there are 3 prepare commands in the Hera custom protocol
+		PROTOCOL_PREPARE = -1
+	}
+	/* JULIETTE: 300719TAIL */
+
 	return coordinator
 }
 
@@ -330,7 +372,27 @@ func (crd *Coordinator) handleMux(request *netstring.Netstring) (bool, error) {
 		}
 		crd.nss = nss
 		for _, ns := range nss {
-			if (ns.Cmd == common.CmdPrepare) || (ns.Cmd == common.CmdPrepareV2) || (ns.Cmd == common.CmdPrepareSpecial) {
+
+			/* JULIETTE: 300719HEAD */
+			// Assumption for (isMySQL = true) is that a netstring will instead have:
+			// Netstring struct {
+			//  ns.Cmd -> MySQL protocol command byte
+			//  ns.Serialized -> full package including 4 byte header
+			//  ns.Payload -> actual data that follows the command byte
+			// }
+
+			var isPrepareStmt bool
+			if isMySQL {
+				isPrepareStmt = ns.Cmd == COM_STMT_PREPARE
+			} else {
+				isPrepareStmt = (ns.Cmd == common.CmdPrepare)
+							|| (ns.Cmd == common.CmdPrepareV2)
+							|| (ns.Cmd == common.CmdPrepareSpecial)
+			}
+
+			if prepare {
+			/* JULIETTE: 300719TAIL */
+
 				crd.isSQL = true
 				crd.sqlhash = int32(utility.GetSQLHash(string(ns.Payload)))
 				crd.isRead = crd.sqlParser.IsRead(string(ns.Payload))
@@ -362,7 +424,19 @@ func (crd *Coordinator) handleMux(request *netstring.Netstring) (bool, error) {
 	}
 	crd.nss = nil
 	// an individual request
-	if (request.Cmd == common.CmdPrepare) || (request.Cmd == common.CmdPrepareV2) || (request.Cmd == common.CmdPrepareSpecial) {
+
+	/* JULIETTE: 300719HEAD */
+	var isPrepareStmt bool
+	if isMySQL {
+		isPrepareStmt = ns.Cmd == COM_STMT_PREPARE
+	} else {
+		isPrepareStmt = (ns.Cmd == common.CmdPrepare)
+					|| (ns.Cmd == common.CmdPrepareV2)
+					|| (ns.Cmd == common.CmdPrepareSpecial)
+	}
+
+	if isPrepareStmt {
+	/* JULIETTE: 300719TAIL */
 		crd.isRead = crd.sqlParser.IsRead(string(request.Payload))
 		return false, nil
 	}
@@ -378,13 +452,29 @@ func (crd *Coordinator) processMuxCommand(request *netstring.Netstring) (bool, e
 	}
 
 	switch request.Cmd {
+	// CAL - Special HERA/OCC
 	case common.CmdClientCalCorrelationID:
 		crd.corrID = request
 	case common.CmdServerPingCommand:
+		/* Can change this easily to a MySQL command packet as long as we
+		* also have the sequence_id encoded into the packet. If this is COM_PING,
+		* then first and only byte of payload is [0e]. Should respond with
+		* an OK_Packet. crd.respond(OK_Packet()), or something like that.
+		*/
 		crd.respond([]byte("4:1009,"))
-	case common.CmdBacktrace: // TODO passing command to worker
+	case common.CmdBacktrace: // TODO passing command to worker - Special HERA/OCC
+
+	// request for server information should have been provided in handshake packet. Special HERA/OCC
 	case common.CmdClientInfo:
 		crd.processClientInfoMuxCommand(string(request.Payload))
+
+
+	/* For general commands that serve as queries against a database,
+	* such as commit, rollback, transact, select, insert, update, delete, etc.
+	* a COM_STMT_PREPARE is used, and the query is made into a prepared
+	* statement. It's executed via COM_STMT_EXECUTE, and results
+	* are fetched via COM_STMT_PREPARE_RESPONSE. You can get back results
+	* as a TextProtocol::BinaryRS. */
 	case common.CmdCommit, common.CmdRollback:
 		if crd.worker != nil {
 			// in transaction, it will be handled by the worker
@@ -394,16 +484,21 @@ func (crd *Coordinator) processMuxCommand(request *netstring.Netstring) (bool, e
 			logger.GetLogger().Log(logger.Debug, "Mux handle command sent alone:", request.Cmd)
 		}
 		// send OK. client did not need to send it, but it is a NOOP anyway
+		// crd.respond(OK_PACKET())
 		crd.respond([]byte("1:5,"))
 	// TODO: add all other case ...
+
+	// COM_STMT_PREPARE_RESPONSE, requires ColumnDefinition, Rows, etc.
 	case common.CmdFetch:
 		if crd.worker != nil {
 			return false, nil
 		}
 		crd.respond([]byte("41:2 fetch requested but no statement exists,"))
+
+	// COM_STMT_PREPARE
 	case common.CmdPrepare, common.CmdPrepareV2, common.CmdPrepareSpecial:
 		return false, nil
-	// sharding commands
+	// sharding commands -- SPECIAL HERA/OCC
 	case common.CmdSetShardID:
 		err := crd.processSetShardID(request.Payload)
 		if err == nil {
@@ -416,11 +511,16 @@ func (crd *Coordinator) processMuxCommand(request *netstring.Netstring) (bool, e
 			crd.conn.Close()
 			return true, err
 		}
+	// SPECIAL HERA/OCC
 	case common.CmdGetNumShards:
 		numShards := fmt.Sprintf("%d", GetConfig().NumOfShards)
 		ns := netstring.NewNetstringFrom(common.RcOK, []byte(numShards))
 		crd.respond(ns.Serialized)
 	default:
+		// i guess it wouldn't be the same for MySQL Protocol because
+		// there are a lot of more commands that wouldn't be just relegated
+		// to the sqlworker
+		// unless we add them as cases to the switch stmt
 		if logger.GetLogger().V(logger.Debug) {
 			logger.GetLogger().Log(logger.Debug, "Mux ignores command:", request.Cmd)
 		}
