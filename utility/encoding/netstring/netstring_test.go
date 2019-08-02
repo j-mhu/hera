@@ -21,6 +21,7 @@ import (
 	"io"
 	"strings"
 	"testing"
+	"github.com/paypal/hera/utility/encoding"
 )
 
 type nsCase struct {
@@ -51,8 +52,8 @@ func tcase(tcases []nsCase, t *testing.T) {
 func TestBasic(t *testing.T) {
 	t.Log("Start TestBasic ++++++++++++++")
 
-	basic := []nsCase{{Serialized: "5:502 0,", ns: &Netstring{Cmd: 502, Payload: []byte("0"), Serialized: []byte("5:502 0,")}},
-		{Serialized: "3:502,", ns: &Netstring{Cmd: 502, Payload: []byte(""), Serialized: []byte("3:502,")}}}
+	basic := []nsCase{{Serialized: "5:502 0,", ns: &Netstring{ encoding.Packet{ Cmd: 502, Payload: []byte("0"), Serialized: []byte("5:502 0,")}}},
+		{Serialized: "3:502,", ns: &Netstring{ encoding.Packet{ Cmd: 502, Payload: []byte(""), Serialized: []byte("3:502,")}}}}
 	tcase(basic, t)
 
 	t.Log("End TestBasic ++++++++++++++")

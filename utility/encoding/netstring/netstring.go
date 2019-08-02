@@ -23,6 +23,7 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"github.com/paypal/hera/utility/encoding"
 )
 
 const (
@@ -33,15 +34,30 @@ const (
 	CodeSubCommand = '0'
 )
 
-// Netstring is a netstring packed, which consists of a command plus a payload
+
+// These are defined so old Hera code that already calls the netstring
+// functions doesn't have to be replaced one by one
+var NewNetstring = NewPacket
+var NewNetstringReader = NewPacketReader
+var NewNetstringFrom = NewPacketFrom
+
+// Netstring is a netstring packet, which consists of a command plus a payload
 type Netstring struct {
-	Cmd        int
-	Serialized []byte // the entire netstring array. e.g. "100:1 xxx...yyy,"
-	Payload    []byte // the content section of a netstring. e.g. "xxx...yyy"
+	encoding.Packet
 }
 
-// NewNetstring creates a Netstring from the reader, reading exactly as many bytes as necessary
-func NewNetstring(_reader io.Reader) (*Netstring, error) {
+// Reader decodes netstrings from a buffer or stores information
+// about the state of the sequence id when packets are exchanged between
+// server and client.
+type Reader struct {
+     reader  io.Reader
+     ns  *Netstring
+     nss []*Netstring
+     next    int
+}
+
+// (formerly) NewNetstring creates a Netstring from the reader, reading exactly as many bytes as necessary
+func NewPacket(_reader io.Reader) (*Netstring, error) {
 	ns := &Netstring{}
 
 	var buff bytes.Buffer
@@ -99,8 +115,8 @@ func NewNetstring(_reader io.Reader) (*Netstring, error) {
 	return ns, nil
 }
 
-// NewNetstringFrom creates a Netstring from command and Payload
-func NewNetstringFrom(_cmd int, _payload []byte) *Netstring {
+// (formerly) NewNetstringFrom creates a Netstring from command and Payload
+func NewPacketFrom(_cmd int, _payload []byte) *Netstring {
 	// TODO: optimize
 	payloadLen := len(_payload)
 	cmdStr := fmt.Sprintf("%d", _cmd)
@@ -153,7 +169,7 @@ func SubNetstrings(_ns *Netstring) ([]*Netstring, error) {
 	var ns *Netstring
 	var err error
 	for {
-		ns, err = NewNetstring(reader)
+		ns, err = NewPacket(reader)
 		if err == io.EOF {
 			break
 		}
@@ -165,16 +181,8 @@ func SubNetstrings(_ns *Netstring) ([]*Netstring, error) {
 	return nss, nil
 }
 
-// Reader decodes netstrings from a buffer
-type Reader struct {
-	reader io.Reader
-	ns     *Netstring
-	nss    []*Netstring
-	next   int
-}
-
 // NewNetstringReader creates a Reader, that maintains the state for embedded Netstrings
-func NewNetstringReader(_reader io.Reader) *Reader {
+func NewPacketReader(_reader io.Reader) *Reader {
 	nsr := new(Reader)
 	nsr.reader = _reader
 	return nsr
@@ -194,7 +202,7 @@ func (reader *Reader) ReadNext() (ns *Netstring, err error) {
 			reader.next++
 			return
 		}
-		reader.ns, err = NewNetstring(reader.reader)
+		reader.ns, err = NewPacket(reader.reader)
 		if err != nil {
 			return nil, err
 		}
