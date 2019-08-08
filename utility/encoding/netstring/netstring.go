@@ -43,7 +43,7 @@ var NewNetstringFrom = NewPacketFrom
 
 // Netstring is a netstring packet, which consists of a command plus a payload
 type Netstring struct {
-	encoding.Packet
+	encoding.Packet 			// Cmd, Serialized, Payload
 }
 
 // Reader decodes netstrings from a buffer or stores information

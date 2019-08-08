@@ -28,6 +28,8 @@ type Packet struct {
      Cmd  int            // Op code / command byte, etc.
      Serialized []byte   // Entire packet byte array including header, payload
      Payload    [] byte  // Content section (excludes header)
+     Length int
+	Sequence_id int
 }
 
 // Reader decodes netstrings from a buffer or stores information

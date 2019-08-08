@@ -45,6 +45,7 @@ import (
 // NOTE TO SELF: look up commit and rollback and how they're done by
 // mysql protocol via database/sql
 var PROTOCOL_COMMIT, PROTOCOL_ROLLBACK, PROTOCOL_FETCH, PROTOCOL_PREPARE int
+var PROTOCOL_PING int
 /* Juliette: 300719TAIL */
 
 
@@ -105,19 +106,21 @@ func NewCoordinator(ctx context.Context, clientchannel <-chan *netstring.Netstri
 
 
 	/* JULIETTE: 300719HEAD */
-	isMYSQL := false // temporary for compilation
+	coordinator.isMySQL = false // temporary for compilation
 
 	// Set globals for the client so that Mux will use either MySQL protocol
 	// command bytes or Hera custom protocol command bytes.
-	if isMySQL {
+	if coordinator.isMySQL {
 		PROTOCOL_FETCH = common.COM_STMT_FETCH
 		PROTOCOL_PREPARE = common.COM_STMT_PREPARE
 		PROTOCOL_COMMIT = -1   // There isn't specific command byte
 		PROTOCOL_ROLLBACK = -1 // There isn't specific command byte
+		PROTOCOL_PING = common.COM_PING;
 	} else {
 		PROTOCOL_FETCH = common.CmdFetch
 		PROTOCOL_COMMIT = common.CmdCommit
 		PROTOCOL_ROLLBACK = common.CmdRollback
+		// PROTOCOL_
 
 		// PROTOCOL_PREPARE is set when the request is received in handleMux
 		// because there are 3 prepare commands in the Hera custom protocol
@@ -382,8 +385,8 @@ func (crd *Coordinator) handleMux(request *netstring.Netstring) (bool, error) {
 			// }
 
 			var isPrepareStmt bool
-			if isMySQL {
-				isPrepareStmt = ns.Cmd == COM_STMT_PREPARE
+			if crd.isMySQL {
+				isPrepareStmt = ns.Cmd == common.COM_STMT_PREPARE
 			} else {
 				isPrepareStmt = (ns.Cmd == common.CmdPrepare) || (ns.Cmd == common.CmdPrepareV2) || (ns.Cmd == common.CmdPrepareSpecial)
 
@@ -392,8 +395,7 @@ func (crd *Coordinator) handleMux(request *netstring.Netstring) (bool, error) {
 			}
 
 
-
-			if prepare {
+			if isPrepareStmt {
 			/* JULIETTE: 300719TAIL */
 
 				crd.isSQL = true
@@ -430,13 +432,13 @@ func (crd *Coordinator) handleMux(request *netstring.Netstring) (bool, error) {
 
 	/* JULIETTE: 300719HEAD */
 	var isPrepareStmt bool
-	if isMySQL {
-		isPrepareStmt = ns.Cmd == COM_STMT_PREPARE
+	if crd.isMySQL {
+		isPrepareStmt = request.Cmd == common.COM_STMT_PREPARE
 	} else {
-		isPrepareStmt = (ns.Cmd == common.CmdPrepare) || (ns.Cmd == common.CmdPrepareV2) || (ns.Cmd == common.CmdPrepareSpecial)
+		isPrepareStmt = (request.Cmd == common.CmdPrepare) || (request.Cmd == common.CmdPrepareV2) || (request.Cmd == common.CmdPrepareSpecial)
 
 		// Set which prepare it is from the ns.Cmd for nonMySQL protocol
-		PROTOCOL_PREPARE = ns.Cmd
+		PROTOCOL_PREPARE = request.Cmd
 	}
 
 
