@@ -27,10 +27,6 @@ import (
 	"github.com/paypal/hera/utility/encoding"
 )
 
-// const (
-//
-// )
-
 // MySQLPacket is a mysql protocol packet, which will have a command byte,
 // payload, size, and sequence id.
 type MySQLPacket struct {
@@ -38,15 +34,7 @@ type MySQLPacket struct {
 
 }
 
-// Reader decodes MySQL protocol command packets from a buffer or stores information
-// about the state of the sequence id when packets are exchanged between
-// server and client.
-type Reader struct {
-     reader  io.Reader
-     ns  *MySQLPacket
-     nss []*MySQLPacket
-     next    int
-}
+const MAX_PACKET_SIZE = 0xffffff
 
 // NewPacket creates a MySQLPacket from the reader, reading exactly as many
 // bytes as necessary. Assumes that the packet being read is a COMMAND PACKET
@@ -118,11 +106,11 @@ func NewPacket(_reader io.Reader) (*MySQLPacket, error) {
 func NewPacketFrom(_cmd int, _payload []byte) *MySQLPacket {
 
 	payloadLen := len(_payload)
-	ns := new(MySQLPacket)
+	ns := &MySQLPacket{}
 
 	if (payloadLen == 0) {
 		// throw error, maybe?
-		return &MySQLPacket{}
+		return ns
 	}
 
 	// Read the command byte from the payload! ;)
@@ -131,22 +119,136 @@ func NewPacketFrom(_cmd int, _payload []byte) *MySQLPacket {
 	ns.Payload = _payload
 	// Create the full packet which has the header and the payload.
 	ns.Serialized = make([]byte, INT4 /* header length */ + payloadLen)
+	ns.Length = payloadLen
+	ns.Sequence_id = _cmd
+
 
 	// Write in header
 	idx := 0
 	// 3 bytes indicating payload length
-	WriteFixedLenInt(ns.Serialized, payloadLen, INT3, &idx)
+	WriteFixedLenInt(ns.Serialized, INT3, payloadLen, &idx)
 	// 1 byte indicating the sequence_id
-	WriteFixedLenInt(ns.Serialized, _cmd /* actually sequence id */, INT1, &idx)
+	WriteFixedLenInt(ns.Serialized, INT1, _cmd /* actually sequence id */, &idx)
 	// Copy the payload
 	copy(ns.Serialized[idx:], ns.Payload)
+
 	return ns
 }
 
-/* BEGIN: MAY NOT BE RELEVANT TO MySQLPackets. */
 
-// NewPacketEmbedded embedds a set of packets into a netstring
-// func NewNetstringEmbedded(_netstrings []*Netstring) *Netstring {
+// Reader decodes MySQL protocol command packets from a buffer or stores information
+// about the state of the sequence id when packets are exchanged between
+// server and client.
+type Reader struct {
+     reader  io.Reader
+     ns  *MySQLPacket
+     nss []*MySQLPacket
+     next    int
+}
+
+// MultiplePackets creates a new Reader and reads all of the incoming packets.
+// It stores all packets in nss. A pointer to the 'current' packet that
+// is being read is stored in 'ns'. next is the index of the current + 1 packet.
+func ReadMultiplePackets(_p *MySQLPacket, r *Reader) ([]*MySQLPacket, error) {
+	// Initialize array of MySQLPackets
+	var nss []*MySQLPacket
+
+	// Variable for storing MySQLPacket
+	var ns *MySQLPacket
+	var err error
+
+	// Add the first packet to the array of MySQLPackets
+	nss = append(nss, _p)
+	curr_sq := _p.Sequence_id
+
+	// Keep reading from the connection until EOF
+	for {
+		curr_sq++
+		ns, err = NewPacket(r.reader)
+		// Multiple packets are sent by padding the payload until the length
+		// is 0xffffff until we reach the last packet with length less
+		// than 0xffffff.
+		// https://dev.mysql.com/doc/internals/en/sending-more-than-16mbyte.html
+		if ns.Length != MAX_PACKET_SIZE {
+			break
+		}
+		if err != nil {
+			return nil, err
+		}
+		// ns.Sequence_id = curr_sq ? might be unnecessary
+
+		// Add the NewPacket to the next.
+		nss = append(nss, ns)
+	}
+	return nss, nil
+}
+
+
+// NewPacketReader creates a Reader, that maintains the state / aka sequence_id
+// for packets sent to the server
+func NewPacketReader(_reader io.Reader) *Reader {
+	nsr := new(Reader)
+	nsr.reader = _reader
+	return nsr
+}
+
+// ReadNext returns the next packet from the stream.
+// Note: in case of multiple packets bigger than 16 MB the Reader will buffer
+// some packets, a different function will probably have to be used. This is
+// just for grabbing one packet from the stream. MySQLPackets are not embedded.
+func (reader *Reader) ReadNext() (ns *MySQLPacket, err error) {
+	for {
+
+		if reader.ns != nil {
+
+			ns = reader.ns
+			reader.ns = nil
+			reader.next++
+			return
+		}
+
+		if reader.next < len(reader.nss) {
+
+			ns = reader.nss[reader.next]
+			reader.next++
+			return
+		}
+
+
+		reader.ns, err = NewPacket(reader.reader)
+
+		if err != nil {
+			return nil, err
+		}
+		if (reader.ns.Length == MAX_PACKET_SIZE) {
+
+			// This means there are more packets on the way.
+			reader.nss, err = ReadMultiplePackets(reader.ns, reader)
+			if err != nil {
+				return nil, err
+			}
+			// reader.ns = nil
+
+			// Start at the 0th packet when the next loop comes around.
+			reader.next = 0
+		}
+	}
+}
+
+
+// IsComposite returns if the MySQLPacket has more packets following it,
+// i.e. the payload length is 0xffffff.
+func (ns *MySQLPacket) IsComposite() bool {
+	idx := 0
+	length := ReadFixedLenInt(ns.Serialized, INT3, &idx)
+	return length == MAX_PACKET_SIZE
+}
+
+
+
+/* BEGIN: MAY NOT BE RELEVANT TO MySQLPackets. */
+// // NewPacketEmbedded embedds a set of packets into a netstring
+// func WriteMultiplePackets(_netstrings []*Netstring) *Netstring {
 // 	// TODO: optimize
 // 	payloadLen := 0
 // 	for _, i := range _netstrings {
@@ -169,85 +271,4 @@ func NewPacketFrom(_cmd int, _payload []byte) *MySQLPacket {
 // 	return ns
 // }
 
-// // SubNetstrings parses incoming
-// func SubNetstrings(_ns *Netstring) ([]*Netstring, error) {
-// 	//  TODO: optimize for zero-copy
-// 	var nss []*Netstring
-// 	reader := bytes.NewReader(_ns.Payload)
-// 	var ns *Netstring
-// 	var err error
-// 	for {
-// 		ns, err = NewPacket(reader)
-// 		if err == io.EOF {
-// 			break
-// 		}
-// 		if err != nil {
-// 			return nil, err
-// 		}
-// 		nss = append(nss, ns)
-// 	}
-// 	return nss, nil
-// }
 /* END: MAY NOT BE RELEVANT TO MySQLPackets. */
-
-
-// NewPacketReader creates a Reader, that maintains the state / aka sequence_id
-// for packets sent to the server
-func NewPacketReader(_reader io.Reader) *Reader {
-	nsr := new(Reader)
-	nsr.reader = _reader
-	return nsr
-}
-
-// ReadNext returns the next packet from the stream.
-// Note: in case of multiple packets bigger than 16 MB the Reader will buffer
-// some packets, a different function will probably have to be used. This is
-// just for grabbing one packet from the stream. MySQLPackets are not embedded.
-func (reader *Reader) ReadNext() (ns *MySQLPacket, err error) {
-	for {
-		if reader.ns != nil {
-			ns = reader.ns
-			reader.ns = nil
-			return
-		}
-		if reader.next < len(reader.nss) {
-			ns = reader.nss[reader.next]
-			reader.next++
-			return
-		}
-
-		reader.ns, err = NewPacket(reader.reader)
-		if err != nil {
-			return nil, err
-		}
-
-		// .....skeleton code that might be fixed later to include
-		// data spread across multiple packets
-		// var more *MySQLPacket
-		//
-		// if (reader.ns.length == 0xffffff) {
-		// 	for {
-		// 		more, err = NewPacket(reader.reader)
-		// 		if err != nil {
-		// 			return nil, err
-		// 		}
-		// 		if err == io.EOF {
-		// 			break
-		// 		}
-		// 		reader.nss.append(reader.nss, more)
-		// 		reader.next++
-		// 		if more.length != 0xffffff {
-		// 			break
-		// 		}
-		// 	}
-		// }
-	}
-}
-
-// IsComposite returns if the MySQLPacket has more packets following it,
-// i.e. the payload length is 0xffffff.
-func (ns *MySQLPacket) IsComposite() bool {
-	idx := 0
-	length := ReadFixedLenInt(ns.Serialized, INT3, &idx)
-	return length == 0xffffff
-}

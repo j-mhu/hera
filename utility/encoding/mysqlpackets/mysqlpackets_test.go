@@ -20,12 +20,12 @@ package mysqlpackets
 import (
 	// "io"
 	// "strings"
+	"math/rand"
 	"testing"
 	"bytes"
 	"github.com/paypal/hera/common"
 	"github.com/paypal/hera/utility/encoding"
 	"reflect"
-	"math/rand"
 )
 
 var codes map[int]string
@@ -117,6 +117,8 @@ func tmake() ([]nsCase) {
 	return cases
 }
 
+// Tests whether or not NewPacket properly reads in a single packet
+// from a buffered reader
 func TestBasic(t *testing.T) {
 	t.Log("Start TestBasic ++++++++++++++")
 
@@ -125,249 +127,130 @@ func TestBasic(t *testing.T) {
 	t.Log("End TestBasic ++++++++++++++")
 }
 
+// Tests whether or not packets get their headers properly prepended
+// before they're written out to the net.Conn for the client.
+func TestNewPacketFrom(t *testing.T) {
 
+	t.Log("Start TestNewPacketFrom +++++++++++++")
+	// Get those go-to queries
+	tcases := tmake()
+
+	for _, tcase := range tcases {
+		t.Log("Testing for: ", tcase.Serialized)
+		ns := NewPacketFrom(0, tcase.ns.Payload)
+		if ns.Length != tcase.ns.Length {
+			t.Log("Length expected", tcase.ns.Length, "instead got", ns.Length)
+		}
+		if ns.Sequence_id != tcase.ns.Sequence_id {
+			t.Log("Length expected", tcase.ns.Sequence_id, "instead got", ns.Sequence_id)
+		}
+		if ns.Cmd != tcase.ns.Cmd {
+			t.Log("Command expected", tcase.ns.Cmd, "instead got", ns.Cmd)
+			t.Fail()
+		}
+		if !reflect.DeepEqual(ns.Payload, tcase.ns.Payload) {
+			t.Log("Payload expected", tcase.ns.Payload, "instead got", ns.Payload)
+			t.Fail()
+		}
+		if !reflect.DeepEqual(ns.Serialized, tcase.ns.Serialized) {
+			t.Log("Serialized expected", tcase.ns.Serialized, "instead got", ns.Serialized)
+			t.Fail()
+		}
+		t.Log("Done testing for: ", tcase.Serialized)
+	}
+
+	t.Log("End TestNewPacketFrom +++++++++++++")
+
+}
+
+/* Tests the read next function which reads multiple packets from a stream. */
 func TestReadNext(t *testing.T) {
 	t.Log("Start TestReadNext +++++++++++++")
 
-	numPackets := rand.Intn(48) + 2 // pick a random number between 2 and 50
-	endPacketLength := rand.Intn(1 << 24 - 2) // pick length of terminal packet
+	// Pick random number of packets to be 'sent' over the reader
+	numPackets := rand.Intn(48) + 2 		// Rand between 2 and 50
 
-	// Send this numPackets + 1 through to be read by ReadNext() in one stream
-	big_payload := make([]byte, (1 << 24 - 1) * numPackets + endPacketLength)
+	// Pick length of terminal packet + header
+	endPacketLength := rand.Intn(MAX_PACKET_SIZE - 1)
+
+	// Create expected test packet! Note that everything is all 0s
+	buf := make([]byte, MAX_PACKET_SIZE)
+	expectedPacket := NewPacketFrom(0, buf) // Stream packet
+
+
+	buf = make([]byte, endPacketLength)
+	endPacket := NewPacketFrom(numPackets - 1, buf) // Terminal packet
+
+	t.Log("Running with ", numPackets, " packets and ", endPacketLength, " length end packet")
+
+	big_payload := make([]byte, 0)
+	idx := 0
+	for i := 0; i < numPackets; i++ {
+		big_payload = append(big_payload, expectedPacket.Serialized...)
+		expectedPacket.Serialized[3]++
+		t.Log(expectedPacket.Serialized[3])
+		idx += expectedPacket.Length
+	}
+	big_payload = append(big_payload, endPacket.Serialized...)
+	if (len(big_payload) != numPackets * (MAX_PACKET_SIZE + 4) + endPacketLength + 4) {
+		t.Log("Unexpected big payload length ", len(big_payload))
+	}
+
+	// Reset sequence id
+	expectedPacket.Serialized[3] = 0
 
 	// Create a new packet reader
 	reader := NewPacketReader(bytes.NewReader(big_payload))
 
-	// Return the next packet from the string!
-	ns, err := reader.ReadNext()
+	// Since we have two packets, use a general variable for test packet
+	var testPacket *MySQLPacket
 
+	// Return the next packet from the string!
+	for {
+		t.Log("reader.ReadNext() in mysql_packets test")
+		ns, err := reader.ReadNext()
+		if err != nil {
+			break
+		}
+		if ns.Length != MAX_PACKET_SIZE {
+			testPacket = endPacket
+		} else {
+			testPacket = expectedPacket
+		}
+		t.Log("Packet number: ", expectedPacket.Serialized[3])
+
+		// Test that the next packet read is as expected!
+		if ns.Length != testPacket.Length {
+			t.Log("Length expected", testPacket.Length, "instead got", ns.Length)
+		}
+		if ns.Sequence_id != testPacket.Sequence_id {
+			t.Log("Sequence id expected", testPacket.Sequence_id, "instead got", ns.Sequence_id)
+		}
+		if ns.Cmd != testPacket.Cmd {
+			t.Log("Command expected", testPacket.Cmd, "instead got", ns.Cmd)
+			t.Fail()
+		}
+		if !reflect.DeepEqual(ns.Payload, testPacket.Payload) {
+			t.Log("Payload expected", testPacket.Payload, "instead got", ns.Payload)
+			// t.Log("Wrong payload")
+			t.Fail()
+		}
+		if !reflect.DeepEqual(ns.Serialized, testPacket.Serialized) {
+			t.Log("Serialized expected", testPacket.Serialized, "instead got", ns.Serialized)
+			// t.Log("Wrong serialized")
+			t.Fail()
+		}
+		expectedPacket.Serialized[3]++
+		expectedPacket.Sequence_id++
+	}
+
+	if int(expectedPacket.Serialized[3]) != numPackets {
+		t.Log("Expected number of packets", numPackets, "instead got", int(expectedPacket.Serialized[3]))
+		t.Fail()
+	}
 
 	t.Log("End TestReadNext +++++++++++++")
 }
-
-
-// /* Tests whether or not the server properly writes multiple packets to the
-// conn. */
-// func TestWriteMultiplePackets(t *testing.T) {
-// 	numPackets := rand.Intn(49) + 1
-// 	big_payload := make([]byte, 1 << 24 - 1)
-//
-// 	for numPackets > 0 {
-// 		numPackets--
-//
-//
-// 	}
-// }
-//
-// // func TestWriteEmbedded(t *testing.T) {
-// // 	nss := make([]*Netstring, 3)
-// // 	nss[0] = NewPacketFrom(502, []byte("abc"))
-// // 	nss[1] = NewPacketFrom(5, []byte(""))
-// // 	nss[2] = NewPacketFrom(25, []byte("1234567890?1234567890?1234567890?"))
-// //
-// // 	ns := NewNetstringEmbedded(nss)
-// // 	if ns.Cmd != 0 {
-// // 		t.Log("Command expected '0' instead got", ns.Cmd)
-// // 		t.Fail()
-// // 	}
-// // 	if strings.Compare(string(ns.Payload), "7:502 abc,1:5,36:25 1234567890?1234567890?1234567890?,") != 0 {
-// // 		t.Log("Payload expected '7:502 abc,1:5,36:25 1234567890?1234567890?1234567890?,' instead got ", string(ns.Payload))
-// // 		t.Fail()
-// // 	}
-// // 	if strings.Compare(string(ns.Serialized), "56:0 7:502 abc,1:5,36:25 1234567890?1234567890?1234567890?,,") != 0 {
-// // 		t.Log("Serialized expected '56:0 7:502 abc,1:5,36:25 1234567890?1234567890?1234567890?,,' instead got", string(ns.Serialized))
-// // 		t.Fail()
-// // 	}
-// // }
-//
-// /* Tests whether or not the server properly reads multiple pacets from the
-// conn. */
-// func TestReadMultiplePackets(t *testing.T) {
-// 	length := 0xffffff
-//
-// 	for length == 0xffffff {
-// 		// Read those boys
-//
-// 	}
-// }
-//
-// // func TestReadEmbedded(t *testing.T) {
-// // 	nss := make([]*Netstring, 3)
-// // 	nss[0] = NewPacketFrom(502, []byte("xyzwx*abcdef"))
-// // 	nss[1] = NewPacketFrom(5, []byte(""))
-// // 	nss[2] = NewPacketFrom(25, []byte("1234567890*1234567890"))
-// //
-// // 	ns := NewNetstringEmbedded(nss)
-// //
-// // 	t.Log("NS::::", string(ns.Serialized))
-// //
-// // 	nss2, _ := SubNetstrings(ns)
-// // 	if len(nss2) != 3 {
-// // 		t.Log("Expected 3 sub-netstrings, instead got", len(nss2))
-// // 		t.Fail()
-// // 	}
-// // 	for idx, i := range nss2 {
-// // 		t.Log("Cmd:", i.Cmd, ", Payload:", string(i.Payload), ", Serialized:", string(i.Serialized))
-// //
-// // 		if i.Cmd != nss[idx].Cmd {
-// // 			t.Log("Command expected", nss[idx].Cmd, "instead got", i.Cmd)
-// // 			t.Fail()
-// // 		}
-// // 		if strings.Compare(string(i.Payload), string(nss[idx].Payload)) != 0 {
-// // 			t.Log("Payload expected", string(nss[idx].Payload), "instead got", string(i.Payload))
-// // 			t.Fail()
-// // 		}
-// // 		if strings.Compare(string(i.Serialized), string(nss[idx].Serialized)) != 0 {
-// // 			t.Log("Payload expected", string(nss[idx].Serialized), "instead got", string(i.Serialized))
-// // 			t.Fail()
-// // 		}
-// // 	}
-// // }
-//
-// func TestPacketReader(t *testing.T) {
-//
-// }
-//
-// // func TestNetstringReader(t *testing.T) {
-// // 	reader := NewPacketReader(bytes.NewReader([]byte{0x12, 00, 00, 00, 0x17, 0x01, 0x00, 00, 00, 00, 0, 00, 00, 00, 00, 01, 0x0f, 00, 03, 0x66, 0x6f, 0x6f}))
-// // 	nss := make([]*Netstring, 6)
-// // 	nss[0] = NewPacketFrom(502, []byte("xyzwx*abcdef"))
-// // 	nss[1] = NewPacketFrom(5, []byte(""))
-// // 	nss[2] = NewPacketFrom(25, []byte("1234567890*1234567890"))
-// // 	nss[3] = NewPacketFrom(502, []byte("xyzwx*WWWWWWW"))
-// // 	nss[4] = NewPacketFrom(5, []byte(""))
-// // 	nss[5] = NewPacketFrom(25, []byte("1234567890*1234567890"))
-// // 	idx := -1
-// // 	var ns *Netstring
-// // 	var err error
-// // 	for {
-// // 		ns, err = reader.ReadNext()
-// // 		if err != nil {
-// // 			if err != io.EOF {
-// // 				t.Log("Error ReadNext: ", err.Error())
-// // 				t.Fail()
-// // 			}
-// // 			break
-// // 		}
-// // 		idx++
-// // 		t.Log("Cmd:", ns.Cmd, ", Payload:", string(ns.Payload), ", Serialized:", string(ns.Serialized))
-// // 		if ns.Cmd != nss[idx].Cmd {
-// // 			t.Log("Command expected", nss[idx].Cmd, "instead got", ns.Cmd)
-// // 			t.Fail()
-// // 		}
-// // 		if strings.Compare(string(ns.Payload), string(nss[idx].Payload)) != 0 {
-// // 			t.Log("Payload expected", string(nss[idx].Payload), "instead got", string(ns.Payload))
-// // 			t.Fail()
-// // 		}
-// // 		if strings.Compare(string(ns.Serialized), string(nss[idx].Serialized)) != 0 {
-// // 			t.Log("Payload expected", string(nss[idx].Serialized), "instead got", string(ns.Serialized))
-// // 			t.Fail()
-// // 		}
-// // 	}
-// // 	if idx != 5 {
-// // 		t.Log("Expected 6 Netstrings to be read, instead found only:", idx+1)
-// // 		t.Fail()
-// // 	}
-// // }
-//
-// func TestBadPacket(t *testing.T) {
-//
-// }
-//
-// // func TestBadInput(t *testing.T) {
-// // 	reader := NewPacketReader(strings.NewReader("54:0 16:502 "))
-// // 	_, err := reader.ReadNext()
-// // 	if err != nil {
-// // 		t.Log("OK: expected error:", err.Error())
-// // 	} else {
-// // 		t.Log("Bad input should have failed - incomplete Netstring")
-// // 		t.Fail()
-// // 	}
-// // 	reader = NewPacketReader(strings.NewReader("55:0 16:502 xyzwx*abcdef,50:5,24:25 1234567890*1234567890,,"))
-// // 	// first NS is fine
-// // 	_, err = reader.ReadNext()
-// // 	if err != nil {
-// // 		t.Log("First Netstring should have been OK")
-// // 		t.Fail()
-// // 	}
-// // 	// second is bad, length is "50" but much fewer bytes are available
-// // 	_, err = reader.ReadNext()
-// // 	if err != nil {
-// // 		t.Log("OK: expected error:", err.Error())
-// // 	} else {
-// // 		t.Log("Bad input should have failed - incomplete embedded Netstring")
-// // 		t.Fail()
-// // 	}
-// // }
-// //
-// // // per https://dave.cheney.net/2013/06/30/how-to-write-benchmarks-in-go, to avoid compiler optimizations
-//
-// var result *MySQLPacket
-//
-// func BenchmarkEncode(b *testing.B) {
-//
-// }
-
-// func BenchmarkEncode(b *testing.B) {
-// 	var ns *Netstring
-// 	nss := make([]*Netstring, 10)
-// 	for i := 0; i < b.N; i++ {
-// 		nss[0] = NewPacketFrom(25, []byte("select id, int_val, str_val from test where id = :account_id and name = :name and address = :address  /*12345-123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890-123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901*/"))
-// 		nss[1] = NewPacketFrom(4, []byte("account_id"))
-// 		nss[2] = NewPacketFrom(3, []byte("1234567890"))
-// 		nss[3] = NewPacketFrom(4, []byte("name"))
-// 		nss[4] = NewPacketFrom(3, []byte("John Smith"))
-// 		nss[5] = NewPacketFrom(4, []byte("address"))
-// 		nss[6] = NewPacketFrom(3, []byte("2211 North First Street, San Jose"))
-// 		nss[7] = NewPacketFrom(4, []byte(""))
-// 		nss[8] = NewPacketFrom(22, []byte(""))
-// 		nss[9] = NewPacketFrom(7, []byte("0"))
-// 		ns = NewNetstringEmbedded(nss)
-// 	}
-// 	result = ns
-// }
-
-
-// func BenchmarkEncodeOne(b *testing.B) {
-// 	var ns *Netstring
-// 	for i := 0; i < b.N; i++ {
-// 		ns = NewPacketFrom(25, []byte("select id, int_val, str_val from test where id = :account_id and name = :name and address = :address"))
-// 	}
-// 	result = ns
-// }
-//
-// var results []*Netstring
-
-func BenchmarkDecode(b *testing.B) {}
-// func BenchmarkDecode(b *testing.B) {
-// 	var nss2 []*Netstring
-// 	nss := make([]*Netstring, 10)
-// 	nss[0] = NewPacketFrom(25, []byte("select id, int_val, str_val from test where id = :account_id and name = :name and address = :address  /*12345-123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890-123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901*/"))
-// 	nss[1] = NewPacketFrom(4, []byte("account_id"))
-// 	nss[2] = NewPacketFrom(3, []byte("1234567890"))
-// 	nss[3] = NewPacketFrom(4, []byte("name"))
-// 	nss[4] = NewPacketFrom(3, []byte("John Smith"))
-// 	nss[5] = NewPacketFrom(4, []byte("address"))
-// 	nss[6] = NewPacketFrom(3, []byte("2211 North First Street, San Jose"))
-// 	nss[7] = NewPacketFrom(4, []byte(""))
-// 	nss[8] = NewPacketFrom(22, []byte(""))
-// 	nss[9] = NewPacketFrom(7, []byte("0"))
-// 	ns := NewNetstringEmbedded(nss)
-// 	//	b.Log("Decoding:", len(ns.Serialized), ":", string(ns.Serialized))
-// 	for i := 0; i < b.N; i++ {
-// 		nss2, _ = SubNetstrings(ns)
-// 	}
-// 	results = nss2
-// }
-//
-// func BenchmarkDecodeOne(b *testing.B) {
-// 	var ns2 *Netstring
-// 	ns := NewPacketFrom(25, []byte("select id, int_val, str_val from test where id = :account_id and name = :name and address = :address"))
-// 	for i := 0; i < b.N; i++ {
-// 		ns2, _ = NewPacket(strings.NewReader(string(ns.Serialized)))
-// 	}
-// 	result = ns2
-// }
 
 /* on hyper
 BenchmarkEncode-24                 50000             29067 ns/op
