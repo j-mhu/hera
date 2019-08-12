@@ -32,7 +32,7 @@ import (
 	"github.com/paypal/hera/cal"
 	"github.com/paypal/hera/common"
 	"github.com/paypal/hera/utility"
-	"github.com/paypal/hera/utility/encoding/netstring"
+	"github.com/paypal/hera/utility/encoding"
 	"github.com/paypal/hera/utility/logger"
 )
 
@@ -45,9 +45,7 @@ import (
 // NOTE TO SELF: look up commit and rollback and how they're done by
 // mysql protocol via database/sql
 var PROTOCOL_COMMIT, PROTOCOL_ROLLBACK, PROTOCOL_FETCH, PROTOCOL_PREPARE int
-var PROTOCOL_PING int
 /* Juliette: 300719TAIL */
-
 
 /*
 * Coordinator needs to keep track of sequence_ids between client and server
@@ -60,12 +58,12 @@ var PROTOCOL_PING int
 // is completed (with COMMIT) or canceled (with ROLLBACK)
 type Coordinator struct {
 	conn          net.Conn                    // used to send back the response(s)
-	clientchannel <-chan *netstring.Netstring // channel where client netstring arrives
+	clientchannel <-chan *encoding.Packet // channel where client netstring arrives
 	ctx           context.Context
 	done          chan int
 	sqlParser     common.SQLParser
 
-	corrID         *netstring.Netstring
+	corrID         *encoding.Packet
 	preppendCorrID bool
 	// tells if the current request is SELECT
 	isRead bool
@@ -83,7 +81,7 @@ type Coordinator struct {
 	ticket        string        // the ticket for the worker
 
 	// if the current netstring is compositie, cache the subnetstrings so that it's not parsed again
-	nss []*netstring.Netstring
+	nss []*encoding.Packet
 
 	// if this handles an internal client like rac maintenance config or shard config
 	isInternal bool
@@ -92,7 +90,7 @@ type Coordinator struct {
 }
 
 // NewCoordinator creates a coordinator, clientchannel is used to read the requests, conn is used to write responses
-func NewCoordinator(ctx context.Context, clientchannel <-chan *netstring.Netstring, conn net.Conn) *Coordinator {
+func NewCoordinator(ctx context.Context, clientchannel <-chan *encoding.Packet, conn net.Conn) *Coordinator {
 	coordinator := &Coordinator{clientchannel: clientchannel, conn: conn, ctx: ctx, done: make(chan int, 1), id: conn.RemoteAddr().String(), shard: &shardInfo{sessionShardID: -1}, prevShard: &shardInfo{sessionShardID: -1}}
 	var err error
 	coordinator.sqlParser, err = common.NewRegexSQLParser()
@@ -103,7 +101,6 @@ func NewCoordinator(ctx context.Context, clientchannel <-chan *netstring.Netstri
 	if conn.RemoteAddr().Network() == "pipe" {
 		coordinator.isInternal = true
 	}
-
 
 	/* JULIETTE: 300719HEAD */
 	coordinator.isMySQL = false // temporary for compilation
@@ -340,7 +337,7 @@ func (crd *Coordinator) Run() {
 	}
 }
 
-func (crd *Coordinator) dispatch(request *netstring.Netstring) bool {
+func (crd *Coordinator) dispatch(request *encoding.Packet) bool {
 	if GetConfig().EnableTAF && (crd.worker == nil) {
 		taferr := crd.DispatchTAFSession(request)
 		crd.processError(taferr)
@@ -352,7 +349,7 @@ func (crd *Coordinator) dispatch(request *netstring.Netstring) bool {
 	return (deferr == nil)
 }
 
-func (crd *Coordinator) computeSQLHash(request *netstring.Netstring) {
+func (crd *Coordinator) computeSQLHash(request *encoding.Packet) {
 	hash, found := ExtractSQLHash(request)
 	if found {
 		crd.sqlhash = int32(hash)
@@ -363,13 +360,14 @@ func (crd *Coordinator) computeSQLHash(request *netstring.Netstring) {
  * it handles the command if it is the case. if the command is indended for a worker, it will return false.
  * worker commands start with one of the prepare/prepare_v2
  */
-func (crd *Coordinator) handleMux(request *netstring.Netstring) (bool, error) {
+func (crd *Coordinator) handleMux(request *encoding.Packet) (bool, error) {
 	crd.isRead = false
 	crd.preppendCorrID = (crd.worker == nil)
 	if request.IsComposite() {
 		// TODO: avoid full parsing if necessary
 		// if this is a worker command, only a shallow parse might be needed (if sharding is enabled, full parsing still needed anyway)
-		nss, err := netstring.SubNetstrings(request)
+
+		nss, err := encoding.ReadMultiplePackets(request)
 		if err != nil {
 			return false, err
 		}
@@ -454,7 +452,7 @@ func (crd *Coordinator) handleMux(request *netstring.Netstring) (bool, error) {
 /*
  * process one mux command
  */
-func (crd *Coordinator) processMuxCommand(request *netstring.Netstring) (bool, error) {
+func (crd *Coordinator) processMuxCommand(request *encoding.Packet) (bool, error) {
 	if logger.GetLogger().V(logger.Debug) {
 		logger.GetLogger().Log(logger.Debug, "Mux handle command:", request.Cmd)
 	}
@@ -517,7 +515,7 @@ func (crd *Coordinator) processMuxCommand(request *netstring.Netstring) (bool, e
 			// send OK
 			crd.respond([]byte("1:5,"))
 		} else {
-			ns := netstring.NewNetstringFrom(common.RcError, []byte(err.Error()))
+			ns := encoding.NewPacketFrom(common.RcError, []byte(err.Error()))
 			crd.respond(ns.Serialized)
 			// critical error, close
 			crd.conn.Close()
@@ -526,7 +524,7 @@ func (crd *Coordinator) processMuxCommand(request *netstring.Netstring) (bool, e
 	// SPECIAL HERA/OCC
 	case common.CmdGetNumShards:
 		numShards := fmt.Sprintf("%d", GetConfig().NumOfShards)
-		ns := netstring.NewNetstringFrom(common.RcOK, []byte(numShards))
+		ns := encoding.NewPacketFrom(common.RcOK, []byte(numShards))
 		crd.respond(ns.Serialized)
 	default:
 		// i guess it wouldn't be the same for MySQL Protocol because
@@ -555,7 +553,7 @@ func (crd *Coordinator) processClientInfoMuxCommand(clientInfo string) {
 	// Need to edit the packets so that they send OK packet instead?
 	// Will still follow netstring and the golang on the other side
 	// will have to take care of that.
-	ns := netstring.NewNetstringFrom(common.RcOK, []byte(serverInfo))
+	ns := encoding.NewPacketFrom(common.RcOK, []byte(serverInfo))
 	crd.respond(ns.Serialized)
 	var poolName string
 	prefix := "Poolname: "
@@ -624,7 +622,7 @@ func (crd *Coordinator) resetWorkerInfo() {
  * or as part of end-of-data if the request was a select+fetch
  *
  */
-func (crd *Coordinator) dispatchRequest(request *netstring.Netstring) error {
+func (crd *Coordinator) dispatchRequest(request *encoding.Packet) error {
 	if logger.GetLogger().V(logger.Verbose) {
 		logger.GetLogger().Log(logger.Verbose, "coordinator dispatchrequest: starting")
 	}
@@ -779,7 +777,7 @@ var (
  * exception happens (client disconnects, worker exits, timeout)
  * 2nd return parameter tells if the worker is still busy (in transaction or in cursor)
  */
-func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, request *netstring.Netstring, clientWriter io.Writer, rqTimer *time.Timer) (bool, error) {
+func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, request *encoding.Packet, clientWriter io.Writer, rqTimer *time.Timer) (bool, error) {
 	if logger.GetLogger().V(logger.Verbose) {
 		logger.GetLogger().Log(logger.Verbose, "coordinator dorequeset: starting")
 	}
@@ -800,7 +798,7 @@ func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, req
 	if crd.preppendCorrID {
 		var err error
 		if crd.corrID == nil {
-			err = worker.Write(netstring.NewNetstringFrom(common.CmdClientCalCorrelationID, []byte("CorrId=NotSet")), false)
+			err = worker.Write(encoding.NewPacketFrom(common.CmdClientCalCorrelationID, []byte("CorrId=NotSet")), false)
 		} else {
 			err = worker.Write(crd.corrID, false)
 		}
@@ -1021,7 +1019,7 @@ func (crd *Coordinator) processError(err error) {
 		(err == ErrRejectDbDown) ||
 		(err == ErrSaturationKill) ||
 		(err == ErrSaturationSoftSQLEviction) {
-		ns := netstring.NewNetstringFrom(common.RcError, []byte(err.Error()))
+		ns := encoding.NewPacketFrom(common.RcError, []byte(err.Error()))
 		if logger.GetLogger().V(logger.Verbose) {
 			logger.GetLogger().Log(logger.Verbose, "error to client", string(ns.Serialized))
 		}

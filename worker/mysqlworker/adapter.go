@@ -71,7 +71,7 @@ func (adapter *mysqlAdapter) InitDB() (*sql.DB, error) {
 			}
 			db.Close()
 		}
-	}	
+	}
 	return db, err
 }
 
@@ -86,7 +86,7 @@ func (adapter *mysqlAdapter) Heartbeat(db *sql.DB) (bool) {
 		}
 		return writable
 	}
-		
+
 	if strings.HasPrefix(os.Getenv("logger.LOG_PREFIX"), "WORKER ") {
 		stmt, err := conn.PrepareContext(ctx, "select @@global.read_only")
 		//stmt, err := conn.PrepareContext(ctx, "show variables where variable_name='read_only'")

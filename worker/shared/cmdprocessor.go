@@ -109,14 +109,15 @@ type CmdProcessor struct {
 	// using map with name key instead of array with position index for faster matching
 	// when processing CmdBindName/Value since some queres can set hundreds of bindvar.
 	//
-	bindVars map[string]*BindValue
+	bindVars map[string]*BindValue		// parameters. MySQL only passes the number of parameters in and not the actual parameter names
 	// placeholders for bindouts
-	bindOuts    []string
-	numBindOuts int
+	bindOuts    []string   // bindouts not supported by MySQL protocol, which only cares about number of bind variables rather than storing actual name
+	numBindOuts int	   // and also bindouts are for getting the same bind variable back out rather than the bind variable back in
+
 	//
 	// matching bindname to location in query for faster lookup at CmdExec.
 	//
-	bindPos []string
+	bindPos []string // bindPos might be possible for NamedArgs?
 	//
 	// hera protocol let client sends bindname in one ns command and bindvalue for the
 	// bindname in the very next ns command. this parameter is used to track which
@@ -757,6 +758,13 @@ func (cp *CmdProcessor) preprocess(query string) string {
 	// WHERE account_number=:account_number
 	// and flags=:flags and return_url=:return_url,
 	//
+
+	/* This will have to be modified because MySQL prepared statements
+	* don't automatically include bind names. The bind names are only provided
+	* when the thing is executed, so all we have is '?', '?' '?'.
+	* Either change cmdprocessor code or maneuver Hera server to obtain
+	* the bind
+	*/
 	binds := cp.regexBindName.FindAllString(query, -1)
 	//
 	// just create a new map for each query. the old map if any will be gc out later.

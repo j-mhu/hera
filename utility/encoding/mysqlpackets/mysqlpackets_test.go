@@ -26,6 +26,7 @@ import (
 	"github.com/paypal/hera/common"
 	"github.com/paypal/hera/utility/encoding"
 	"reflect"
+	"fmt"
 )
 
 var codes map[int]string
@@ -39,6 +40,7 @@ func tcase(tcases []nsCase, t *testing.T) {
 	for _, tcase := range tcases {
 		t.Log("Testing for: ", tcase.Serialized)
 		ns, _ := NewPacket(bytes.NewReader(tcase.Serialized))
+		// fmt.Println(reflect.TypeOf(ns))
 		if ns.Length != tcase.ns.Length {
 			t.Log("Length expected", tcase.ns.Length, "instead got", ns.Length)
 		}

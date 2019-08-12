@@ -24,10 +24,19 @@ import (
 	"github.com/paypal/hera/cal"
 	"github.com/paypal/hera/common"
 	"github.com/paypal/hera/utility/encoding/netstring"
+	"github.com/paypal/hera/utility/encoding"
 	"github.com/paypal/hera/utility/logger"
 	"net"
 	"time"
 )
+
+
+/* BIG NOTES:
+*
+* might have to replace DispatchTAFSession and removeFetchSize
+* to use with MySQL protocol
+*
+*/
 
 // Errors
 var (
@@ -57,7 +66,7 @@ func (p *tafResponsePreproc) Write(bf []byte) (int, error) {
 	if p.replyTime == 0 {
 		p.replyTime = time.Now().UnixNano()
 	}
-	ns, err := netstring.NewNetstring(bytes.NewReader(bf))
+	ns, err := encoding.NewPacket(bytes.NewReader(bf))
 	if err == nil {
 		if !p.dataSent /*if prior to this some response was alredy sent - then disable this check*/ {
 			// look inside for SQLError

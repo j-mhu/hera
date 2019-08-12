@@ -40,6 +40,7 @@ const (
 var NewNetstring = NewPacket
 var NewNetstringReader = NewPacketReader
 var NewNetstringFrom = NewPacketFrom
+var SubNetstrings = ReadMultiplePackets
 
 // Netstring is a netstring packet, which consists of a command plus a payload
 type Netstring struct {
@@ -162,7 +163,7 @@ func NewNetstringEmbedded(_netstrings []*Netstring) *Netstring {
 }
 
 // SubNetstrings parses the embedded Netstrings
-func SubNetstrings(_ns *Netstring) ([]*Netstring, error) {
+func ReadMultiplePackets(_ns *Netstring) ([]*Netstring, error) {
 	//  TODO: optimize for zero-copy
 	var nss []*Netstring
 	reader := bytes.NewReader(_ns.Payload)

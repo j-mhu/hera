@@ -149,7 +149,7 @@ type Reader struct {
 // MultiplePackets creates a new Reader and reads all of the incoming packets.
 // It stores all packets in nss. A pointer to the 'current' packet that
 // is being read is stored in 'ns'. next is the index of the current + 1 packet.
-func ReadMultiplePackets(_p *MySQLPacket, r *Reader) ([]*MySQLPacket, error) {
+func (r *Reader) ReadMultiplePackets(_p *MySQLPacket) ([]*MySQLPacket, error) {
 	// Initialize array of MySQLPackets
 	var nss []*MySQLPacket
 
@@ -223,7 +223,7 @@ func (reader *Reader) ReadNext() (ns *MySQLPacket, err error) {
 		if (reader.ns.Length == MAX_PACKET_SIZE) {
 
 			// This means there are more packets on the way.
-			reader.nss, err = ReadMultiplePackets(reader.ns, reader)
+			reader.nss, err = reader.ReadMultiplePackets(reader.ns)
 			if err != nil {
 				return nil, err
 			}

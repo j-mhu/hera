@@ -84,7 +84,7 @@ then
     sed -e 's/^# ssl-key/ssl-key/;s/^# ssl-cert/ssl-cert/' -i mysql.conf.d/mysqld.cnf
 fi
 
-# for some installations, you'll also have to edit the bind_address to 
+# for some installations, you'll also have to edit the bind_address to
 # 0.0.0.0 in mysqld.conf and use a mysql client to adjust grants or permissions
 # to allow the user to login from other ip's.
 

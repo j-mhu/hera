@@ -26,7 +26,7 @@ import (
 
 	"github.com/paypal/hera/client/gosqldriver"
 	"github.com/paypal/hera/common"
-	"github.com/paypal/hera/utility/encoding/netstring"
+	"github.com/paypal/hera/utility/encoding"
 	"github.com/paypal/hera/utility/logger"
 )
 
@@ -65,9 +65,9 @@ func (driver *heraLoopDriver) Open(url string) (driver.Conn, error) {
 		// now set the shard ID
 		fields := strings.Split(url, ":")
 		if (len(fields) == 3) && (GetConfig().EnableSharding) {
-			ns := netstring.NewNetstringFrom(common.CmdSetShardID, []byte(fields[0]))
+			ns := encoding.NewPacketFrom(common.CmdSetShardID, []byte(fields[0]))
 			cli.Write(ns.Serialized)
-			ns, err := netstring.NewNetstring(cli)
+			ns, err := encoding.NewPacket(cli)
 			if err != nil {
 				return nil, fmt.Errorf("Failed to set shardID: %s", err.Error())
 			}

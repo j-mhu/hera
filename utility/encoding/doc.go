@@ -36,10 +36,10 @@ type Packet struct {
 // about the state of the sequence id when packets are exchanged between
 // server and client.
 type Reader struct {
-     // reader  io.Reader
-     // packet  *Packet
-     // packets []*Packet
-     // next    int
+     reader  io.Reader
+     packet  *Packet
+     packets []*Packet
+     next    int
 }
 
 /* A Packet interface gives options for reading netstrings or MySQL packets.
@@ -63,6 +63,8 @@ type Packaging interface {
      // counting the number of packets exchanged in sequence between client
      // and server or netstrings in a payload
      NewPacketReader(_reader io.Reader) *Reader
+
+     ReadMultiplePackets(_p *Packet) ([]*Packet, error)
 
      // ReadNext returns the next packet from the string.
      ReadNext() (packet *Packet, err error)

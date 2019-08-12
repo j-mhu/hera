@@ -523,6 +523,9 @@ func (c *Conn) readPacket(handshake bool) (bool) {
 
           // This is a command packet, so process according to
           // what kind of command it is.
+          fmt.Printf("Command byte: %d\n", COM(payload[0]))
+          fmt.Println("Length: %d", length)
+          fmt.Println(payload)
           switch COM(payload[0]) {
 
                case COM_QUERY:
@@ -543,6 +546,7 @@ func (c *Conn) readPacket(handshake bool) (bool) {
                case COM_STMT_PREPARE:
                     // New statement; increment stmtid
                     c.stmtid++
+
                     // anything set with prepare
                     // Create new mapping between stmt id and actual statement
                     qi := ParseQuery(string(payload[1:]), c.stmtid)

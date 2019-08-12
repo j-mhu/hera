@@ -9,8 +9,8 @@ import (
      "database/sql"
      "fmt"
      "log"
-     "time"
-     "context"
+     // "time"
+     // "context"
 
      _ "github.com/go-sql-driver/mysql"
 )
@@ -103,52 +103,88 @@ func main() {
      log_error(err)
      defer db.Close()
 
-     // Create a new user.
-     user := "test_user"
-     pw := "test_password"
-     createuser(db, user, pw)
-     fmt.Println("Created new test_user.")
+     // // Create a new user.
+     // user := "test_user"
+     // pw := "test_password"
+     // createuser(db, user, pw)
+     // fmt.Println("Created new test_user.")
+     //
+     // // Create a new db.
+     // dbname := "testdb"
+     // createdb(db, dbname)
+     // fmt.Println("Created database testdb.")
+     //
+     // // Create a new table.
+     // schema := "i1 INT DEFAULT 0, i2 INT, i3 INT, dscr VARCHAR(255)"
+     // table(db, "tb", schema)
+     // fmt.Println(fmt.Sprintf("Created table tb with schema (%s).", schema))
+     //
+     // // Test inserts.
+     // fmt.Println("Inserting into table tb...")
+     // modify(db, "INSERT INTO tb VALUES ('2');")
+     // modify(db, "INSERT INTO tb VALUES ('beepbeepboopboop')")
+     //
+     // fmt.Println("Updating table tb...")
+     // // Test updates.
+     // modify(db, "UPDATE tb SET dscr = '0' WHERE i1 = 1")
+     //
+     // disp := "SELECT * FROM tb WHERE i1 = ?"
+     // // Test selects.
+     // selects(db, disp)
+     //
+     // ctx, _ /*cancel*/ := context.WithTimeout(context.Background(), 10*time.Second)
+     // // ctx := context.Background()
+	// conn, err := db.Conn(ctx)
+     //
+     // stmt, err := conn.PrepareContext(ctx, "select @@global.read_only")
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+     //
+     // _, err = stmt.Query()
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+     //
+     // fmt.Println("Deleting from table tb...")
+     // // Test deletes.
+     // modify(db, "DELETE FROM tb WHERE i2 = 3")
 
-     // Create a new db.
-     dbname := "testdb"
-     createdb(db, dbname)
-     fmt.Println("Created database testdb.")
+     fmt.Println("BEGIN")
+     tx, err := db.Begin()
+     if err != nil {
+          log.Fatal(err)
+     }
+     defer func () {
+          fmt.Println("ROLLBACK")
+          tx.Rollback()
+     }()
+     fmt.Println("insert into test1 (id, val) values (?, ?);")
+     stmt, err := tx.Prepare("insert into test1 (id, val) values (?, ?);")
+     if err != nil {
+          log.Fatal(err)
+     }
 
-     // Create a new table.
-     schema := "i1 INT DEFAULT 0, i2 INT, i3 INT, dscr VARCHAR(255)"
-     table(db, "tb", schema)
-     fmt.Println(fmt.Sprintf("Created table tb with schema (%s).", schema))
+     _, err = stmt.Exec(1, 2)
+     if err != nil {
+          log.Fatal(err)
+     }
+     defer stmt.Close()
 
-     // Test inserts.
-     fmt.Println("Inserting into table tb...")
-     modify(db, "INSERT INTO tb VALUES ('2');")
-     modify(db, "INSERT INTO tb VALUES ('beepbeepboopboop')")
+     fmt.Println("delete from test1 where id = 2;")
+     stmt, err = tx.Prepare("delete from test1 where id = 2;")
+     stmt.Exec()
+     stmt.Close()
 
-     fmt.Println("Updating table tb...")
-     // Test updates.
-     modify(db, "UPDATE tb SET dscr = '0' WHERE i1 = 1")
+     fmt.Println("select * from test1;")
+     db.Query("select * from test1;")
+     // stmt.Close()
 
-     disp := "SELECT * FROM tb WHERE i1 = ?"
-     // Test selects.
-     selects(db, disp)
-
-     ctx, _ /*cancel*/ := context.WithTimeout(context.Background(), 10*time.Second)
-     // ctx := context.Background()
-	conn, err := db.Conn(ctx)
-
-     stmt, err := conn.PrepareContext(ctx, "select @@global.read_only")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-     _, err = stmt.Query()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-     fmt.Println("Deleting from table tb...")
-     // Test deletes.
-     modify(db, "DELETE FROM tb WHERE i2 = 3")
+     fmt.Println("COMMIT")
+     err = tx.Commit()
+     if err != nil {
+          log.Fatal(err)
+     }
 
      // Shutdown database
      fmt.Println("Testing complete.")

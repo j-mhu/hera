@@ -1,0 +1,22 @@
+A10:28:10.10	API	mux-go	0		
+E10:28:10.10	MUX	new_worker_child_0	0	
+E10:28:10.11	MSG	STATELOG	0	Created.
+E10:28:10.11	MUX	new_worker_child_0	0	
+E10:28:10.11	MUX	new_worker_child_0	0	
+A10:28:10.11	API	mux-go-start	0		
+E10:28:10.11	MSG	STATE	mux_start_time	tv_sec=1565112490&tv_usec=116519
+E10:28:10.13	SERVER_INFO	worker-go-start	0	
+E10:28:10.13	SERVER_INFO	worker-go-start	0	
+E10:28:10.13	SERVER_INFO	worker-go-start	0	
+H10:28:11.11	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+
+t10:28:11.12	API	CLIENT_SESSION
+A10:28:11.12	EXEC	3817610591	0		
+A10:28:11.12	EXEC	325402861	0		
+E10:28:11.12	COMMIT	Local	0	
+T10:28:11.12	API	CLIENT_SESSION	0		corr_id_=&log_id_=&session_id_=
+
+t10:28:11.12	API	CLIENT_SESSION
+A10:28:11.12	EXEC	1633452271	0		
+A10:28:11.12	FETCH	1633452271	0		
+T10:28:11.12	API	CLIENT_SESSION	0		corr_id_=&log_id_=&session_id_=

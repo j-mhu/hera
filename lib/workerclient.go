@@ -34,7 +34,7 @@ import (
 	"github.com/paypal/hera/cal"
 	"github.com/paypal/hera/common"
 	"github.com/paypal/hera/utility"
-	"github.com/paypal/hera/utility/encoding/netstring"
+	"github.com/paypal/hera/utility/encoding"
 	"github.com/paypal/hera/utility/logger"
 )
 
@@ -68,12 +68,12 @@ type workerMsg struct {
 	inTransaction bool
 	// tell coordinator to abort dosession with an ErrWorkerFail. call will recover worker.
 	abort bool
-	ns    *netstring.Netstring
+	ns    *encoding.Packet
 }
 
-func (msg *workerMsg) GetNetstring() *netstring.Netstring {
+func (msg *workerMsg) GetPacket() *encoding.Packet {
 	if msg.ns == nil {
-		msg.ns, _ = NetstringFromBytes(msg.data)
+		msg.ns, _ = PacketFromBytes(msg.data)
 	}
 	return msg.ns
 }
@@ -428,7 +428,7 @@ func (worker *WorkerClient) attachToWorker() (err error) {
 		logger.GetLogger().Log(logger.Verbose, "Waiting for control message from worker (", worker.ID, ", ", worker.pid, ")")
 	}
 	// wait for control message
-	ns, err := netstring.NewNetstring(worker.workerConn)
+	ns, err := encoding.NewPacket(worker.workerConn)
 	if err != nil {
 		return err
 	}
@@ -732,7 +732,7 @@ func (worker *WorkerClient) doRead() {
 		// blocking call. if something goes wrong, recycle will close uds from worker
 		// side to unblock this call.
 		//
-		ns, err := netstring.NewNetstring(worker.workerConn)
+		ns, err := encoding.NewPacket(worker.workerConn)
 		if err != nil {
 			if logger.GetLogger().V(logger.Warning) {
 				logger.GetLogger().Log(logger.Warning, "workerclient pid=", worker.pid, " read error:", err.Error())
@@ -809,7 +809,7 @@ func (worker *WorkerClient) doRead() {
 }
 
 // Write sends a message to the worker
-func (worker *WorkerClient) Write(ns *netstring.Netstring, isSQL bool) error {
+func (worker *WorkerClient) Write(ns *encoding.Packet, isSQL bool) error {
 	worker.setState(wsBusy)
 
 	if isSQL {
