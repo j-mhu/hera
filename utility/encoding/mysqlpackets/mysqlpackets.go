@@ -24,7 +24,15 @@ import (
 	"io"
 	"log"
 	"fmt"
+	"github.com/paypal/hera/utility/encoding"
 )
+
+type MySQLPacket struct{
+	reader  io.Reader
+     ns  *encoding.Packet
+     nss []*encoding.Packet
+     next    int
+}
 
 /* ==== CONSTANTS ============================================================*/
 /* ---- STRING TYPES. ----------------------------------------------------------
@@ -64,21 +72,12 @@ const (
 /* ==== FUNCTIONS ============================================================*/
 
 /* ---- HERA USE -------------------------------------------------------------*/
-// MySQLPacket is a mysql protocol packet, which will have a command byte,
-// payload, size, and sequence id.
-type MySQLPacket struct {
-	Cmd       	 int
-	Length 	 	 int
-	Sequence_id 	 int
-	Serialized    []byte // the full packet
-	Payload 	    []byte // the payload of a packet
-}
 
-// NewPacket creates a MySQLPacket from the reader, reading exactly as many
+// NewPacket creates a encoding.Packet from the reader, reading exactly as many
 // bytes as necessary. Assumes that the packet being read is a COMMAND PACKET
 // only.
-func NewPacket(_reader io.Reader) (*MySQLPacket, error) {
-	ns := &MySQLPacket{}
+func (p *MySQLPacket) NewPacket(_reader io.Reader) (*encoding.Packet, error) {
+	ns := &encoding.Packet{}
 
 	var buff bytes.Buffer
 	var tmp = make([]byte, INT4)
@@ -122,6 +121,7 @@ func NewPacket(_reader io.Reader) (*MySQLPacket, error) {
 	next := buff.Len()
 	ns.Cmd = int(ns.Serialized[next])
 	ns.Payload = ns.Serialized[next:]
+	ns.IsMySQL = true
 
 	return ns, nil
 }
@@ -140,10 +140,10 @@ func NewPacket(_reader io.Reader) (*MySQLPacket, error) {
 * packets! So note that NewPacketFrom is used by the server to construct
 * packets to send to the client.
 */
-func NewPacketFrom(_cmd int, _payload []byte) *MySQLPacket {
+func (p *MySQLPacket) NewPacketFrom(_cmd int, _payload []byte) *encoding.Packet {
 
 	payloadLen := len(_payload)
-	ns := &MySQLPacket{}
+	ns := &encoding.Packet{}
 
 	if (payloadLen == 0) {
 		// throw error, maybe?
@@ -157,7 +157,7 @@ func NewPacketFrom(_cmd int, _payload []byte) *MySQLPacket {
 	ns.Length = payloadLen
 	ns.Sequence_id = _cmd
 	ns.Payload = _payload
-
+	ns.IsMySQL = true
 
 	// Write in header
 	idx := 0
@@ -171,36 +171,25 @@ func NewPacketFrom(_cmd int, _payload []byte) *MySQLPacket {
 	return ns
 }
 
-
-// Reader decodes MySQL protocol command packets from a buffer or stores information
-// about the state of the sequence id when packets are exchanged between
-// server and client.
-type Reader struct {
-     reader  io.Reader
-     ns  *MySQLPacket
-     nss []*MySQLPacket
-     next    int
-}
-
 // MultiplePackets creates a new Reader and reads all of the incoming packets.
 // It stores all packets in nss. A pointer to the 'current' packet that
 // is being read is stored in 'ns'. next is the index of the current + 1 packet.
-func (r *Reader) ReadMultiplePackets(_p *MySQLPacket) ([]*MySQLPacket, error) {
-	// Initialize array of MySQLPackets
-	var nss []*MySQLPacket
+func (p *MySQLPacket)  ReadMultiplePackets(_p *encoding.Packet) ([]*encoding.Packet, error) {
+	// Initialize array of encoding.Packets
+	var nss []*encoding.Packet
 
-	// Variable for storing MySQLPacket
-	var ns *MySQLPacket
+	// Variable for storing encoding.Packet
+	var ns *encoding.Packet
 	var err error
 
-	// Add the first packet to the array of MySQLPackets
+	// Add the first packet to the array of encoding.Packets
 	nss = append(nss, _p)
 	curr_sq := _p.Sequence_id
 
 	// Keep reading from the connection until EOF
 	for {
 		curr_sq++
-		ns, err = NewPacket(r.reader)
+		ns, err = p.NewPacket(p.reader)
 		// Multiple packets are sent by padding the payload until the length
 		// is 0xffffff until we reach the last packet with length less
 		// than 0xffffff.
@@ -222,66 +211,55 @@ func (r *Reader) ReadMultiplePackets(_p *MySQLPacket) ([]*MySQLPacket, error) {
 
 // NewPacketReader creates a Reader, that maintains the state / aka sequence_id
 // for packets sent to the server
-func NewPacketReader(_reader io.Reader) *Reader {
-	nsr := new(Reader)
-	nsr.reader = _reader
-	return nsr
+func (p *MySQLPacket) NewPacketReader(_reader io.Reader)  {
+	p.reader = _reader
 }
 
 // ReadNext returns the next packet from the stream.
 // Note: in case of multiple packets bigger than 16 MB the Reader will buffer
 // some packets, a different function will probably have to be used. This is
-// just for grabbing one packet from the stream. MySQLPackets are not embedded.
-func (reader *Reader) ReadNext() (ns *MySQLPacket, err error) {
+// just for grabbing one packet from the stream. encoding.Packets are not embedded.
+func (p *MySQLPacket)  ReadNext() (ns *encoding.Packet, err error) {
 	for {
 		// If packets have already been loaded into the reader,
 		// return the one that is currently being pointed to
-		if reader.ns != nil {
+		if p.ns != nil {
 
-			ns = reader.ns
-			reader.ns = nil
-			reader.next++
+			ns = p.ns
+			p.ns = nil
+			p.next++
 			return
 		}
 
 		// Otherwise, move to the next packet in the packet array
-		if reader.next < len(reader.nss) {
+		if p.next < len(p.nss) {
 
-			ns = reader.nss[reader.next]
-			reader.next++
+			ns = p.nss[p.next]
+			p.next++
 			return
 		}
 
 		// If there are no packets, read them in from the connection.
-		reader.ns, err = NewPacket(reader.reader)
+		p.ns, err = p.NewPacket(p.reader)
 
 		if err != nil {
 			return nil, err
 		}
 
 		// Check for packet size of the first incoming packet.
-		if (reader.ns.Length == MAX_PACKET_SIZE) {
+		if (p.ns.Length == MAX_PACKET_SIZE) {
 
 			// This means there are more packets on the way.
-			reader.nss, err = reader.ReadMultiplePackets(reader.ns)
+			p.nss, err = p.ReadMultiplePackets(p.ns)
 			if err != nil {
 				return nil, err
 			}
 
 			// Start at the 0th packet when the next loop comes around so
 			// the reader returns the first packet.
-			reader.next = 0
+			p.next = 0
 		}
 	}
-}
-
-
-// IsComposite returns if the MySQLPacket has more packets following it,
-// i.e. the payload length is 0xffffff.
-func (ns *MySQLPacket) IsComposite() bool {
-	idx := 0
-	length := ReadFixedLenInt(ns.Serialized, INT3, &idx)
-	return length == MAX_PACKET_SIZE
 }
 
 

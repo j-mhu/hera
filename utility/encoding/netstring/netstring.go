@@ -23,7 +23,15 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"github.com/paypal/hera/utility/encoding"
 )
+
+type Netstring struct {
+	reader io.Reader
+	ns     *encoding.Packet
+	nss    []*encoding.Packet
+	next   int
+}
 
 const (
 	colon byte = ':'
@@ -33,16 +41,9 @@ const (
 	CodeSubCommand = '0'
 )
 
-// Netstring is a netstring packed, which consists of a command plus a payload
-type Netstring struct {
-	Cmd        int
-	Serialized []byte // the entire netstring array. e.g. "100:1 xxx...yyy,"
-	Payload    []byte // the content section of a netstring. e.g. "xxx...yyy"
-}
-
-// NewNetstring creates a Netstring from the reader, reading exactly as many bytes as necessary
-func NewNetstring(_reader io.Reader) (*Netstring, error) {
-	ns := &Netstring{}
+// NewPacket creates a Packet from the reader, reading exactly as many bytes as necessary
+func (p *Netstring) NewPacket(_reader io.Reader) (*encoding.Packet, error) {
+	ns := &encoding.Packet{}
 
 	var buff bytes.Buffer
 	var tmp = make([]byte, 1)
@@ -99,8 +100,8 @@ func NewNetstring(_reader io.Reader) (*Netstring, error) {
 	return ns, nil
 }
 
-// NewNetstringFrom creates a Netstring from command and Payload
-func NewNetstringFrom(_cmd int, _payload []byte) *Netstring {
+// NewPacketFrom creates a Packet from command and Payload
+func (n *Netstring) NewPacketFrom(_cmd int, _payload []byte) *encoding.Packet {
 	// TODO: optimize
 	payloadLen := len(_payload)
 	cmdStr := fmt.Sprintf("%d", _cmd)
@@ -110,7 +111,7 @@ func NewNetstringFrom(_cmd int, _payload []byte) *Netstring {
 	} else {
 		str = fmt.Sprintf("%d:%s %s,", payloadLen+len(cmdStr)+1 /*the space*/, cmdStr, string(_payload))
 	}
-	ns := new(Netstring)
+	ns := new(encoding.Packet)
 	ns.Cmd = _cmd
 	ns.Serialized = []byte(str)
 	if payloadLen > 0 {
@@ -121,8 +122,8 @@ func NewNetstringFrom(_cmd int, _payload []byte) *Netstring {
 	return ns
 }
 
-// NewNetstringEmbedded embedds a set of Netstrings into a netstring
-func NewNetstringEmbedded(_netstrings []*Netstring) *Netstring {
+// NewPacketEmbedded embedds a set of Packets into a netstring
+func (n *Netstring) NewPacketEmbedded(_netstrings []*encoding.Packet) *encoding.Packet {
 	// TODO: optimize
 	payloadLen := 0
 	for _, i := range _netstrings {
@@ -130,7 +131,7 @@ func NewNetstringEmbedded(_netstrings []*Netstring) *Netstring {
 	}
 	lenStr := fmt.Sprintf("%d:", payloadLen+2 /*len("0 ")*/)
 	totalLen := len(lenStr) + payloadLen + 2 /*len("0 ")*/ + 1 /*ending comma*/
-	ns := new(Netstring)
+	ns := new(encoding.Packet)
 	ns.Serialized = make([]byte, totalLen)
 	copy(ns.Serialized, []byte(lenStr))
 	next := len(lenStr)
@@ -145,15 +146,15 @@ func NewNetstringEmbedded(_netstrings []*Netstring) *Netstring {
 	return ns
 }
 
-// SubNetstrings parses the embedded Netstrings
-func SubNetstrings(_ns *Netstring) ([]*Netstring, error) {
+// SubPackets parses the embedded Packets
+func (n *Netstring) ReadMultiplePackets(_ns *encoding.Packet) ([]*encoding.Packet, error) {
 	//  TODO: optimize for zero-copy
-	var nss []*Netstring
+	var nss []*encoding.Packet
 	reader := bytes.NewReader(_ns.Payload)
-	var ns *Netstring
+	var ns *encoding.Packet
 	var err error
 	for {
-		ns, err = NewNetstring(reader)
+		ns, err = n.NewPacket(reader)
 		if err == io.EOF {
 			break
 		}
@@ -165,25 +166,16 @@ func SubNetstrings(_ns *Netstring) ([]*Netstring, error) {
 	return nss, nil
 }
 
-// Reader decodes netstrings from a buffer
-type Reader struct {
-	reader io.Reader
-	ns     *Netstring
-	nss    []*Netstring
-	next   int
+// NewPacketReader creates a Reader, that maintains the state for embedded Packets
+func (n *Netstring) NewPacketReader(_reader io.Reader) {
+	n.reader = _reader
 }
 
-// NewNetstringReader creates a Reader, that maintains the state for embedded Netstrings
-func NewNetstringReader(_reader io.Reader) *Reader {
-	nsr := new(Reader)
-	nsr.reader = _reader
-	return nsr
-}
-
-// ReadNext returns the next Netstring from the stream. Note: in case of embedded netstrings,
-// the Reader will buffer some Netstrings
-func (reader *Reader) ReadNext() (ns *Netstring, err error) {
+// ReadNext returns the next Packet from the stream. Note: in case of embedded netstrings,
+// the Reader will buffer some Packets
+func (n *Netstring) ReadNext() (ns *encoding.Packet, err error) {
 	for {
+		reader := n
 		if reader.ns != nil {
 			ns = reader.ns
 			reader.ns = nil
@@ -194,12 +186,12 @@ func (reader *Reader) ReadNext() (ns *Netstring, err error) {
 			reader.next++
 			return
 		}
-		reader.ns, err = NewNetstring(reader.reader)
+		reader.ns, err = n.NewPacket(reader.reader)
 		if err != nil {
 			return nil, err
 		}
 		if reader.ns.Cmd == (CodeSubCommand - '0') {
-			reader.nss, err = SubNetstrings(reader.ns)
+			reader.nss, err = n.ReadMultiplePackets(reader.ns)
 			if err != nil {
 				return nil, err
 			}
@@ -207,9 +199,4 @@ func (reader *Reader) ReadNext() (ns *Netstring, err error) {
 			reader.next = 0
 		}
 	}
-}
-
-// IsComposite returns if the netstring is compisite, embedding multiple netstrings in it
-func (ns *Netstring) IsComposite() bool {
-	return ns.Cmd == (CodeSubCommand - '0')
 }

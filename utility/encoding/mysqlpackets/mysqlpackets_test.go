@@ -24,6 +24,7 @@ import (
 	"testing"
 	"bytes"
 	"github.com/paypal/hera/common"
+	"github.com/paypal/hera/utility/encoding"
 	"reflect"
 )
 
@@ -31,13 +32,14 @@ var codes map[int]string
 
 type nsCase struct {
 	Serialized []byte
-	ns         *MySQLPacket
+	ns         *encoding.Packet
 }
 
 func tcase(tcases []nsCase, t *testing.T) {
+	p := new(MySQLPacket)
 	for _, tcase := range tcases {
 		t.Log("Testing for: ", tcase.Serialized)
-		ns, _ := NewPacket(bytes.NewReader(tcase.Serialized))
+		ns, _ := p.NewPacket(bytes.NewReader(tcase.Serialized))
 		// fmt.Println(reflect.TypeOf(ns))
 		if ns.Length != tcase.ns.Length {
 			t.Log("Length expected", tcase.ns.Length, "instead got", ns.Length)
@@ -87,29 +89,29 @@ func tmake() ([]nsCase) {
 
 	query = []byte{0x12,  00,  00,  00,  3,  83,  84,  65,  82,  84,  32,  84,  82,  65,  78,  83,  65,  67,  84,  73,  79,  78}
 	// payload = []byte{3,  83,  84,  65,  82,  84,  32,  84,  82,  65,  78,  83,  65,  67,  84,  73,  79,  78}
-	cases[0] = nsCase{Serialized:query, ns:&MySQLPacket{Cmd:3, Length:18, Sequence_id:0, Serialized:query}}
+	cases[0] = nsCase{Serialized:query, ns:&encoding.Packet{Cmd:3, Length:18, Sequence_id:0, Serialized:query}}
 
 
 	query = []byte{ 0x2b,  00,  00,  00, 22,  105,  110,  115,  101,  114,  116,  32,  105,  110,  116,  111,  32,  116,  101,  115,  116,  49,  32,  40,  105,  100,  44,  32,  118,  97,  108,  41,  32,  118,  97,  108,  117,  101,  115,  32,  40,  63,  44,  32,  63,  41,  59}
 	// payload = []byte{22,  105,  110,  115,  101,  114,  116,  32,  105,  110,  116,  111,  32,  116,  101,  115,  116,  49,  32,  40,  105,  100,  44,  32,  118,  97,  108,  41,  32,  118,  97,  108,  117,  101,  115,  32,  40,  63,  44,  32,  63,  41,  59}
-	cases[1] = nsCase{Serialized:query, ns:&MySQLPacket{Cmd:22, Length:43, Sequence_id:0, Serialized:query}}
+	cases[1] = nsCase{Serialized:query, ns:&encoding.Packet{Cmd:22, Length:43, Sequence_id:0, Serialized:query}}
 
 
 	query = []byte{0x20, 00, 00, 00, 23, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 8, 0, 8, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0}
 	// payload = []byte{23, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 8, 0, 8, 0, 1, 0, 0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 0}
-	cases[2] = nsCase{Serialized:query, ns:&MySQLPacket{Cmd:23, Length:32, Sequence_id:0, Serialized:query}}
+	cases[2] = nsCase{Serialized:query, ns:&encoding.Packet{Cmd:23, Length:32, Sequence_id:0, Serialized:query}}
 
 	query = []byte{0x20, 00, 00, 00, 22, 100, 101, 108,  101,  116,  101,  32,  102,  114,  111,  109,  32,  116,  101,  115,  116,  49,  32,  119,  104,  101,  114,  101,  32,  105,  100,  32,  61,  32,  50, 59}
 	// payload = []byte{22, 100, 101, 108, 101, 116, 101,  32,  102,  114,  111,  109,  32,  116,  101,  115,  116,  49,  32,  119,  104,  101,  114,  101,  32,  105,  100,  32,  61,  32,  50,  59}
-	cases[3] = nsCase{Serialized:query, ns:&MySQLPacket{Cmd:22, Length:32, Sequence_id:0, Serialized:query}}
+	cases[3] = nsCase{Serialized:query, ns:&encoding.Packet{Cmd:22, Length:32, Sequence_id:0, Serialized:query}}
 
 	query = []byte{5, 0, 0, 0, 25, 1, 0, 0, 0}
 	// payload = []byte{25, 1, 0, 0, 0}
-	cases[4] = nsCase{Serialized:query, ns:&MySQLPacket{Cmd:25, Length:5, Sequence_id:0, Serialized:query}}
+	cases[4] = nsCase{Serialized:query, ns:&encoding.Packet{Cmd:25, Length:5, Sequence_id:0, Serialized:query}}
 
 	query = []byte{1, 00, 00, 00, 1}
 	// payload = []byte{01}
-	cases[5] = nsCase{Serialized:query, ns:&MySQLPacket{Cmd:1, Length:1, Sequence_id:0, Serialized:query}}
+	cases[5] = nsCase{Serialized:query, ns:&encoding.Packet{Cmd:1, Length:1, Sequence_id:0, Serialized:query}}
 
 	return cases
 }
@@ -127,14 +129,14 @@ func TestBasic(t *testing.T) {
 // Tests whether or not packets get their headers properly prepended
 // before they're written out to the net.Conn for the client.
 func TestNewPacketFrom(t *testing.T) {
-
+	p := new(MySQLPacket)
 	t.Log("Start TestNewPacketFrom +++++++++++++")
 	// Get those go-to queries
 	tcases := tmake()
 
 	for _, tcase := range tcases {
 		t.Log("Testing for: ", tcase.Serialized)
-		ns := NewPacketFrom(0, tcase.ns.Serialized[HEADER_SIZE:])
+		ns := p.NewPacketFrom(0, tcase.ns.Serialized[HEADER_SIZE:])
 		if ns.Length != tcase.ns.Length {
 			t.Log("Length expected", tcase.ns.Length, "instead got", ns.Length)
 		}
@@ -159,7 +161,7 @@ func TestNewPacketFrom(t *testing.T) {
 /* Tests the read next function which reads multiple packets from a stream. */
 func TestReadNext(t *testing.T) {
 	t.Log("Start TestReadNext +++++++++++++")
-
+	p := new(MySQLPacket)
 	// Pick random number of packets to be 'sent' over the reader
 	numPackets := rand.Intn(48) + 2 		// Rand between 2 and 50
 
@@ -168,11 +170,11 @@ func TestReadNext(t *testing.T) {
 
 	// Create expected test packet! Note that everything is all 0s
 	buf := make([]byte, MAX_PACKET_SIZE)
-	expectedPacket := NewPacketFrom(0, buf) // Stream packet
+	expectedPacket := p.NewPacketFrom(0, buf) // Stream packet
 
 
 	buf = make([]byte, endPacketLength)
-	endPacket := NewPacketFrom(numPackets - 1, buf) // Terminal packet
+	endPacket := p.NewPacketFrom(numPackets - 1, buf) // Terminal packet
 
 	t.Log("Running with ", numPackets, " packets and ", endPacketLength, " length end packet")
 
@@ -193,15 +195,15 @@ func TestReadNext(t *testing.T) {
 	expectedPacket.Sequence_id = 0
 
 	// Create a new packet reader
-	reader := NewPacketReader(bytes.NewReader(big_payload))
+	p.NewPacketReader(bytes.NewReader(big_payload))
 
 	// Since we have two packets, use a general variable for test packet
-	var testPacket *MySQLPacket
+	var testPacket *encoding.Packet
 
 	// Return the next packet from the string!
 	for {
 		t.Log("reader.ReadNext() in mysql_packets test")
-		ns, err := reader.ReadNext()
+		ns, err := p.ReadNext()
 		if err != nil {
 			break
 		}
