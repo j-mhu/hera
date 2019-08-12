@@ -70,7 +70,8 @@ type MySQLPacket struct {
 	Cmd       	 int
 	Length 	 	 int
 	Sequence_id 	 int
-	Serialized    []byte // the content section of a netstring. e.g. "xxx...yyy"
+	Serialized    []byte // the full packet
+	Payload 	    []byte // the payload of a packet
 }
 
 // NewPacket creates a MySQLPacket from the reader, reading exactly as many
@@ -120,6 +121,7 @@ func NewPacket(_reader io.Reader) (*MySQLPacket, error) {
 	// Read command byte, which is the first byte after the header
 	next := buff.Len()
 	ns.Cmd = int(ns.Serialized[next])
+	ns.Payload = ns.Serialized[next:]
 
 	return ns, nil
 }
@@ -154,6 +156,7 @@ func NewPacketFrom(_cmd int, _payload []byte) *MySQLPacket {
 	ns.Serialized = make([]byte, INT4 /* header length */ + payloadLen)
 	ns.Length = payloadLen
 	ns.Sequence_id = _cmd
+	ns.Payload = _payload
 
 
 	// Write in header
