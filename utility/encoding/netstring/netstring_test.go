@@ -118,8 +118,7 @@ func TestReadEmbedded(t *testing.T) {
 
 func TestPacketReader(t *testing.T) {
 	n := new(Netstring)
-	reader := n.NewPacketReader(strings.NewReader("54:0 16:502 xyzwx*abcdef,1:5,24:25 1234567890*1234567890,,55:0 17:502 xyzwx*WWWWWWW,1:5,24:25 1234567890*1234567890,,"))
-	n.reader = reader
+	n.NewPacketReader(strings.NewReader("54:0 16:502 xyzwx*abcdef,1:5,24:25 1234567890*1234567890,,55:0 17:502 xyzwx*WWWWWWW,1:5,24:25 1234567890*1234567890,,"))
 	nss := make([]*encoding.Packet, 6)
 	nss[0] = n.NewPacketFrom(502, []byte("xyzwx*abcdef"))
 	nss[1] = n.NewPacketFrom(5, []byte(""))
@@ -162,8 +161,8 @@ func TestPacketReader(t *testing.T) {
 
 func TestBadInput(t *testing.T) {
 	n := new(Netstring)
-	reader := n.NewPacketReader(strings.NewReader("54:0 16:502 "))
-	n.reader = reader
+	n.NewPacketReader(strings.NewReader("54:0 16:502 "))
+	// n.reader = reader
 	_, err := n.ReadNext()
 	if err != nil {
 		t.Log("OK: expected error:", err.Error())
@@ -171,8 +170,8 @@ func TestBadInput(t *testing.T) {
 		t.Log("Bad input should have failed - incomplete Packet")
 		t.Fail()
 	}
-	reader = n.NewPacketReader(strings.NewReader("55:0 16:502 xyzwx*abcdef,50:5,24:25 1234567890*1234567890,,"))
-	n.reader = reader
+	n.NewPacketReader(strings.NewReader("55:0 16:502 xyzwx*abcdef,50:5,24:25 1234567890*1234567890,,"))
+	// n.reader = reader
 	// first NS is fine
 	_, err = n.ReadNext()
 	if err != nil {

@@ -21,6 +21,10 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"github.com/paypal/hera/utility/encoding/mysqlpackets"
+
+	// "github.com/paypal/hera/utility/encoding/mysqlpackets"
+	"github.com/paypal/hera/utility/encoding/netstring"
 	"math/rand"
 	"net"
 	"os"
@@ -34,7 +38,7 @@ import (
 	"github.com/paypal/hera/cal"
 	"github.com/paypal/hera/common"
 	"github.com/paypal/hera/utility"
-	"github.com/paypal/hera/utility/encoding/netstring"
+	"github.com/paypal/hera/utility/encoding"
 	"github.com/paypal/hera/utility/logger"
 )
 
@@ -68,15 +72,15 @@ type workerMsg struct {
 	inTransaction bool
 	// tell coordinator to abort dosession with an ErrWorkerFail. call will recover worker.
 	abort bool
-	ns    *netstring.Netstring
+	ns    *encoding.Packet
 }
 
-func (msg *workerMsg) GetNetstring() *netstring.Netstring {
-	if msg.ns == nil {
-		msg.ns, _ = NetstringFromBytes(msg.data)
-	}
-	return msg.ns
-}
+//func (msg *workerMsg) GetPacket() *encoding.Packet {
+//	if msg.ns == nil {
+//		msg.ns, _ = PacketFromBytes(msg.data)
+//	}
+//	return msg.ns
+//}
 
 // WorkerClient represents a worker process
 type WorkerClient struct {
@@ -134,6 +138,9 @@ type WorkerClient struct {
 	// under recovery. 0: no; 1: yes. use atomic.CompareAndSwapInt32 to check state.
 	//
 	isUnderRecovery int32
+
+	// reader in order to use netstring functions
+	packager 		encoding.Packager
 }
 
 type strandedCalInfo struct {
@@ -161,7 +168,8 @@ func envUpsert(attr *syscall.ProcAttr, key string, val string) {
 
 // NewWorker creates a new workerclient instance (pointer)
 func NewWorker(wid int, wType HeraWorkerType, instID int, shardID int, moduleName string) *WorkerClient {
-	worker := &WorkerClient{ID: wid, Type: wType, Status: wsUnset, instID: instID, shardID: shardID, moduleName: moduleName}
+	ns := &mysqlpackets.MySQLPacket{}
+	worker := &WorkerClient{ID: wid, Type: wType, Status: wsUnset, instID: instID, shardID: shardID, moduleName: moduleName, packager:ns}
 	maxReqs := GetMaxRequestsPerChild()
 	if maxReqs >= 4 {
 		worker.maxReqCount = maxReqs - uint32(rand.Intn(int(maxReqs/4)))
@@ -427,8 +435,12 @@ func (worker *WorkerClient) attachToWorker() (err error) {
 	if logger.GetLogger().V(logger.Verbose) {
 		logger.GetLogger().Log(logger.Verbose, "Waiting for control message from worker (", worker.ID, ", ", worker.pid, ")")
 	}
+	nps := &netstring.Netstring{}
 	// wait for control message
-	ns, err := netstring.NewNetstring(worker.workerConn)
+	ns, err := nps.NewPacket(worker.workerConn) /* cp.reader ... */
+	//if logger.GetLogger().V(logger.Verbose) {
+	//	logger.GetLogger().Log(logger.Verbose, fmt.Errorf("Got this control message: %s", string(ns.Cmd)))
+	//}
 	if err != nil {
 		return err
 	}
@@ -732,7 +744,7 @@ func (worker *WorkerClient) doRead() {
 		// blocking call. if something goes wrong, recycle will close uds from worker
 		// side to unblock this call.
 		//
-		ns, err := netstring.NewNetstring(worker.workerConn)
+		ns, err := worker.packager.NewPacket(worker.workerConn) /* cp.reader ... */
 		if err != nil {
 			if logger.GetLogger().V(logger.Warning) {
 				logger.GetLogger().Log(logger.Warning, "workerclient pid=", worker.pid, " read error:", err.Error())
@@ -809,7 +821,7 @@ func (worker *WorkerClient) doRead() {
 }
 
 // Write sends a message to the worker
-func (worker *WorkerClient) Write(ns *netstring.Netstring, isSQL bool) error {
+func (worker *WorkerClient) Write(ns *encoding.Packet, isSQL bool) error {
 	worker.setState(wsBusy)
 
 	if isSQL {

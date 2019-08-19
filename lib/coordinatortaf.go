@@ -23,7 +23,7 @@ import (
 	"fmt"
 	"github.com/paypal/hera/cal"
 	"github.com/paypal/hera/common"
-	"github.com/paypal/hera/utility/encoding/netstring"
+	"github.com/paypal/hera/utility/encoding"
 	"github.com/paypal/hera/utility/logger"
 	"net"
 	"time"
@@ -39,6 +39,7 @@ var (
 // it discards the response, and it reports to the coordinator. The coordinator then will retry the request on a worker from the fallback pool
 type tafResponsePreproc struct {
 	// tells if the request was forwarded to the client, so the coordinator will not retry on the fallback.
+
 	// the request was either successfull, or had some error which is "not-retriable"
 	ok bool
 	// the client connection to forward the response got from the worker
@@ -49,6 +50,8 @@ type tafResponsePreproc struct {
 	dataSent bool
 	// time when the first reply came
 	replyTime int64
+	// packager for doing encoding commands
+	packager 	encoding.Packager
 }
 
 // Write is the prepocessor function. It is a filter between the worker and the client, it processes the response and it
@@ -57,7 +60,7 @@ func (p *tafResponsePreproc) Write(bf []byte) (int, error) {
 	if p.replyTime == 0 {
 		p.replyTime = time.Now().UnixNano()
 	}
-	ns, err := netstring.NewNetstring(bytes.NewReader(bf))
+	ns, err := p.packager.NewPacket(bytes.NewReader(bf))
 	if err == nil {
 		if !p.dataSent /*if prior to this some response was alredy sent - then disable this check*/ {
 			// look inside for SQLError
@@ -96,7 +99,7 @@ func (p *tafResponsePreproc) Write(bf []byte) (int, error) {
 }
 
 // removeFetchSize replaces fetch chunk size value with zero. For simplicity we remove the fetch size hint. Fetch hint should not be used anyways for TAF case
-func (crd *Coordinator) removeFetchSize(request *netstring.Netstring) *netstring.Netstring {
+func (crd *Coordinator) removeFetchSize(request *encoding.Packet) *encoding.Packet {
 	nss := crd.nss
 	for i := range nss {
 		if nss[i].Cmd == common.CmdFetch {
@@ -104,7 +107,7 @@ func (crd *Coordinator) removeFetchSize(request *netstring.Netstring) *netstring
 			if (len(payload) != 1) || (payload[0] != '0') {
 				nss[i].Payload = []byte("0")
 				nss[i].Serialized = []byte("3:7 0,")
-				return netstring.NewNetstringEmbedded(crd.nss)
+				return crd.packager.NewPacketEmbedded(crd.nss)
 			}
 		}
 	}
@@ -121,7 +124,7 @@ func (crd *Coordinator) removeFetchSize(request *netstring.Netstring) *netstring
 // When the primary database health decreases, we start sending the some requests directly to the fallback database.
 // If the primary is completely down, we still send 1% of requests to the primary, as a "health check", so that
 // we can c ompletely switch to the primary when the primary eventualy comes back up
-func (crd *Coordinator) DispatchTAFSession(request *netstring.Netstring) error {
+func (crd *Coordinator) DispatchTAFSession(request *encoding.Packet) error {
 	if logger.GetLogger().V(logger.Debug) {
 		logger.GetLogger().Log(logger.Debug, "TAFSession: starting")
 	}

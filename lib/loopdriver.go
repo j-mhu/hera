@@ -21,12 +21,12 @@ import (
 	"database/sql"
 	"database/sql/driver"
 	"fmt"
+	"github.com/paypal/hera/client/gosqldriver"
+	"github.com/paypal/hera/utility/encoding/netstring"
 	"net"
 	"strings"
 
-	"github.com/paypal/hera/client/gosqldriver"
 	"github.com/paypal/hera/common"
-	"github.com/paypal/hera/utility/encoding/netstring"
 	"github.com/paypal/hera/utility/logger"
 )
 
@@ -56,7 +56,12 @@ TODO: add another parameter for debugging/troubleshooting, IDing the client
 */
 func (driver *heraLoopDriver) Open(url string) (driver.Conn, error) {
 	cli, srv := net.Pipe()
+
+	// Create packager for doing packets"
+	nets := &netstring.Netstring{}
 	go connHandler(srv)
+
+	logger.GetLogger().Log(logger.Verbose, "We're out here in loopdriver 64")
 
 	if logger.GetLogger().V(logger.Debug) {
 		logger.GetLogger().Log(logger.Debug, "Hera loop driver driver, opening", url, ": ", cli)
@@ -65,9 +70,11 @@ func (driver *heraLoopDriver) Open(url string) (driver.Conn, error) {
 		// now set the shard ID
 		fields := strings.Split(url, ":")
 		if (len(fields) == 3) && (GetConfig().EnableSharding) {
-			ns := netstring.NewNetstringFrom(common.CmdSetShardID, []byte(fields[0]))
+			ns := nets.NewPacketFrom(common.CmdSetShardID, []byte(fields[0]))
 			cli.Write(ns.Serialized)
-			ns, err := netstring.NewNetstring(cli)
+			logger.GetLogger().Log(logger.Verbose, "HERA loop driver driver, fields", ns.Serialized)
+
+			ns, err := nets.NewPacket(cli)
 			if err != nil {
 				return nil, fmt.Errorf("Failed to set shardID: %s", err.Error())
 			}

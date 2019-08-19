@@ -120,6 +120,7 @@ func Run() {
 		logger.GetLogger().Log(logger.Info, "Waiting for at least one database connection")
 	}
 
+
 	pool, err := GetWorkerBrokerInstance().GetWorkerPool(wtypeRW, 0, 0)
 	if err != nil {
 		if logger.GetLogger().V(logger.Alert) {

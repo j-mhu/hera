@@ -1,0 +1,194 @@
+12:11:51.331008 info: [PROXY config.go:217] failed to get num_standby_dbs from hera.txt, defaulting to 0
+12:11:51.331564 info: [PROXY logger.go:149] Change log level to verbose:
+12:11:51.332069 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+12:11:51.332119 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+12:11:51.332137 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+12:11:51.332148 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+12:11:51.332160 debug: [PROXY workerbroker.go:166] workercnt  3
+12:11:51.332196 info: [PROXY workerclient.go:320] TWO_TASK_0 is not defined, fallback
+12:11:51.333654 verbose: [PROXY workerbroker.go:239] Added 95903 , pwmap: map[95903:0xc0001924d0]
+12:11:51.333692 info: [PROXY workerclient.go:403] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/unittest/coordinator_basic/mysqlworker , pid= 95903
+12:11:51.333726 debug: [PROXY workerclient.go:855] worker pid= 95903  changing status from -1 to 0
+12:11:51.333767 verbose: [PROXY statelog.go:387] init statelog
+12:11:51.333852 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+12:11:51.333872 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+12:11:51.333888 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+12:11:51.333981 verbose: [PROXY statelog.go:181] publish state event 0
+12:11:51.334049 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 0
+12:11:51.334062 info: [PROXY workerpool.go:128] worker started type  0  id 0  instid 0  shardid 0
+12:11:51.334142 info: [PROXY workerclient.go:320] TWO_TASK_0 is not defined, fallback
+12:11:51.334149 verbose: [PROXY workerclient.go:436] Waiting for control message from worker ( 0 ,  95903 )
+12:11:51.335896 verbose: [PROXY workerbroker.go:239] Added 95904 , pwmap: map[95903:0xc0001924d0 95904:0xc0001b20b0]
+12:11:51.335949 info: [PROXY workerclient.go:403] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/unittest/coordinator_basic/mysqlworker , pid= 95904
+12:11:51.335980 debug: [PROXY workerclient.go:855] worker pid= 95904  changing status from -1 to 0
+12:11:51.336006 verbose: [PROXY statelog.go:181] publish state event 0
+12:11:51.336103 info: [PROXY workerpool.go:128] worker started type  0  id 1  instid 0  shardid 0
+12:11:51.336129 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 0
+12:11:51.336172 info: [PROXY workerclient.go:320] TWO_TASK_0 is not defined, fallback
+12:11:51.336195 verbose: [PROXY workerclient.go:436] Waiting for control message from worker ( 1 ,  95904 )
+12:11:51.337009 debug: [PROXY setup.go:172] State log acpt: -1
+12:11:51.337092 debug: [PROXY setup.go:182] Wait up to  10 seconds for mux to come up
+12:11:51.337858 verbose: [PROXY workerbroker.go:239] Added 95905 , pwmap: map[95903:0xc0001924d0 95904:0xc0001b20b0 95905:0xc0001b22c0]
+12:11:51.337937 info: [PROXY workerclient.go:403] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/unittest/coordinator_basic/mysqlworker , pid= 95905
+12:11:51.337968 debug: [PROXY workerclient.go:855] worker pid= 95905  changing status from -1 to 0
+12:11:51.337987 verbose: [PROXY statelog.go:181] publish state event 0
+12:11:51.338030 info: [PROXY workerpool.go:128] worker started type  0  id 2  instid 0  shardid 0
+12:11:51.338032 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 0
+12:11:51.338110 verbose: [PROXY workerclient.go:436] Waiting for control message from worker ( 2 ,  95905 )
+12:11:51.338213 verbose: [PROXY adaptivequemgr.go:120] saturation recover enter (ms) 9223372036854775807
+12:11:51.338246 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:11:51.338253 verbose: [PROXY stats.go:66] GoStats every 10
+12:11:51.338307 info: [PROXY main.go:120] Waiting for at least one database connection
+12:11:51.346368 info: [WORKER 0 workerservice.go:104] DB heartbeat interval: 2m0s
+12:11:51.346696 info: [WORKER 0 cmdprocessor.go:889] setup db connection.
+12:11:51.347641 info: [WORKER 1 workerservice.go:104] DB heartbeat interval: 2m0s
+12:11:51.347918 info: [WORKER 1 cmdprocessor.go:889] setup db connection.
+12:11:51.348802 info: [WORKER 2 workerservice.go:104] DB heartbeat interval: 2m0s
+12:11:51.349109 info: [WORKER 2 cmdprocessor.go:889] setup db connection.
+12:11:51.352865 debug: [WORKER 0 adapter.go:120] writable: true
+12:11:51.352996 verbose: [WORKER 0 common.go:36] worker writing to mux >>>  10:501 0 MyDB,
+12:11:51.353085 info: [PROXY workerclient.go:474] Got control message from worker ( 0 , 95903 , 0 ,  MyDB )
+12:11:51.353123 debug: [PROXY workerclient.go:855] worker pid= 95903  changing status from 0 to 1
+12:11:51.353139 verbose: [PROXY statelog.go:181] publish state event 0
+12:11:51.353163 debug: [PROXY workerpool.go:202] Pool::WorkerReady 95903 0 0
+12:11:51.353199 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 1
+12:11:51.353227 debug: [PROXY workerpool.go:207] poolsize(ready) 1  type  0  instance  0
+12:11:51.353254 debug: [PROXY workerpool.go:217] poolsize (after signal) 1  type  0
+12:11:51.355672 debug: [WORKER 1 adapter.go:120] writable: true
+12:11:51.355850 verbose: [WORKER 1 common.go:36] worker writing to mux >>>  10:501 0 MyDB,
+12:11:51.355904 info: [PROXY workerclient.go:474] Got control message from worker ( 1 , 95904 , 0 ,  MyDB )
+12:11:51.355929 debug: [PROXY workerclient.go:855] worker pid= 95904  changing status from 0 to 1
+12:11:51.355944 verbose: [PROXY statelog.go:181] publish state event 0
+12:11:51.355966 debug: [PROXY workerpool.go:202] Pool::WorkerReady 95904 0 0
+12:11:51.355986 debug: [PROXY workerpool.go:207] poolsize(ready) 2  type  0  instance  0
+12:11:51.355994 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 1
+12:11:51.355999 debug: [PROXY workerpool.go:217] poolsize (after signal) 2  type  0
+12:11:51.359578 debug: [WORKER 2 adapter.go:120] writable: true
+12:11:51.359712 verbose: [WORKER 2 common.go:36] worker writing to mux >>>  10:501 0 MyDB,
+12:11:51.359761 info: [PROXY workerclient.go:474] Got control message from worker ( 2 , 95905 , 0 ,  MyDB )
+12:11:51.359793 debug: [PROXY workerclient.go:855] worker pid= 95905  changing status from 0 to 1
+12:11:51.359812 verbose: [PROXY statelog.go:181] publish state event 0
+12:11:51.359831 debug: [PROXY workerpool.go:202] Pool::WorkerReady 95905 0 0
+12:11:51.359846 debug: [PROXY workerpool.go:207] poolsize(ready) 3  type  0  instance  0
+12:11:51.359851 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 1
+12:11:51.359855 debug: [PROXY workerpool.go:217] poolsize (after signal) 3  type  0
+12:11:51.443006 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:31002  for https, connects to worker through socket
+12:11:52.346379 debug: [PROXY setup.go:172] State log acpt: 3
+12:11:52.346427 verbose: [PROXY workerbroker.go:266] worker exit signal: child exited
+12:11:52.346476 verbose: [PROXY workerbroker.go:276] Wait SIGCHLD len= 6 , pwmap: map[95903:0xc0001924d0 95904:0xc0001b20b0 95905:0xc0001b22c0]
+12:11:52.346435 info: [PROXY setup.go:189] StartServer: Mux is up, time = 1565982712
+12:11:52.346516 info: [PROXY workerbroker.go:282] exited worker [0 0 0 0 0 0 0]
+12:11:52.346674 debug: [PROXY main_test.go:65] TestCoordinatorBasic begin +++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+12:11:52.346720 info: [PROXY main_test.go:69] Type of db:
+ *sql.DB
+12:11:52.346740 info: [PROXY main_test.go:77] WHen do we even call loopdriver dude
+12:11:52.346759 info: [PROXY main_test.go:81] Post context
+12:11:52.346795 verbose: [PROXY loopdriver.go:64] We're out here in loopdriver 64
+12:11:52.346828 verbose: [PROXY statelog.go:181] publish state event 1
+12:11:52.346874 verbose: [PROXY connectionhandler.go:89] Entered HandleConnection
+12:11:52.346889 debug: [PROXY loopdriver.go:67] Hera loop driver driver, opening 0:0:0 :  &{{0 0} 0xc000198960 0xc000198a20 0xc0001989c0 0xc000198a80 {{0 0} 0} 0xc000198ae0 0xc000198b40 {{0 0} <nil> 0xc000198ba0} {{0 0} <nil> 0xc000198c00}}
+12:11:52.346925 info: [PROXY connection.go:54] pipe create driver connection
+12:11:52.346943 info: [PROXY main_test.go:85] Right above here
+12:11:52.346959 info: [PROXY main_test.go:87] Conn type: *sql.Conn
+12:11:52.346975 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+12:11:52.346977 debug: [PROXY connection.go:86] pipe begin txn
+12:11:52.347035 verbose: [PROXY coordinator.go:89] Created coordinator
+12:11:52.347072 debug: [PROXY connection.go:62] pipe prepare SQL: /*cmd*/delete jdbc_hera_test
+12:11:52.347134 debug: [PROXY statement.go:60] pipe final SQL: /*cmd*/delete jdbc_hera_test
+12:11:52.347164 debug: [PROXY coordinator.go:118] idle timeout 600000 900000
+12:11:52.347173 verbose: [PROXY connection.go:103] pipe send command: 0 , payload: 18:2006 CorrId=NotSet,31:25 /*cmd*/delete jdbc_hera_test,1:4,
+12:12:21.341383 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:12:21.341657 info: [PROXY config.go:397] Loading ops config
+12:12:21.341732 verbose: [PROXY config.go:446] max_connections unchanged in opsconfig
+12:12:51.341939 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:13:21.347235 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:13:51.352472 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:13:51.354602 info: [WORKER 0 workerservice.go:178] sending heartbeat to DB
+12:13:51.355583 debug: [WORKER 0 adapter.go:120] writable: true
+12:13:51.358457 info: [WORKER 1 workerservice.go:178] sending heartbeat to DB
+12:13:51.359571 debug: [WORKER 1 adapter.go:120] writable: true
+12:13:51.363347 info: [WORKER 2 workerservice.go:178] sending heartbeat to DB
+12:13:51.364405 debug: [WORKER 2 adapter.go:120] writable: true
+12:14:21.353137 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:14:51.357399 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:15:21.359434 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:15:51.359051 info: [WORKER 0 workerservice.go:178] sending heartbeat to DB
+12:15:51.359893 debug: [WORKER 0 adapter.go:120] writable: true
+12:15:51.361148 info: [WORKER 1 workerservice.go:178] sending heartbeat to DB
+12:15:51.361154 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:15:51.361686 debug: [WORKER 1 adapter.go:120] writable: true
+12:15:51.367836 info: [WORKER 2 workerservice.go:178] sending heartbeat to DB
+12:15:51.368617 debug: [WORKER 2 adapter.go:120] writable: true
+12:16:21.363679 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:16:51.366826 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:17:21.369547 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:17:51.362455 info: [WORKER 0 workerservice.go:178] sending heartbeat to DB
+12:17:51.362491 info: [WORKER 1 workerservice.go:178] sending heartbeat to DB
+12:17:51.364142 debug: [WORKER 1 adapter.go:120] writable: true
+12:17:51.364367 debug: [WORKER 0 adapter.go:120] writable: true
+12:17:51.373061 info: [WORKER 2 workerservice.go:178] sending heartbeat to DB
+12:17:51.374110 debug: [WORKER 2 adapter.go:120] writable: true
+12:17:51.374128 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:18:21.376980 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:18:51.380702 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:19:21.381100 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:19:51.365856 info: [WORKER 0 workerservice.go:178] sending heartbeat to DB
+12:19:51.365856 info: [WORKER 1 workerservice.go:178] sending heartbeat to DB
+12:19:51.367039 debug: [WORKER 0 adapter.go:120] writable: true
+12:19:51.367073 debug: [WORKER 1 adapter.go:120] writable: true
+12:19:51.374368 info: [WORKER 2 workerservice.go:178] sending heartbeat to DB
+12:19:51.375251 debug: [WORKER 2 adapter.go:120] writable: true
+12:19:51.385502 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:20:21.389952 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:20:51.394509 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:21:21.399690 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:21:51.369805 info: [WORKER 0 workerservice.go:178] sending heartbeat to DB
+12:21:51.369844 info: [WORKER 1 workerservice.go:178] sending heartbeat to DB
+12:21:51.371019 debug: [WORKER 0 adapter.go:120] writable: true
+12:21:51.371068 debug: [WORKER 1 adapter.go:120] writable: true
+12:21:51.380540 info: [WORKER 2 workerservice.go:178] sending heartbeat to DB
+12:21:51.381495 debug: [WORKER 2 adapter.go:120] writable: true
+12:21:51.404550 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+12:21:52.347829 info: [PROXY connectionhandler.go:108] Connection handler idle timeout pipe
+12:21:52.347984 info: [PROXY connectionhandler.go:132] ======== Connection handler exits pipe
+12:21:52.348046 verbose: [PROXY connectionhandler.go:41]  ---------
+12:21:52.348128 debug: [PROXY coordinator.go:129] Coordinator exiting (closed channel) ...
+12:21:52.348152 info: [PROXY connectionhandler.go:50] pipe : Connection handler read error io: read/write on closed pipe
+12:21:52.348101 verbose: [PROXY statelog.go:181] publish state event 1
+12:21:52.348053 warn: [PROXY connection.go:114] pipe Failed to read response
+12:21:52.348235 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 1 4
+12:21:52.348446 verbose: [PROXY connection.go:103] pipe send command: 9 , payload:
+12:21:52.348500 debug: [PROXY setup.go:198] Waiting up to 5 seconds for mux to exit 1565983312
+12:21:52.348535 info: [PROXY connection.go:77] pipe close driver connection
+12:21:52.348579 debug: [PROXY workerbroker.go:326] Got SIGTERM
+12:21:52.348670 debug: [PROXY workerbroker.go:346] Waiting for workers to exit
+12:21:52.348760 debug: [PROXY workerclient.go:626] workerclient pid= 95904  to be terminated, sending SIGTERM first for gracefull termination
+12:21:52.348766 debug: [PROXY workerclient.go:626] workerclient pid= 95903  to be terminated, sending SIGTERM first for gracefull termination
+12:21:52.348781 debug: [PROXY workerclient.go:626] workerclient pid= 95905  to be terminated, sending SIGTERM first for gracefull termination
+12:21:52.348961 info: [WORKER 1 workerservice.go:168] worker_sp0 worker exiting
+12:21:52.348992 info: [WORKER 0 workerservice.go:168] worker_sp0 worker exiting
+12:21:52.349001 info: [WORKER 1 workerservice.go:217] ======== worker exits
+12:21:52.349021 info: [WORKER 2 workerservice.go:168] worker_sp0 worker exiting
+12:21:52.349065 info: [WORKER 0 workerservice.go:217] ======== worker exits
+12:21:52.349097 info: [WORKER 2 workerservice.go:217] ======== worker exits
+12:21:52.350792 debug: [PROXY workerbroker.go:339] pid = 95904  worker process reaped
+12:21:52.350794 debug: [PROXY workerbroker.go:339] pid = 95905  worker process reaped
+12:21:52.350801 warn: [PROXY workerclient.go:750] workerclient pid= 95903  read error: EOF
+12:21:52.351029 debug: [PROXY workerclient.go:626] workerclient pid= 95903  to be terminated, sending SIGTERM first for gracefull termination
+12:21:52.350801 warn: [PROXY workerclient.go:750] workerclient pid= 95904  read error: EOF
+12:21:52.351071 debug: [PROXY workerclient.go:626] workerclient pid= 95904  to be terminated, sending SIGTERM first for gracefull termination
+12:21:52.350816 warn: [PROXY workerclient.go:750] workerclient pid= 95905  read error: EOF
+12:21:52.351131 debug: [PROXY workerclient.go:626] workerclient pid= 95905  to be terminated, sending SIGTERM first for gracefull termination
+12:21:52.350954 debug: [PROXY workerbroker.go:339] pid = 95903  worker process reaped
+12:21:52.351183 debug: [PROXY workerbroker.go:350] Mux done
+12:21:52.351059 debug: [PROXY workerclient.go:640] workerclient pid= 95903 is gone already:  os: process already finished
+12:21:52.351255 verbose: [PROXY workerclient.go:690] Drain the response channel from worker ( 0 ,  95903 )
+12:21:52.351316 verbose: [PROXY workerclient.go:699] draining: Channel closed for from worker ( 0 ,  95903 )
+12:21:52.351099 debug: [PROXY workerclient.go:640] workerclient pid= 95904 is gone already:  os: process already finished
+12:21:52.351377 verbose: [PROXY workerclient.go:690] Drain the response channel from worker ( 1 ,  95904 )
+12:21:52.351403 verbose: [PROXY workerclient.go:699] draining: Channel closed for from worker ( 1 ,  95904 )
+12:21:52.351165 debug: [PROXY workerclient.go:640] workerclient pid= 95905 is gone already:  os: process already finished
+12:21:52.351450 verbose: [PROXY workerclient.go:690] Drain the response channel from worker ( 2 ,  95905 )
+12:21:52.351475 verbose: [PROXY workerclient.go:699] draining: Channel closed for from worker ( 2 ,  95905 )
+12:21:52.351572 info: [PROXY setup.go:210] Exit StopServer time= 1565983312

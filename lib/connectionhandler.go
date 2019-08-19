@@ -19,21 +19,27 @@ package lib
 
 import (
 	"context"
+	"github.com/paypal/hera/utility/encoding/mysqlpackets"
+
+	// "github.com/paypal/hera/utility/encoding/mysqlpackets"
+	// "github.com/paypal/hera/utility/encoding/netstring"
 	"io"
 	"net"
 	"strconv"
 
 	"github.com/paypal/hera/cal"
-	"github.com/paypal/hera/utility/encoding/netstring"
+	"github.com/paypal/hera/utility/encoding"
 	"github.com/paypal/hera/utility/logger"
 )
 
 // Spawns a goroutine which blocks waiting for a message on conn. When a message is received it writes
 // to the channel and exit. It basically wrapps the net.Conn in a channel
-func wrapNewNetstring(conn net.Conn) <-chan *netstring.Netstring {
-	ch := make(chan *netstring.Netstring, 1)
+func wrapNewPacket(conn net.Conn, packager encoding.Packager) <-chan *encoding.Packet {
+	ch := make(chan *encoding.Packet, 1)
 	go func() {
-		ns, err := netstring.NewNetstring(conn)
+		ns, err := packager.NewPacket(conn)
+		logger.GetLogger().Log(logger.Verbose, " --------- ")
+
 		if err != nil {
 			if err == io.EOF {
 				if logger.GetLogger().V(logger.Debug) {
@@ -70,7 +76,7 @@ func HandleConnection(conn net.Conn) {
 	//
 	GetStateLog().PublishStateEvent(StateEvent{eType: ConnStateEvt, shardID: 0, wType: wtypeRW, instID: 0, oldCState: Close, newCState: Idle})
 
-	clientchannel := make(chan *netstring.Netstring, 1)
+	clientchannel := make(chan *encoding.Packet, 1)
 	// closing of clientchannel will notify the coordinator to exit
 	defer func() {
 		close(clientchannel)
@@ -79,7 +85,10 @@ func HandleConnection(conn net.Conn) {
 
 	//TODO: create a context with timeout
 	ctx, cancel := context.WithCancel(context.Background())
-	crd := NewCoordinator(ctx, clientchannel, conn)
+	packager := &mysqlpackets.MySQLPacket{}
+	logger.GetLogger().Log(logger.Verbose, "Entered HandleConnection")
+
+	crd := NewCoordinator(ctx, clientchannel, conn, packager)
 	go crd.Run()
 
 	//
@@ -91,9 +100,9 @@ func HandleConnection(conn net.Conn) {
 	//
 	addr := conn.RemoteAddr()
 	for {
-		var ns *netstring.Netstring
+		var ns *encoding.Packet
 		select {
-		case ns = <-wrapNewNetstring(conn):
+		case ns = <-wrapNewPacket(conn, packager):
 		case timeout := <-crd.Done():
 			if logger.GetLogger().V(logger.Info) {
 				logger.GetLogger().Log(logger.Info, "Connection handler idle timeout", addr)

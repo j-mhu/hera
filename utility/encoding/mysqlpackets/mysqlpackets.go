@@ -171,6 +171,24 @@ func (p *MySQLPacket) NewPacketFrom(_cmd int, _payload []byte) *encoding.Packet 
 	return ns
 }
 
+// NewPacketEmbedded embedds a set of Packets into one big packet.
+func (p *MySQLPacket) NewPacketEmbedded(_packets []*encoding.Packet) *encoding.Packet {
+	// TODO: optimize
+	totalLen := 0
+	for _, pkt := range _packets {
+		totalLen += pkt.Length
+	}
+	ns := new(encoding.Packet)
+	ns.Serialized = make([]byte, totalLen)
+	next := 0
+	for _, i := range _packets {
+		copy(ns.Serialized[next:], i.Serialized)
+		next += i.Length
+	}
+	ns.Payload = nil
+	return ns
+}
+
 // MultiplePackets creates a new Reader and reads all of the incoming packets.
 // It stores all packets in nss. A pointer to the 'current' packet that
 // is being read is stored in 'ns'. next is the index of the current + 1 packet.
@@ -262,6 +280,63 @@ func (p *MySQLPacket)  ReadNext() (ns *encoding.Packet, err error) {
 	}
 }
 
+/*---- COMMON PACKETS ----------------------------------------------------------
+* Packets that are frequently used, like ERR packet or OK packet or EOF packet
+* are written below.
+*/
+
+// https://dev.mysql.com/doc/internals/en/packet-OK_Packet.html
+func OKPacket(affectedRows int, lastInsertId int, msg string) []byte {
+	payload := make([]byte, 1 + calculateLenEnc(uint64(affectedRows)) + calculateLenEnc(uint64(lastInsertId)))
+	pos := 0
+	// Write OK packet header
+	WriteFixedLenInt(payload, INT1, 0x00, &pos)
+
+	// Write affected_rows
+	WriteLenEncInt(payload, uint64(affectedRows), &pos)
+	// Write last_insert_id
+	WriteLenEncInt(payload, uint64(lastInsertId), &pos)
+
+	/* There's several things to do with client capabilities....that are all ignored
+	*
+	*  if capabilities & CLIENT_PROTOCOL_41 { write status_flags int<2> and warnings int<2>}
+	*  elseif capabilities & CLIENT_TRANSACTIONS { status_flags <2> }
+	*  if capabilities & CLIENT_SESSION_TRACK { info string<lenenc> ;
+	*     if status_flags & SERVER_SESSION_STATE_CHANGED { session_state_changes string<lenenc> }
+	*  }
+	*  else { do what is written below }
+	*/
+	WriteString(payload, msg, EOFSTR, &pos, 0)
+	return payload
+}
+
+// https://dev.mysql.com/doc/internals/en/packet-ERR_Packet.html
+func ERRPacket(errcode int, msg string) []byte {
+	payload := make([]byte, 1 + 2 + len(msg))
+	pos := 0
+	// Write ERR packet header
+	WriteFixedLenInt(payload, INT1, 0xff, &pos)
+	// Write error code
+	WriteFixedLenInt(payload, INT2, errcode, &pos)
+	/* There's one thing to do with client capabilities....that are all ignored
+	*
+	*  if capabilities & CLIENT_PROTOCOL_41 { write sql_state_marker string<1> and sql_state string<5>}
+	 */
+
+	// Write human readable error message
+	WriteString(payload, msg, EOFSTR, &pos, 0)
+	return payload
+}
+
+// https://dev.mysql.com/doc/internals/en/packet-EOF_Packet.html
+func EOFPacket() []byte {
+	payload := make([]byte, 1)
+	pos := 0
+	// Write EOF packet header
+	WriteFixedLenInt(payload, INT1, 0xfe, &pos)
+	// if capabilities & CLIENT_PROTOCOL_41 { warnings int<2>, status_flags <int2> }
+	return payload
+}
 
 /*---- MISC. FUNCTIONS ---------------------------------------------------------
 * Miscellaneous functions that perform common operations. Includes mostly
@@ -292,6 +367,18 @@ func checkSize(sz1 int, sz2 int) {
 	}
 }
 
+func calculateLenEnc(n uint64) int {
+	// Determine the length encoded integer.
+	l := 1
+	if n >= 251 && n < (1 << 16) {
+		l = 3
+	} else if n >= (1 << 16) && n < (1 << 24) {
+		l = 4
+	} else if n >= (1 << 24) {
+		l = 9
+	}
+	return l
+}
 
 
 /*---- WRITING BASIC DATA ------------------------------------------------------
@@ -352,14 +439,7 @@ func WriteFixedLenInt(data []byte, l int, n int, pos *int) {
 */
 func WriteLenEncInt(data []byte, n uint64, pos *int) {
      // Determine the length encoded integer.
-	l := 1
-	if n >= 251 && n < (1 << 16) {
-		l = 3
-	} else if n >= (1 << 16) && n < (1 << 24) {
-		l = 4
-	} else if n >= (1 << 24) {
-		l = 9
-	}
+	l := calculateLenEnc(n)
 
      // Check that the data byte array is big enough for the desired length.
 	// checkSize(len(data[*pos:]), l)
@@ -431,6 +511,7 @@ func WriteString(data []byte, str string, stype string_t, pos *int, l int) {
 * Basically what happens is that this bit-shifts the elements accordingly
 * and bit-wise ORs all of them together to get the original integer back.
 */
+
 func ReadFixedLenInt(data []byte, l int, pos *int) int {
 	checkSize(len(data[*pos:]), l)
      n := uint(0)

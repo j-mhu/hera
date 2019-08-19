@@ -24,7 +24,6 @@ import (
 	"io"
 
 	"github.com/paypal/hera/common"
-	"github.com/paypal/hera/utility/encoding/netstring"
 	"github.com/paypal/hera/utility/logger"
 )
 
@@ -99,7 +98,7 @@ func (r *rows) Next(dest []driver.Value) error {
 			return io.EOF
 		}
 		// fetch the next rows
-		ns := netstring.NewNetstringFrom(common.CmdFetch, r.fetchChunkSize)
+		ns := (*r.hera.reader).NewPacketFrom(common.CmdFetch, r.fetchChunkSize)
 		err := r.hera.execNs(ns)
 		if err != nil {
 			return err

@@ -25,7 +25,7 @@ import (
 
 	"github.com/paypal/hera/cal"
 	"github.com/paypal/hera/common"
-	"github.com/paypal/hera/utility/encoding/netstring"
+	"github.com/paypal/hera/utility/encoding"
 	"github.com/paypal/hera/utility/logger"
 )
 
@@ -273,7 +273,7 @@ func (crd *Coordinator) isShardKey(bind string) bool {
 // before determining if the current request should continue, returning nil error if the request should be allowed.
 // If error is not nil, the second parameter says if the coordinator should hangup the client connection.
 // The decision to hang-up or not in case of error is based on backward compatibility
-func (crd *Coordinator) PreprocessSharding(requests []*netstring.Netstring) (bool, error) {
+func (crd *Coordinator) PreprocessSharding(requests []*encoding.Packet) (bool, error) {
 	if logger.GetLogger().V(logger.Verbose) {
 		logger.GetLogger().Log(logger.Verbose, "PreprocessSharding:", crd.shard)
 	}
@@ -300,7 +300,7 @@ func (crd *Coordinator) PreprocessSharding(requests []*netstring.Netstring) (boo
 				evt := cal.NewCalEvent(EvtTypeSharding, EvtNameAutodiscSetShardID, cal.TransOK, "")
 				evt.AddDataInt("sql", int64(uint32(crd.sqlhash)))
 				evt.Completed()
-				ns := netstring.NewNetstringFrom(common.RcError, []byte(ErrAutodiscoverWhileSetShardID.Error()))
+				ns := crd.packager.NewPacketFrom(common.RcError, []byte(ErrAutodiscoverWhileSetShardID.Error()))
 				crd.respond(ns.Serialized)
 				return true, ErrAutodiscoverWhileSetShardID
 			}
@@ -336,7 +336,7 @@ func (crd *Coordinator) PreprocessSharding(requests []*netstring.Netstring) (boo
 						evt := cal.NewCalEvent(EvtTypeSharding, EvtNameNoShardKey, cal.TransOK, "")
 						evt.AddDataInt("sql", int64(uint32(crd.sqlhash)))
 						evt.Completed()
-						ns := netstring.NewNetstringFrom(common.RcError, []byte(ErrNoShardKey.Error()))
+						ns := crd.packager.NewPacketFrom(common.RcError, []byte(ErrNoShardKey.Error()))
 						crd.respond(ns.Serialized)
 						return false /*don't hangup*/, ErrNoShardKey
 					}
@@ -430,7 +430,7 @@ func (crd *Coordinator) verifyValidShard() (bool, error) {
 			crd.shard.shardRecs[0] = &ShardMapRecord{logical: 0}
 			crd.shard.shardID = 0
 		} else {
-			ns := netstring.NewNetstringFrom(common.RcError, []byte(ErrNoShardKey.Error()))
+			ns := crd.packager.NewPacketFrom(common.RcError, []byte(ErrNoShardKey.Error()))
 			crd.respond(ns.Serialized)
 			hangup := ((len(crd.shard.shardValues) > 0) && ((crd.shard.shardRecs[0].flags & ShardMapRecordFlagsBadLogical) != 0))
 			return hangup, ErrNoShardKey
@@ -446,7 +446,7 @@ func (crd *Coordinator) verifyValidShard() (bool, error) {
 		evt.AddDataInt("sql", int64(uint32(crd.sqlhash)))
 		evt.Completed()
 
-		ns := netstring.NewNetstringFrom(common.RcError, []byte(ErrNoShardKey.Error()))
+		ns := crd.packager.NewPacketFrom(common.RcError, []byte(ErrNoShardKey.Error()))
 		crd.respond(ns.Serialized)
 		hangup := ((len(crd.shard.shardValues) > 0) && ((crd.shard.shardRecs[0].flags & ShardMapRecordFlagsBadLogical) != 0))
 		return hangup, ErrNoShardKey
@@ -462,7 +462,7 @@ func (crd *Coordinator) verifyValidShard() (bool, error) {
 				evt.AddDataInt("scuttle_id", int64(crd.shard.shardRecs[0].bin))
 				evt.AddDataInt("sql", int64(uint32(crd.sqlhash)))
 				evt.Completed()
-				ns := netstring.NewNetstringFrom(common.RcError, []byte(ErrScuttleMarkdownR.Error()))
+				ns := crd.packager.NewPacketFrom(common.RcError, []byte(ErrScuttleMarkdownR.Error()))
 				crd.respond(ns.Serialized)
 				return true, ErrScuttleMarkdownR
 			}
@@ -472,7 +472,7 @@ func (crd *Coordinator) verifyValidShard() (bool, error) {
 				evt.AddDataInt("scuttle_id", int64(crd.shard.shardRecs[0].bin))
 				evt.AddDataInt("sql", int64(uint32(crd.sqlhash)))
 				evt.Completed()
-				ns := netstring.NewNetstringFrom(common.RcError, []byte(ErrScuttleMarkdownW.Error()))
+				ns := crd.packager.NewPacketFrom(common.RcError, []byte(ErrScuttleMarkdownW.Error()))
 				crd.respond(ns.Serialized)
 				return true, ErrScuttleMarkdownW
 			}
@@ -507,7 +507,7 @@ func (crd *Coordinator) verifyXShard(oldShardValues []string, oldShardID int, ol
 				}
 				evt.Completed()
 				if GetConfig().ShardingCrossKeysErr {
-					ns := netstring.NewNetstringFrom(common.RcError, []byte(ErrCrossKeysDML.Error()))
+					ns := crd.packager.NewPacketFrom(common.RcError, []byte(ErrCrossKeysDML.Error()))
 					crd.respond(ns.Serialized)
 					return ErrCrossKeysDML
 				}
@@ -526,7 +526,7 @@ func (crd *Coordinator) verifyXShard(oldShardValues []string, oldShardID int, ol
 				evt.AddDataStr("corr_id", string(crd.corrID.Payload))
 			}
 			evt.Completed()
-			ns := netstring.NewNetstringFrom(common.RcError, []byte(ErrCrossShardDML.Error()))
+			ns := crd.packager.NewPacketFrom(common.RcError, []byte(ErrCrossShardDML.Error()))
 			crd.respond(ns.Serialized)
 			return ErrCrossShardDML
 		}

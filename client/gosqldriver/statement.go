@@ -23,11 +23,11 @@ import (
 	"database/sql/driver"
 	"errors"
 	"fmt"
+	"github.com/paypal/hera/utility/encoding"
 	"strconv"
 	"strings"
 
 	"github.com/paypal/hera/common"
-	"github.com/paypal/hera/utility/encoding/netstring"
 	"github.com/paypal/hera/utility/logger"
 )
 
@@ -91,29 +91,29 @@ func (st *stmt) Exec(args []driver.Value) (driver.Result, error) {
 		crid = 1
 	}
 	binds := len(args)
-	nss := make([]*netstring.Netstring, crid /*CmdClientCorrelationID*/ +1 /*CmdPrepare*/ +2*binds /* CmdBindName and CmdBindValue */ +sk /*CmdShardKey*/ +1 /*CmdExecute*/)
+	nss := make([]*encoding.Packet, crid /*CmdClientCorrelationID*/ +1 /*CmdPrepare*/ +2*binds /* CmdBindName and CmdBindValue */ +sk /*CmdShardKey*/ +1 /*CmdExecute*/)
 	idx := 0
 	if crid == 1 {
 		nss[0] = st.hera.corrID
 		st.hera.corrID = nil
 		idx++
 	}
-	nss[idx] = netstring.NewNetstringFrom(common.CmdPrepareV2, []byte(st.sql))
+	nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdPrepareV2, []byte(st.sql))
 	idx++
 	for _, val := range args {
-		nss[idx] = netstring.NewNetstringFrom(common.CmdBindName, []byte(fmt.Sprintf("p%d", (idx-crid)/2+1)))
+		nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindName, []byte(fmt.Sprintf("p%d", (idx-crid)/2+1)))
 		idx++
 		switch val := val.(type) {
 		default:
 			return nil, fmt.Errorf("unexpected parameter type %T, only int,string and []byte supported", val)
 		case int:
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindValue, []byte(fmt.Sprintf("%d", int(val))))
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindValue, []byte(fmt.Sprintf("%d", int(val))))
 		case int64:
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindValue, []byte(fmt.Sprintf("%d", int(val))))
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindValue, []byte(fmt.Sprintf("%d", int(val))))
 		case []byte:
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindValue, val)
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindValue, val)
 		case string:
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindValue, []byte(val))
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindValue, []byte(val))
 		}
 		if logger.GetLogger().V(logger.Verbose) {
 			logger.GetLogger().Log(logger.Verbose, st.hera.id, "Bind name =", string(nss[idx-1].Payload), ", value=", string(nss[idx].Payload))
@@ -121,11 +121,11 @@ func (st *stmt) Exec(args []driver.Value) (driver.Result, error) {
 		idx++
 	}
 	if sk == 1 {
-		nss[idx] = netstring.NewNetstringFrom(common.CmdShardKey, st.hera.shardKeyPayload)
+		nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdShardKey, st.hera.shardKeyPayload)
 		idx++
 	}
-	nss[idx] = netstring.NewNetstringFrom(common.CmdExecute, nil)
-	cmd := netstring.NewNetstringEmbedded(nss)
+	nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdExecute, nil)
+	cmd := (*st.hera.reader).NewPacketEmbedded(nss)
 	err := st.hera.execNs(cmd)
 	if err != nil {
 		return nil, err
@@ -176,33 +176,33 @@ func (st *stmt) ExecContext(ctx context.Context, args []driver.NamedValue) (driv
 		crid = 1
 	}
 	binds := len(args)
-	nss := make([]*netstring.Netstring, crid /*CmdClientCalCorrelationID*/ +1 /*CmdPrepare*/ +2*binds /* CmdBindName and BindValue */ +sk /*CmdShardKey*/ +1 /*CmdExecute*/)
+	nss := make([]*encoding.Packet, crid /*CmdClientCalCorrelationID*/ +1 /*CmdPrepare*/ +2*binds /* CmdBindName and BindValue */ +sk /*CmdShardKey*/ +1 /*CmdExecute*/)
 	idx := 0
 	if crid == 1 {
 		nss[0] = st.hera.corrID
 		st.hera.corrID = nil
 		idx++
 	}
-	nss[idx] = netstring.NewNetstringFrom(common.CmdPrepareV2, []byte(st.sql))
+	nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdPrepareV2, []byte(st.sql))
 	idx++
 	for _, val := range args {
 		if len(val.Name) > 0 {
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindName, []byte(val.Name))
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindName, []byte(val.Name))
 		} else {
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindName, []byte(fmt.Sprintf("p%d", (idx-crid)/2+1)))
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindName, []byte(fmt.Sprintf("p%d", (idx-crid)/2+1)))
 		}
 		idx++
 		switch val := val.Value.(type) {
 		default:
 			return nil, fmt.Errorf("unexpected parameter type %T, only int,string and []byte supported", val)
 		case int:
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindValue, []byte(fmt.Sprintf("%d", int(val))))
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindValue, []byte(fmt.Sprintf("%d", int(val))))
 		case int64:
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindValue, []byte(fmt.Sprintf("%d", int(val))))
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindValue, []byte(fmt.Sprintf("%d", int(val))))
 		case []byte:
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindValue, val)
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindValue, val)
 		case string:
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindValue, []byte(val))
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindValue, []byte(val))
 		}
 		if logger.GetLogger().V(logger.Verbose) {
 			logger.GetLogger().Log(logger.Verbose, st.hera.id, "Bind name =", string(nss[idx-1].Payload), ", value=", string(nss[idx].Payload))
@@ -210,11 +210,11 @@ func (st *stmt) ExecContext(ctx context.Context, args []driver.NamedValue) (driv
 		idx++
 	}
 	if sk == 1 {
-		nss[idx] = netstring.NewNetstringFrom(common.CmdShardKey, st.hera.shardKeyPayload)
+		nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdShardKey, st.hera.shardKeyPayload)
 		idx++
 	}
-	nss[idx] = netstring.NewNetstringFrom(common.CmdExecute, nil)
-	cmd := netstring.NewNetstringEmbedded(nss)
+	nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdExecute, nil)
+	cmd := (*st.hera.reader).NewPacketEmbedded(nss)
 	err := st.hera.execNs(cmd)
 	if err != nil {
 		return nil, err
@@ -264,29 +264,29 @@ func (st *stmt) Query(args []driver.Value) (driver.Rows, error) {
 		crid = 1
 	}
 	binds := len(args)
-	nss := make([]*netstring.Netstring, crid /*CmdClientCorrelationID*/ +1 /*CmdPrepare*/ +2*binds /* CmdBindName and BindValue */ +sk /*CmdShardKey*/ +1 /*CmdExecute*/ +1 /* CmdFetch */)
+	nss := make([]*encoding.Packet, crid /*CmdClientCorrelationID*/ +1 /*CmdPrepare*/ +2*binds /* CmdBindName and BindValue */ +sk /*CmdShardKey*/ +1 /*CmdExecute*/ +1 /* CmdFetch */)
 	idx := 0
 	if crid == 1 {
 		nss[0] = st.hera.corrID
 		st.hera.corrID = nil
 		idx++
 	}
-	nss[idx] = netstring.NewNetstringFrom(common.CmdPrepareV2, []byte(st.sql))
+	nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdPrepareV2, []byte(st.sql))
 	idx++
 	for _, val := range args {
-		nss[idx] = netstring.NewNetstringFrom(common.CmdBindName, []byte(fmt.Sprintf("p%d", (idx-crid)/2+1)))
+		nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindName, []byte(fmt.Sprintf("p%d", (idx-crid)/2+1)))
 		idx++
 		switch val := val.(type) {
 		default:
 			return nil, fmt.Errorf("unexpected parameter type %T, only int,string and []byte supported", val)
 		case int:
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindValue, []byte(fmt.Sprintf("%d", val)))
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindValue, []byte(fmt.Sprintf("%d", val)))
 		case int64:
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindValue, []byte(fmt.Sprintf("%d", val)))
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindValue, []byte(fmt.Sprintf("%d", val)))
 		case []byte:
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindValue, val)
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindValue, val)
 		case string:
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindValue, []byte(val))
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindValue, []byte(val))
 		}
 		if logger.GetLogger().V(logger.Verbose) {
 			logger.GetLogger().Log(logger.Verbose, st.hera.id, "Bind name =", string(nss[idx-1].Payload), ", value=", string(nss[idx].Payload))
@@ -294,19 +294,19 @@ func (st *stmt) Query(args []driver.Value) (driver.Rows, error) {
 		idx++
 	}
 	if sk == 1 {
-		nss[idx] = netstring.NewNetstringFrom(common.CmdShardKey, st.hera.shardKeyPayload)
+		nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdShardKey, st.hera.shardKeyPayload)
 		idx++
 	}
-	nss[idx] = netstring.NewNetstringFrom(common.CmdExecute, nil)
+	nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdExecute, nil)
 	idx++
-	nss[idx] = netstring.NewNetstringFrom(common.CmdFetch, st.fetchChunkSize)
-	cmd := netstring.NewNetstringEmbedded(nss)
+	nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdFetch, st.fetchChunkSize)
+	cmd := (*st.hera.reader).NewPacketEmbedded(nss)
 	err := st.hera.execNs(cmd)
 	if err != nil {
 		return nil, err
 	}
 
-	var ns *netstring.Netstring
+	var ns *encoding.Packet
 Loop:
 	for {
 		ns, err = st.hera.getResponse()
@@ -368,33 +368,33 @@ func (st *stmt) QueryContext(ctx context.Context, args []driver.NamedValue) (dri
 		crid = 1
 	}
 	binds := len(args)
-	nss := make([]*netstring.Netstring, crid /*ClientCalCorrelationID*/ +1 /*CmdPrepare*/ +2*binds /* CmdBindName and BindValue */ +sk /*ShardKey*/ +1 /*Execute*/ +1 /* Fetch */)
+	nss := make([]*encoding.Packet, crid /*ClientCalCorrelationID*/ +1 /*CmdPrepare*/ +2*binds /* CmdBindName and BindValue */ +sk /*ShardKey*/ +1 /*Execute*/ +1 /* Fetch */)
 	idx := 0
 	if crid == 1 {
 		nss[0] = st.hera.corrID
 		st.hera.corrID = nil
 		idx++
 	}
-	nss[idx] = netstring.NewNetstringFrom(common.CmdPrepareV2, []byte(st.sql))
+	nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdPrepareV2, []byte(st.sql))
 	idx++
 	for _, val := range args {
 		if len(val.Name) > 0 {
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindName, []byte(val.Name))
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindName, []byte(val.Name))
 		} else {
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindName, []byte(fmt.Sprintf("p%d", (idx-crid)/2+1)))
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindName, []byte(fmt.Sprintf("p%d", (idx-crid)/2+1)))
 		}
 		idx++
 		switch val := val.Value.(type) {
 		default:
 			return nil, fmt.Errorf("unexpected parameter type %T, only int,string and []byte supported", val)
 		case int:
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindValue, []byte(fmt.Sprintf("%d", val)))
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindValue, []byte(fmt.Sprintf("%d", val)))
 		case int64:
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindValue, []byte(fmt.Sprintf("%d", val)))
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindValue, []byte(fmt.Sprintf("%d", val)))
 		case []byte:
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindValue, val)
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindValue, val)
 		case string:
-			nss[idx] = netstring.NewNetstringFrom(common.CmdBindValue, []byte(val))
+			nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdBindValue, []byte(val))
 		}
 		if logger.GetLogger().V(logger.Verbose) {
 			logger.GetLogger().Log(logger.Verbose, st.hera.id, "Bind name =", string(nss[idx-1].Payload), ", value=", string(nss[idx].Payload))
@@ -402,19 +402,19 @@ func (st *stmt) QueryContext(ctx context.Context, args []driver.NamedValue) (dri
 		idx++
 	}
 	if sk == 1 {
-		nss[idx] = netstring.NewNetstringFrom(common.CmdShardKey, st.hera.shardKeyPayload)
+		nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdShardKey, st.hera.shardKeyPayload)
 		idx++
 	}
-	nss[idx] = netstring.NewNetstringFrom(common.CmdExecute, nil)
+	nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdExecute, nil)
 	idx++
-	nss[idx] = netstring.NewNetstringFrom(common.CmdFetch, st.fetchChunkSize)
-	cmd := netstring.NewNetstringEmbedded(nss)
+	nss[idx] = (*st.hera.reader).NewPacketFrom(common.CmdFetch, st.fetchChunkSize)
+	cmd := (*st.hera.reader).NewPacketEmbedded(nss)
 	err := st.hera.execNs(cmd)
 	if err != nil {
 		return nil, err
 	}
 
-	var ns *netstring.Netstring
+	var ns *encoding.Packet
 Loop:
 	for {
 		ns, err = st.hera.getResponse()

@@ -5,11 +5,13 @@ import (
 	"database/sql"
 	"fmt"
 	"os"
+	"reflect"
 	"testing"
 	"time"
 
 	"github.com/paypal/hera/tests/unittest/testutil"
 	"github.com/paypal/hera/utility/logger"
+	_ "github.com/go-sql-driver/mysql"
 )
 
 /*
@@ -38,12 +40,13 @@ func cfg() (map[string]string, map[string]string, testutil.WorkerType) {
 	appcfg["log_file"] = "hera.log"
 	appcfg["sharding_cfg_reload_interval"] = "0"
 	appcfg["rac_sql_interval"] = "0"
+	appcfg["child.executable"] = "mysqlworker"
 
 	opscfg := make(map[string]string)
 	opscfg["opscfg.default.server.max_connections"] = "3"
 	opscfg["opscfg.default.server.log_level"] = "5"
 
-	return appcfg, opscfg, testutil.OracleWorker
+	return appcfg, opscfg, testutil.MySQLWorker
 }
 
 func before() error {
@@ -63,6 +66,7 @@ func TestCoordinatorBasic(t *testing.T) {
 
 	shard := 0
 	db, err := sql.Open("heraloop", fmt.Sprintf("%d:0:0", shard))
+	logger.GetLogger().Log(logger.Info, "Type of db: \n", reflect.TypeOf(db))
 	if err != nil {
 		t.Fatal("Error starting Mux:", err)
 		return
@@ -70,9 +74,19 @@ func TestCoordinatorBasic(t *testing.T) {
 	db.SetMaxIdleConns(0)
 	defer db.Close()
 
+	logger.GetLogger().Log(logger.Info, "WHen do we even call loopdriver dude")
+
 	ctx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+
+	logger.GetLogger().Log(logger.Info, "Post context")
 	// cleanup and insert one row in the table
 	conn, err := db.Conn(ctx)
+
+	logger.GetLogger().Log(logger.Info, "Right above here")
+
+	logger.GetLogger().Log(logger.Info, "Conn type:", reflect.TypeOf(conn))
+
+
 	if err != nil {
 		t.Fatalf("Error getting connection %s\n", err.Error())
 	}

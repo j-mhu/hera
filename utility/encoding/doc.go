@@ -61,6 +61,11 @@ type Packager interface {
      // all packets in nss. A pointer to the 'current'
      ReadMultiplePackets(_ns *Packet) ([]*Packet, error)
 
+     // Flattens array of packets into one big packet. For netstrings specifically,
+     // it prepends a CodeSubCommand and makes the nested substrings one
+     // BIG netstring. For regular MySQLPackets, it doesn't do anything.
+     NewPacketEmbedded([]*Packet) *Packet
+
      // ReadNext returns the next packet from the stream.
      ReadNext() (ns *Packet, err error)
 }

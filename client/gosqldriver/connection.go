@@ -22,6 +22,7 @@ import (
 	"database/sql/driver"
 	"errors"
 	"fmt"
+	"github.com/paypal/hera/utility/encoding"
 	"net"
 
 	"github.com/paypal/hera/common"
@@ -29,21 +30,26 @@ import (
 	"github.com/paypal/hera/utility/logger"
 )
 
-var corrIDUnsetCmd = netstring.NewNetstringFrom(common.CmdClientCalCorrelationID, []byte("CorrId=NotSet"))
+var corrIDUnsetCmd *encoding.Packet
 
 type heraConnection struct {
 	id     string // used for logging
 	conn   net.Conn
-	reader *netstring.Reader
+	reader *netstring.Netstring
 	// for the sharding extension
 	shardKeyPayload []byte
 	// correlation id
-	corrID *netstring.Netstring
+	corrID *encoding.Packet
 }
 
 // NewHeraConnection creates a structure implementing a driver.Con interface
 func NewHeraConnection(conn net.Conn) driver.Conn {
-	hera := &heraConnection{conn: conn, id: conn.RemoteAddr().String(), reader: netstring.NewNetstringReader(conn), corrID: corrIDUnsetCmd}
+	ns := &netstring.Netstring{}
+	ns.NewPacketReader(conn)
+
+	corrIDUnsetCmd = ns.NewPacketFrom(common.CmdClientCalCorrelationID, []byte("CorrId=NotSet"))
+
+	hera := &heraConnection{conn: conn, id: conn.RemoteAddr().String(), reader: ns, corrID: corrIDUnsetCmd}
 	if logger.GetLogger().V(logger.Info) {
 		logger.GetLogger().Log(logger.Info, hera.id, "create driver connection")
 	}
@@ -84,11 +90,11 @@ func (c *heraConnection) Begin() (driver.Tx, error) {
 
 // internal function to execute commands
 func (c *heraConnection) exec(cmd int, payload []byte) error {
-	return c.execNs(netstring.NewNetstringFrom(cmd, payload))
+	return c.execNs((*c.reader).NewPacketFrom(cmd, payload))
 }
 
 // internal function to execute commands
-func (c *heraConnection) execNs(ns *netstring.Netstring) error {
+func (c *heraConnection) execNs(ns *encoding.Packet) error {
 	if logger.GetLogger().V(logger.Verbose) {
 		payload := string(ns.Payload)
 		if len(payload) > 1000 {
@@ -101,7 +107,7 @@ func (c *heraConnection) execNs(ns *netstring.Netstring) error {
 }
 
 // returns the next message from the connection
-func (c *heraConnection) getResponse() (*netstring.Netstring, error) {
+func (c *heraConnection) getResponse() (*encoding.Packet, error) {
 	ns, err := c.reader.ReadNext()
 	if err != nil {
 		if logger.GetLogger().V(logger.Warning) {
@@ -170,5 +176,5 @@ func (c *heraConnection) ResetShardKeyPayload() {
 
 // implementing the extension HeraConn interface
 func (c *heraConnection) SetCalCorrID(corrID string) {
-	c.corrID = netstring.NewNetstringFrom(common.CmdClientCalCorrelationID, []byte(fmt.Sprintf("CorrId=%s", corrID)))
+	c.corrID = (*c.reader).NewPacketFrom(common.CmdClientCalCorrelationID, []byte(fmt.Sprintf("CorrId=%s", corrID)))
 }

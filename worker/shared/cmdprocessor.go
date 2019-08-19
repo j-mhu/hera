@@ -22,6 +22,8 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/paypal/hera/utility/encoding/mysqlpackets"
+	// "github.com/paypal/hera/utility/encoding/netstring"
 	"os"
 	"regexp"
 	"strconv"
@@ -31,13 +33,14 @@ import (
 	"github.com/paypal/hera/cal"
 	"github.com/paypal/hera/common"
 	"github.com/paypal/hera/utility"
-	"github.com/paypal/hera/utility/encoding/netstring"
+	"github.com/paypal/hera/utility/encoding"
 	"github.com/paypal/hera/utility/logger"
 
 	"database/sql"
 )
 
 // CmdProcessorAdapter is interface for differentiating the specific database implementations.
+// For example there is an adapter for MySQL, another for Oracle
 // For example there is an adapter for MySQL, another for Oracle
 type CmdProcessorAdapter interface {
 	InitDB() (*sql.DB, error)
@@ -149,6 +152,8 @@ type CmdProcessor struct {
 	// the name of the cal TXN
 	calSessionTxnName string
 	heartbeat         bool
+	// Performs packet operations
+	packager 		encoding.Packager
 }
 
 // NewCmdProcessor creates the processor using th egiven adapter
@@ -158,11 +163,13 @@ func NewCmdProcessor(adapter CmdProcessorAdapter, sockMux *os.File) *CmdProcesso
 		cs = "CLIENT_SESSION"
 	}
 
-	return &CmdProcessor{adapter: adapter, SocketOut: sockMux, calSessionTxnName: cs, heartbeat: true}
+	ns := &mysqlpackets.MySQLPacket{}
+
+	return &CmdProcessor{adapter: adapter, SocketOut: sockMux, calSessionTxnName: cs, heartbeat: true, packager:ns}
 }
 
 // ProcessCmd implements the client commands like prepare, bind, execute, etc
-func (cp *CmdProcessor) ProcessCmd(ns *netstring.Netstring) error {
+func (cp *CmdProcessor) ProcessCmd(ns *encoding.Packet) error {
 	if ns == nil {
 		return errors.New("empty netstring passed to processcommand")
 	}
@@ -170,6 +177,8 @@ func (cp *CmdProcessor) ProcessCmd(ns *netstring.Netstring) error {
 		logger.GetLogger().Log(logger.Debug, "process command", DebugString(ns.Serialized))
 	}
 	var err error
+
+if !ns.IsMySQL {
 
 outloop:
 	switch ns.Cmd {
@@ -189,9 +198,11 @@ outloop:
 		// to "select * from table where ca=? and cb=?"
 		// while keeping an ordered list of (":a"=>"val_:a", ":b"=>"val_:b") to run
 		// stmt.Exec("val_:a", "val_:b"). val_:a and val_:b are extracted using
-		// BindName and BindValue
+		// BindName and BindValue.
 		//
+		// For MySQL command packets, the payload is what follows after the command byte.
 		sqlQuery := cp.preprocess(string(ns.Payload))
+
 		if logger.GetLogger().V(logger.Verbose) {
 			logger.GetLogger().Log(logger.Verbose, "Preparing:", sqlQuery)
 		}
@@ -203,6 +214,7 @@ outloop:
 		if cp.calSessionTxn == nil {
 			cp.calSessionTxn = cal.NewCalTransaction(cal.TransTypeAPI, cp.calSessionTxnName, cal.TransOK, "", cal.DefaultTGName)
 		}
+
 		cp.sqlHash = utility.GetSQLHash(string(ns.Payload))
 		cp.calExecTxn = cal.NewCalTransaction(cal.TransTypeExec, fmt.Sprintf("%d", cp.sqlHash), cal.TransOK, "", cal.DefaultTGName)
 		if (cp.tx == nil) && (startTrans) {
@@ -379,9 +391,9 @@ outloop:
 					logger.GetLogger().Log(logger.Warning, "Execute error:", err.Error())
 				}
 				if cp.inTrans {
-					cp.eor(common.EORInTransaction, netstring.NewNetstringFrom(common.RcSQLError, []byte(err.Error())))
+					cp.eor(common.EORInTransaction, cp.packager.NewPacketFrom(common.RcSQLError, []byte(err.Error())) /* netstring.NewNetstringFrom(common.RcSQLError, []byte(err.Error()))*/)
 				} else {
-					cp.eor(common.EORFree, netstring.NewNetstringFrom(common.RcSQLError, []byte(err.Error())))
+					cp.eor(common.EORFree, cp.packager.NewPacketFrom(common.RcSQLError, []byte(err.Error())) /* netstring.NewNetstringFrom(common.RcSQLError, []byte(err.Error()))*/)
 				}
 				err = nil
 				break
@@ -413,18 +425,18 @@ outloop:
 					logger.GetLogger().Log(logger.Verbose, "BINDOUTS", len(cp.bindOuts), cp.bindOuts)
 				}
 
-				nss := make([]*netstring.Netstring, sz)
-				nss[0] = netstring.NewNetstringFrom(common.RcValue, []byte("0"))
-				nss[1] = netstring.NewNetstringFrom(common.RcValue, []byte(strconv.FormatInt(rowcnt, 10)))
+				nss := make([]*encoding.Packet, sz)                                                       // nss := make([]*encoding.Packet, sz)
+				nss[0] = cp.packager.NewPacketFrom(common.RcValue, []byte("0"))                           /* cp.reader.NewPacketFrom(common.RcValue, []byte("0")) */
+				nss[1] = cp.packager.NewPacketFrom(common.RcValue, []byte(strconv.FormatInt(rowcnt, 10))) /* cp.reader.NewPacketFrom(common.RcValue, []byte(strconv.FormatInt(rowcnt, 10))) */
 				if sz > 2 {
 					if len(cp.bindOuts) > 0 {
-						nss[2] = netstring.NewNetstringFrom(common.RcValue, []byte("1"))
+						nss[2] = cp.packager.NewPacketFrom(common.RcValue, []byte("1")) /* cp.reader ... */
 						for i := 0; i < len(cp.bindOuts); i++ {
-							nss[i+3] = netstring.NewNetstringFrom(common.RcValue, []byte(cp.bindOuts[i]))
+							nss[i+3] = cp.packager.NewPacketFrom(common.RcValue, []byte(cp.bindOuts[i])) /* cp.reader ... */
 						}
 					}
 				}
-				resns := netstring.NewNetstringEmbedded(nss)
+				resns := cp.packager.NewPacketEmbedded(nss) /* cp.reader ... */
 				err = cp.eor(common.EORInTransaction, resns)
 			}
 			if cp.rows != nil {
@@ -446,13 +458,13 @@ outloop:
 					sz++
 				}
 
-				nss := make([]*netstring.Netstring, sz)
-				nss[0] = netstring.NewNetstringFrom(common.RcValue, []byte(strconv.Itoa(len(cols))))
-				nss[1] = netstring.NewNetstringFrom(common.RcValue, []byte("0"))
+				nss := make([]*encoding.Packet, sz)
+				nss[0] = cp.packager.NewPacketFrom(common.RcValue, []byte(strconv.Itoa(len(cols))))
+				nss[1] = cp.packager.NewPacketFrom(common.RcValue, []byte("0"))
 				if sz > 2 {
-					nss[2] = netstring.NewNetstringFrom(common.RcValue, []byte("0"))
+					nss[2] = cp.packager.NewPacketFrom(common.RcValue, []byte("0"))
 				}
-				resns := netstring.NewNetstringEmbedded(nss)
+				resns := cp.packager.NewPacketEmbedded(nss)
 				if cp.hasResult {
 					/*
 						TODO: this is the proper implementation, need to fix mux, meanwhile just done use EOR_IN_CURSOR_...
@@ -473,9 +485,9 @@ outloop:
 			}
 		} else {
 			if cp.inTrans {
-				cp.eor(common.EORInTransaction, netstring.NewNetstringFrom(common.RcSQLError, []byte(cp.lastErr.Error())))
+				cp.eor(common.EORInTransaction, cp.packager.NewPacketFrom(common.RcSQLError, []byte(cp.lastErr.Error())))
 			} else {
-				cp.eor(common.EORFree, netstring.NewNetstringFrom(common.RcSQLError, []byte(cp.lastErr.Error())))
+				cp.eor(common.EORFree, cp.packager.NewPacketFrom(common.RcSQLError, []byte(cp.lastErr.Error())))
 			}
 		}
 	case common.CmdFetch:
@@ -493,7 +505,7 @@ outloop:
 				calt.Completed()
 				break
 			}
-			var nss []*netstring.Netstring
+			var nss []*encoding.Packet
 			cols, _ := cp.rows.Columns()
 			readCols := make([]interface{}, len(cols))
 			writeCols := make([]sql.NullString, len(cols))
@@ -519,11 +531,11 @@ outloop:
 					if logger.GetLogger().V(logger.Debug) {
 						logger.GetLogger().Log(logger.Debug, "query result", outstr)
 					}
-					nss = append(nss, netstring.NewNetstringFrom(common.RcValue, []byte(outstr)))
+					nss = append(nss, cp.packager.NewPacketFrom(common.RcValue, []byte(outstr)))
 				}
 			}
 			if len(nss) > 0 {
-				resns := netstring.NewNetstringEmbedded(nss)
+				resns := cp.packager.NewPacketEmbedded(nss)
 				err = WriteAll(cp.SocketOut, resns.Serialized)
 				if err != nil {
 					if logger.GetLogger().V(logger.Warning) {
@@ -537,16 +549,16 @@ outloop:
 			}
 			calt.Completed()
 			if cp.inTrans {
-				cp.eor(common.EORInTransaction, netstring.NewNetstringFrom(common.RcNoMoreData, nil))
+				cp.eor(common.EORInTransaction, cp.packager.NewPacketFrom(common.RcNoMoreData, nil))
 			} else {
-				cp.eor(common.EORFree, netstring.NewNetstringFrom(common.RcNoMoreData, nil))
+				cp.eor(common.EORFree, cp.packager.NewPacketFrom(common.RcNoMoreData, nil))
 			}
 			cp.rows = nil
 		} else {
 			if cp.inTrans {
-				cp.eor(common.EORInTransaction, netstring.NewNetstringFrom(common.RcError, []byte("fetch requested but no statement exists")))
+				cp.eor(common.EORInTransaction, cp.packager.NewPacketFrom(common.RcError, []byte("fetch requested but no statement exists")))
 			} else {
-				cp.eor(common.EORFree, netstring.NewNetstringFrom(common.RcError, []byte("fetch requested but no statement exists")))
+				cp.eor(common.EORFree, cp.packager.NewPacketFrom(common.RcError, []byte("fetch requested but no statement exists")))
 			}
 		}
 	case common.CmdColsInfo:
@@ -566,28 +578,28 @@ outloop:
 			break
 		}
 		if cts == nil {
-			ns := netstring.NewNetstringFrom(common.RcValue, []byte("0"))
+			ns := cp.packager.NewPacketFrom(common.RcValue, []byte("0"))
 			err = WriteAll(cp.SocketOut, ns.Serialized)
 		} else {
-			nss := make([]*netstring.Netstring, len(cts)*5+1)
-			nss[0] = netstring.NewNetstringFrom(common.RcValue, []byte(strconv.Itoa(len(cts))))
-			var cnt = 1
+			nss := make([]*encoding.Packet, len(cts)*5+1)
+			nss[0] = cp.packager.NewPacketFrom(common.RcValue, []byte(strconv.Itoa(len(cts))))
+			var cnt= 1
 			var width, prec, scale int64
-			var ok = true
+			var ok= true
 			for _, ct := range cts {
-				nss[cnt] = netstring.NewNetstringFrom(common.RcValue, []byte(ct.Name()))
+				nss[cnt] = cp.packager.NewPacketFrom(common.RcValue, []byte(ct.Name()))
 				cnt++
 				typename := ct.DatabaseTypeName()
 				if len(typename) == 0 {
 					typename = "UNDEFINED"
 				}
-				nss[cnt] = netstring.NewNetstringFrom(common.RcValue, []byte(strconv.Itoa(cp.adapter.GetColTypeMap()[strings.ToUpper(typename)])))
+				nss[cnt] = cp.packager.NewPacketFrom(common.RcValue, []byte(strconv.Itoa(cp.adapter.GetColTypeMap()[strings.ToUpper(typename)])))
 				cnt++
 				width, ok = ct.Length()
 				if !ok {
 					width = 0
 				}
-				nss[cnt] = netstring.NewNetstringFrom(common.RcValue, []byte(strconv.FormatInt(width, 10)))
+				nss[cnt] = cp.packager.NewPacketFrom(common.RcValue, []byte(strconv.FormatInt(width, 10)))
 				cnt++
 				prec, scale, ok = ct.DecimalSize()
 				if !ok {
@@ -608,12 +620,12 @@ outloop:
 				if scale > 2147483647 {
 					scale = 2147483647
 				}
-				nss[cnt] = netstring.NewNetstringFrom(common.RcValue, []byte(strconv.FormatInt(prec, 10)))
+				nss[cnt] = cp.packager.NewPacketFrom(common.RcValue, []byte(strconv.FormatInt(prec, 10)))
 				cnt++
-				nss[cnt] = netstring.NewNetstringFrom(common.RcValue, []byte(strconv.FormatInt(scale, 10)))
+				nss[cnt] = cp.packager.NewPacketFrom(common.RcValue, []byte(strconv.FormatInt(scale, 10)))
 				cnt++
 			}
-			resns := netstring.NewNetstringEmbedded(nss)
+			resns := cp.packager.NewPacketEmbedded(nss)
 			err = WriteAll(cp.SocketOut, resns.Serialized)
 		}
 	case common.CmdCommit:
@@ -640,9 +652,9 @@ outloop:
 		}
 		if err == nil {
 			cp.inTrans = false
-			cp.eor(common.EORFree, netstring.NewNetstringFrom(common.RcOK, nil))
+			cp.eor(common.EORFree, cp.packager.NewPacketFrom(common.RcOK, nil))
 		} else {
-			cp.eor(common.EORInTransaction, netstring.NewNetstringFrom(common.RcSQLError, []byte(err.Error())))
+			cp.eor(common.EORInTransaction, cp.packager.NewPacketFrom(common.RcSQLError, []byte(err.Error())))
 			err = nil
 		}
 	case common.CmdRollback:
@@ -666,13 +678,202 @@ outloop:
 		}
 		if err == nil {
 			cp.inTrans = false
-			cp.eor(common.EORFree, netstring.NewNetstringFrom(common.RcOK, nil))
+			cp.eor(common.EORFree, cp.packager.NewPacketFrom(common.RcOK, nil))
 		} else {
-			cp.eor(common.EORInTransaction, netstring.NewNetstringFrom(common.RcSQLError, []byte(err.Error())))
+			cp.eor(common.EORInTransaction, cp.packager.NewPacketFrom(common.RcSQLError, []byte(err.Error())))
 			err = nil
 		}
-	}
+	} } else {
+	/* -------------------------------------------- MySQL VERSION OF COMMAND PROCESSING ----------------------------------------------------*/
+// outloop2:
+	switch ns.Cmd {
+	case common.COM_QUERY:
+		// These statements are immediately executed by the server.
+		// Right now, only very simple queries are handled. These require, hopefully, no bind names
+		// or bind values.
+		if logger.GetLogger().V(logger.Debug) {
+			logger.GetLogger().Log(logger.Debug, "Executing ", cp.inTrans)
+			logger.GetLogger().Log(logger.Debug, "No bindings")
+		}
 
+		// Get the query from the payload
+		sqlQuery := string(ns.Payload[1:])
+
+		// If the sqlQuery contains a select, use Query -- otherwise use Exec
+		if cp.hasResult {
+			cp.rows, err = cp.db.Query(sqlQuery)
+		} else {
+			cp.result, err = cp.db.Exec(sqlQuery)
+		}
+
+		if err != nil {
+			cp.calExecErr("RC", err.Error())
+			if logger.GetLogger().V(logger.Warning) {
+				logger.GetLogger().Log(logger.Warning, "Execute error:", err.Error())
+			}
+			if cp.inTrans {
+				cp.eor(common.EORInTransaction, cp.packager.NewPacketFrom(common.RcSQLError, []byte(err.Error())))
+			} else {
+				cp.eor(common.EORFree, cp.packager.NewPacketFrom(common.RcSQLError, []byte(err.Error())))
+			}
+			err = nil
+			break
+		}
+
+		if cp.tx != nil {
+			cp.inTrans = true
+		}
+
+		cp.calExecTxn.Completed()
+		cp.calExecTxn = nil
+		if cp.result != nil {
+			// Get row count from the sql.Result
+			var rowcnt int64
+			rowcnt, err = cp.result.RowsAffected()
+			if err != nil {
+				if logger.GetLogger().V(logger.Debug) {
+					logger.GetLogger().Log(logger.Debug, "RowsAffected():", err.Error())
+				}
+				cp.calExecErr("RowsAffected", err.Error())
+				break
+			}
+			if logger.GetLogger().V(logger.Debug) {
+				logger.GetLogger().Log(logger.Debug, "exe row", rowcnt)
+			}
+			// Get the last insert id from the sql.Result
+			var liid int64
+			liid, err = cp.result.LastInsertId()
+			if err != nil {
+				if logger.GetLogger().V(logger.Debug) {
+					logger.GetLogger().Log(logger.Debug, "LastInsertId():", err.Error())
+				}
+				cp.calExecErr("LastInsertId", err.Error())
+				break
+			}
+			if logger.GetLogger().V(logger.Debug) {
+				logger.GetLogger().Log(logger.Debug, "exe LastInsertId", rowcnt)
+			}
+			// Set an OK packet reporting the number of rows affected and last insert id. I don't know what to put for the message though...
+			ns := cp.packager.NewPacketFrom(ns.Sequence_id + 1, mysqlpackets.OKPacket(int(rowcnt), int(liid), "This packet has to be over 7 bytes."))
+			err = cp.eor(common.EORInTransaction, ns)
+		}
+
+		if cp.hasResult {
+			// Write this bad boy out to mux.
+			WriteAll(cp.SocketOut, ns.Serialized)
+		} else {
+			// There's some other stuff but I'm not sure?
+			if cp.inTrans {
+				cp.eor(common.EORInTransaction, cp.packager.NewPacketFrom(common.RcSQLError, []byte(cp.lastErr.Error())))
+			} else {
+				cp.eor(common.EORFree, cp.packager.NewPacketFrom(common.RcSQLError, []byte(cp.lastErr.Error())))
+			}
+			/*
+					* if cp.inTrans { cp.eor(common.EORInTransaction, ns) } else
+				/*
+				* Some things that may need to be further analyzed: the difference between Fetch and Execute? Since they
+				* both write to the mux socket?
+			*/
+		}
+
+	case common.COM_STMT_PREPARE:
+		cp.lastErr = nil
+		cp.sqlHash = 0
+		cp.heartbeat = false // for hb
+		//
+		// need to turn "select * from table where ca=:a and cb=:b"
+		// to "select * from table where ca=? and cb=?"
+		// while keeping an ordered list of (":a"=>"val_:a", ":b"=>"val_:b") to run
+		// stmt.Exec("val_:a", "val_:b"). val_:a and val_:b are extracted using
+		// BindName and BindValue
+		//
+		// For MySQL command packets, the payload is what follows after the command byte.
+		sqlQuery := string(ns.Payload[1:])
+		if logger.GetLogger().V(logger.Verbose) {
+			logger.GetLogger().Log(logger.Verbose, "Preparing:", sqlQuery)
+		}
+		//
+		// start a new transaction for the first dml request.
+		//
+		var startTrans bool
+		cp.hasResult, startTrans = cp.sqlParser.Parse(sqlQuery)
+		if cp.calSessionTxn == nil {
+			cp.calSessionTxn = cal.NewCalTransaction(cal.TransTypeAPI, cp.calSessionTxnName, cal.TransOK, "", cal.DefaultTGName)
+		}
+
+		cp.sqlHash = utility.GetSQLHash(sqlQuery)
+
+		cp.calExecTxn = cal.NewCalTransaction(cal.TransTypeExec, fmt.Sprintf("%d", cp.sqlHash), cal.TransOK, "", cal.DefaultTGName)
+		if (cp.tx == nil) && (startTrans) {
+			cp.tx, err = cp.db.Begin()
+		}
+		if cp.tx != nil {
+			cp.stmt, err = cp.tx.Prepare(sqlQuery)
+		} else {
+			cp.stmt, err = cp.db.Prepare(sqlQuery)
+		}
+		if err != nil {
+			cp.calExecErr("Prepare", err.Error())
+			cp.lastErr = err
+			err = nil
+		}
+		cp.rows = nil
+		cp.result = nil
+		cp.bindOuts = cp.bindOuts[:0]
+		cp.numBindOuts = 0
+	case common.COM_STMT_EXECUTE:
+		if cp.stmt != nil {
+			// step through bindvar at each location to build bindinput? is that necessary
+		}
+
+		if logger.GetLogger().V(logger.Debug) {
+			logger.GetLogger().Log(logger.Debug, "Executing ", cp.inTrans)
+		}
+
+		// WILL NEED TO BUILD BIND INPUT BY COUNTING THE NUMBER OF '?' IN THE QUERY, RIP
+		bindinput := make([]interface{}, 0)
+		if len(bindinput) == 0 {
+			if cp.hasResult {
+				cp.rows, err = cp.stmt.Query()
+			} else {
+				cp.result, err = cp.stmt.Exec()
+			}
+		} else {
+			if cp.hasResult {
+				cp.rows, err = cp.stmt.Query(bindinput...)
+			} else {
+				cp.result, err = cp.stmt.Exec(bindinput...)
+			}
+		}
+
+		if err != nil {
+			cp.calExecErr("RC", err.Error())
+			if logger.GetLogger().V(logger.Warning) {
+				logger.GetLogger().Log(logger.Warning, "Execute error:", err.Error())
+			}
+			if cp.inTrans {
+				// cp.eor(common.EORInTransaction, cp.packager.NewPacketFrom(common.RcSQLError, []byte(err.Error())) /* netstring.NewNetstringFrom(common.RcSQLError, []byte(err.Error()))*/)
+			} else {
+				// cp.eor(common.EORFree, cp.packager.NewPacketFrom(common.RcSQLError, []byte(err.Error())) /* netstring.NewNetstringFrom(common.RcSQLError, []byte(err.Error()))*/)
+			}
+			err = nil
+			break
+		}
+		if cp.tx != nil {
+			cp.inTrans = true
+		}
+		cp.calExecTxn.Completed()
+		cp.calExecTxn = nil
+
+	case common.COM_STMT_FETCH:
+	case common.COM_STMT_SEND_LONG_DATA:
+	case common.COM_FIELD_LIST: /* etc */
+	case common.COM_RESET_CONNECTION:
+	case common.COM_STMT_RESET:
+	case common.COM_TABLE_DUMP:
+	case common.COM_PROCESS_KILL:
+	}
+	}
 	return err
 }
 
@@ -719,7 +920,7 @@ func (cp *CmdProcessor) InitDB() error {
 	return nil
 }
 
-func (cp *CmdProcessor) eor(code int, ns *netstring.Netstring) error {
+func (cp *CmdProcessor) eor(code int, ns *encoding.Packet) error {
 	if (code == common.EORFree) && (cp.calSessionTxn != nil) {
 		cp.calSessionTxn.Completed()
 		cp.calSessionTxn = nil
@@ -729,11 +930,12 @@ func (cp *CmdProcessor) eor(code int, ns *netstring.Netstring) error {
 		payload = make([]byte, len(ns.Serialized)+1)
 		payload[0] = byte('0' + code)
 		copy(payload[1:], ns.Serialized)
+
 	} else {
 		payload = []byte{byte('0' + code)}
 	}
 	cp.heartbeat = true
-	return WriteAll(cp.SocketOut, netstring.NewNetstringFrom(common.CmdEOR, payload).Serialized)
+	return WriteAll(cp.SocketOut, cp.packager.NewPacketFrom(common.CmdEOR, payload).Serialized) /* cp.reader ... */
 }
 
 func (cp *CmdProcessor) calExecErr(field string, err string) {
