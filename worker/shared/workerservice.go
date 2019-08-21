@@ -19,6 +19,7 @@ package shared
 
 import (
 	"fmt"
+	"github.com/paypal/hera/utility/encoding"
 	"os"
 	"os/signal"
 	"strconv"
@@ -132,7 +133,7 @@ func Start(adapter CmdProcessorAdapter) {
 
 // runworker is the infinite loop, serving requests
 func runworker(sockMux *os.File, cmdprocessor *CmdProcessor, cfg *workerConfig) {
-	var ns *netstring.Netstring
+	var ns *encoding.Packet
 	var ok = true
 	var sig int
 	var err error
@@ -229,11 +230,11 @@ outerloop:
  * reading the next command from socketpair and sending it to commandchannel.
  * block on read. exit only when readnext returns an error.
  */
-func readNextNetstring(sockMux *os.File) <-chan *netstring.Netstring {
+func readNextNetstring(sockMux *os.File) <-chan *encoding.Packet {
 	//
 	// up to 10 ns substrings will be queued up in the buffer.
 	//
-	commandch := make(chan *netstring.Netstring, 10)
+	commandch := make(chan *encoding.Packet, 10)
 	nsreader := netstring.NewNetstringReader(sockMux)
 	go func() {
 		for {
@@ -280,14 +281,14 @@ func waitForSignal() <-chan int {
 }
 
 // recoverworker drains the mux channel and rollbacks the current transaction
-func recoverworker(cmdprocessor *CmdProcessor, nschannel <-chan *netstring.Netstring) error {
+func recoverworker(cmdprocessor *CmdProcessor, nschannel <-chan *encoding.Packet) error {
 	drainIncomingChannel(cmdprocessor, nschannel)
 	err := cmdprocessor.ProcessCmd(netstring.NewNetstringFrom(common.CmdRollback, []byte("")))
 	return err
 }
 
 // drainIncomingChannel clears the mux channel
-func drainIncomingChannel(cmdprocessor *CmdProcessor, nschannel <-chan *netstring.Netstring) {
+func drainIncomingChannel(cmdprocessor *CmdProcessor, nschannel <-chan *encoding.Packet) {
 	for {
 		if logger.GetLogger().V(logger.Debug) {
 			logger.GetLogger().Log(logger.Debug, "draining nschannel")

@@ -17,6 +17,8 @@
 
 package common
 
+
+/* ==== HERA =================================================================*/
 // contains protocol constants shared by the client and the server
 
 // Return codes
@@ -93,4 +95,51 @@ const (
 	CmdClientCalCorrelationID = 2006
 
 	CmdProtocolVersion = 2008
+)
+
+/* ==== MySQL  ===============================================================
+* Below defines constants for all the MySQL protocol packets, basic types
+* (fixed length integers, EOF strings, etc.), capability flag bitfields, and
+* command bytes. Functions for encoding them into connection phase packets
+* are located in utility/encoding/mysqlpackets.
+ */
+
+/* ---- COMMAND BYTES. ---------------------------------------------------------
+* Command byte is the first byte in a command packet. Signifies
+* what command the client wants the server to carry out. The command bytes
+* are consistent with MySQL 4.1.
+*    https://dev.mysql.com/doc/internals/en/command-phase.html
+ */
+const (
+	COM_SLEEP int = iota 	// -------------------------------- 0
+	COM_QUIT
+	COM_INIT_DB
+	COM_QUERY
+	COM_FIELD_LIST
+	COM_CREATE_DB 			// -------------------------------- 5
+	COM_DROP_DB
+	COM_REFRESH
+	COM_SHUTDOWN
+	COM_STATISTICS
+	COM_PROCESS_INFO 		// -------------------------------- 10
+	COM_CONNECT
+	COM_PROCESS_KILL
+	COM_DEBUG
+	COM_PING
+	COM_TIME 				// -------------------------------- 15
+	COM_DELAYED_INSERT
+	COM_CHANGE_USER
+	COM_BINLOG_DUMP
+	COM_TABLE_DUMP
+	COM_CONNECT_OUT  		// -------------------------------- 20
+	COM_REGISTER_SLAVE
+	COM_STMT_PREPARE
+	COM_STMT_EXECUTE
+	COM_STMT_SEND_LONG_DATA
+	COM_STMT_CLOSE 		// -------------------------------- 25
+	COM_STMT_RESET
+	COM_SET_OPTION
+	COM_STMT_FETCH
+	COM_RESET_CONNECTION
+	COM_DAEMON 			// -------------------------------- 30
 )

@@ -21,6 +21,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"github.com/paypal/hera/utility/encoding"
 	"math/rand"
 	"net"
 	"os"
@@ -71,10 +72,10 @@ type workerMsg struct {
 	// the request counter / Id
 	rqId uint16
 	// the actual message to be sent to the client
-	ns *netstring.Netstring
+	ns *encoding.Packet
 }
 
-func (msg *workerMsg) GetNetstring() *netstring.Netstring {
+func (msg *workerMsg) GetNetstring() *encoding.Packet {
 	if msg.ns == nil {
 		msg.ns, _ = NetstringFromBytes(msg.data)
 	}
@@ -830,7 +831,7 @@ func (worker *WorkerClient) doRead() {
 }
 
 // Write sends a message to the worker
-func (worker *WorkerClient) Write(ns *netstring.Netstring, nsCount uint16) error {
+func (worker *WorkerClient) Write(ns *encoding.Packet, nsCount uint16) error {
 	worker.setState(wsBusy)
 
 	worker.rqId += nsCount

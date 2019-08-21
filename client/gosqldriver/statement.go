@@ -23,6 +23,7 @@ import (
 	"database/sql/driver"
 	"errors"
 	"fmt"
+	"github.com/paypal/hera/utility/encoding"
 	"strconv"
 	"strings"
 
@@ -91,7 +92,7 @@ func (st *stmt) Exec(args []driver.Value) (driver.Result, error) {
 		crid = 1
 	}
 	binds := len(args)
-	nss := make([]*netstring.Netstring, crid /*CmdClientCorrelationID*/ +1 /*CmdPrepare*/ +2*binds /* CmdBindName and CmdBindValue */ +sk /*CmdShardKey*/ +1 /*CmdExecute*/)
+	nss := make([]*encoding.Packet, crid /*CmdClientCorrelationID*/ +1 /*CmdPrepare*/ +2*binds /* CmdBindName and CmdBindValue */ +sk /*CmdShardKey*/ +1 /*CmdExecute*/)
 	idx := 0
 	if crid == 1 {
 		nss[0] = st.hera.corrID
@@ -176,7 +177,7 @@ func (st *stmt) ExecContext(ctx context.Context, args []driver.NamedValue) (driv
 		crid = 1
 	}
 	binds := len(args)
-	nss := make([]*netstring.Netstring, crid /*CmdClientCalCorrelationID*/ +1 /*CmdPrepare*/ +2*binds /* CmdBindName and BindValue */ +sk /*CmdShardKey*/ +1 /*CmdExecute*/)
+	nss := make([]*encoding.Packet, crid /*CmdClientCalCorrelationID*/ +1 /*CmdPrepare*/ +2*binds /* CmdBindName and BindValue */ +sk /*CmdShardKey*/ +1 /*CmdExecute*/)
 	idx := 0
 	if crid == 1 {
 		nss[0] = st.hera.corrID
@@ -264,7 +265,7 @@ func (st *stmt) Query(args []driver.Value) (driver.Rows, error) {
 		crid = 1
 	}
 	binds := len(args)
-	nss := make([]*netstring.Netstring, crid /*CmdClientCorrelationID*/ +1 /*CmdPrepare*/ +2*binds /* CmdBindName and BindValue */ +sk /*CmdShardKey*/ +1 /*CmdExecute*/ +1 /* CmdFetch */)
+	nss := make([]*encoding.Packet, crid /*CmdClientCorrelationID*/ +1 /*CmdPrepare*/ +2*binds /* CmdBindName and BindValue */ +sk /*CmdShardKey*/ +1 /*CmdExecute*/ +1 /* CmdFetch */)
 	idx := 0
 	if crid == 1 {
 		nss[0] = st.hera.corrID
@@ -306,7 +307,7 @@ func (st *stmt) Query(args []driver.Value) (driver.Rows, error) {
 		return nil, err
 	}
 
-	var ns *netstring.Netstring
+	var ns *encoding.Packet
 Loop:
 	for {
 		ns, err = st.hera.getResponse()
@@ -368,7 +369,7 @@ func (st *stmt) QueryContext(ctx context.Context, args []driver.NamedValue) (dri
 		crid = 1
 	}
 	binds := len(args)
-	nss := make([]*netstring.Netstring, crid /*ClientCalCorrelationID*/ +1 /*CmdPrepare*/ +2*binds /* CmdBindName and BindValue */ +sk /*ShardKey*/ +1 /*Execute*/ +1 /* Fetch */)
+	nss := make([]*encoding.Packet, crid /*ClientCalCorrelationID*/ +1 /*CmdPrepare*/ +2*binds /* CmdBindName and BindValue */ +sk /*ShardKey*/ +1 /*Execute*/ +1 /* Fetch */)
 	idx := 0
 	if crid == 1 {
 		nss[0] = st.hera.corrID
@@ -414,7 +415,7 @@ func (st *stmt) QueryContext(ctx context.Context, args []driver.NamedValue) (dri
 		return nil, err
 	}
 
-	var ns *netstring.Netstring
+	var ns *encoding.Packet
 Loop:
 	for {
 		ns, err = st.hera.getResponse()

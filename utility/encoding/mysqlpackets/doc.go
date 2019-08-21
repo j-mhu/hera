@@ -15,19 +15,5 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-// Package encoding provides the encoding functions such as netstring etc.,
-package encoding
-
-type Packet struct {
-	Cmd		int			// Command byte in the payload
-	Serialized []byte 	// The entire packet
-	Payload []byte 		// The entire payload
-	Length	int 		// Length of Payload
-	Sqid int			// Sequence id
-	IsMySQL bool		// indicates whether or not the packet is MySQL, which affects how it's processed
-}
-
-// IsComposite returns if the netstring is compisite, embedding multiple netstrings in it
-func (ns *Packet) IsComposite() bool {
-	return ns.Cmd == ('0' - '0')
-}
+// Package mysqlpackets provides the functions to read and write mysqlpackets
+package mysqlpackets

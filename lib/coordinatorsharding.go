@@ -20,6 +20,7 @@ package lib
 import (
 	"errors"
 	"fmt"
+	"github.com/paypal/hera/utility/encoding"
 	"strconv"
 	"strings"
 
@@ -287,7 +288,7 @@ func (crd *Coordinator) isShardKey(bind string) bool {
 // before determining if the current request should continue, returning nil error if the request should be allowed.
 // If error is not nil, the second parameter says if the coordinator should hangup the client connection.
 // The decision to hang-up or not in case of error is based on backward compatibility
-func (crd *Coordinator) PreprocessSharding(requests []*netstring.Netstring) (bool, error) {
+func (crd *Coordinator) PreprocessSharding(requests []*encoding.Packet) (bool, error) {
 	if logger.GetLogger().V(logger.Verbose) {
 		logger.GetLogger().Log(logger.Verbose, "PreprocessSharding:", crd.shard)
 	}

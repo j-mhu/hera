@@ -19,6 +19,7 @@ package lib
 
 import (
 	"context"
+	"github.com/paypal/hera/utility/encoding"
 	"io"
 	"net"
 	"strconv"
@@ -30,8 +31,8 @@ import (
 
 // Spawns a goroutine which blocks waiting for a message on conn. When a message is received it writes
 // to the channel and exit. It basically wrapps the net.Conn in a channel
-func wrapNewNetstring(conn net.Conn) <-chan *netstring.Netstring {
-	ch := make(chan *netstring.Netstring, 1)
+func wrapNewNetstring(conn net.Conn) <-chan *encoding.Packet {
+	ch := make(chan *encoding.Packet, 1)
 	go func() {
 		ns, err := netstring.NewNetstring(conn)
 		if err != nil {
@@ -70,7 +71,7 @@ func HandleConnection(conn net.Conn) {
 	//
 	GetStateLog().PublishStateEvent(StateEvent{eType: ConnStateEvt, shardID: 0, wType: wtypeRW, instID: 0, oldCState: Close, newCState: Idle})
 
-	clientchannel := make(chan *netstring.Netstring, 1)
+	clientchannel := make(chan *encoding.Packet, 1)
 	// closing of clientchannel will notify the coordinator to exit
 	defer func() {
 		close(clientchannel)
@@ -91,7 +92,7 @@ func HandleConnection(conn net.Conn) {
 	//
 	addr := conn.RemoteAddr()
 	for {
-		var ns *netstring.Netstring
+		var ns *encoding.Packet
 		select {
 		case ns = <-wrapNewNetstring(conn):
 		case timeout := <-crd.Done():
