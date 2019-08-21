@@ -44,7 +44,7 @@ import (
 // is completed (with COMMIT) or canceled (with ROLLBACK)
 type Coordinator struct {
 	conn          net.Conn                    // used to send back the response(s)
-	clientchannel <-chan *mysqlpackets.Packet // channel where client netstring arrives
+	clientchannel <-chan *encoding.Packet // channel where client netstring arrives
 	ctx           context.Context
 	done          chan int
 	sqlParser     common.SQLParser
@@ -323,53 +323,85 @@ func (crd *Coordinator) computeSQLHash(request *encoding.Packet) {
  * it handles the command if it is the case. if the command is indended for a worker, it will return false.
  * worker commands start with one of the prepare/prepare_v2
  */
-func (crd *Coordinator) handleMux(request *mysqlpackets.Packet) (bool, error) {
+func (crd *Coordinator) handleMux(request *encoding.Packet) (bool, error) {
 	crd.isRead = false
 	crd.preppendCorrID = crd.worker == nil
 	packet := request
 
-	// Process individual request.
-	crd.nss = nil
-	// an individual request
-	if request.Cmd == common.COM_STMT_PREPARE {
-		crd.isRead = crd.sqlParser.IsRead(string(request.Payload))
-		return false, nil
-	}
+	if request.IsMySQL {
 
-	for packet.Length != mysqlpackets.MAX_PACKET_SIZE {
-		packet, err := crd.packager.ReadNext()
-		if err != nil {
-			return false, err
+		// Process individual request.
+		crd.nss = nil
+		// an individual request
+		if request.Cmd == common.COM_STMT_PREPARE {
+			crd.isRead = crd.sqlParser.IsRead(string(request.Payload))
+			return false, nil
 		}
-		for _, ns := range nss {
-			if (ns.Cmd == common.CmdPrepare) || (ns.Cmd == common.CmdPrepareV2) || (ns.Cmd == common.CmdPrepareSpecial) {
+
+		for packet.Length != mysqlpackets.MAX_PACKET_SIZE {
+			ns, err := crd.packager.ReadNext()
+			if err != nil {
+				return false, err
+			}
+
+			if ns.Cmd == common.COM_STMT_PREPARE {
 				crd.sqlhash = int32(utility.GetSQLHash(string(ns.Payload)))
 				crd.isRead = crd.sqlParser.IsRead(string(ns.Payload))
-				handled := false
-				if GetConfig().EnableSharding {
-					hangup, err := crd.PreprocessSharding(nss)
-					if err != nil {
-						handled = true
-						if logger.GetLogger().V(logger.Debug) {
-							logger.GetLogger().Log(logger.Debug, "Error preprocessing sharding, hangup:", err.Error(), hangup)
-						}
-						if hangup {
-							crd.conn.Close()
-						}
-					}
-				}
-				return handled, err
+				return crd.processMuxCommand(ns)
 			}
 
 			handled, err := crd.processMuxCommand(ns)
 			if !handled {
-				if nss[0].Cmd == common.CmdClientCalCorrelationID {
-					crd.preppendCorrID = false
-				}
 				return false, err
 			}
 		}
 		return true, nil
+
+	} else {
+		if request.IsComposite() {
+			// TODO: avoid full parsing if necessary
+			// if this is a worker command, only a shallow parse might be needed (if sharding is enabled, full parsing still needed anyway)
+			nss, err := netstring.SubNetstrings(request)
+			if err != nil {
+				return false, err
+			}
+			crd.nss = nss
+			for _, ns := range nss {
+				if (ns.Cmd == common.CmdPrepare) || (ns.Cmd == common.CmdPrepareV2) || (ns.Cmd == common.CmdPrepareSpecial) {
+					crd.sqlhash = int32(utility.GetSQLHash(string(ns.Payload)))
+					crd.isRead = crd.sqlParser.IsRead(string(ns.Payload))
+					handled := false
+					if GetConfig().EnableSharding {
+						hangup, err := crd.PreprocessSharding(nss)
+						if err != nil {
+							handled = true
+							if logger.GetLogger().V(logger.Debug) {
+								logger.GetLogger().Log(logger.Debug, "Error preprocessing sharding, hangup:", err.Error(), hangup)
+							}
+							if hangup {
+								crd.conn.Close()
+							}
+						}
+					}
+					return handled, err
+				}
+
+				handled, err := crd.processMuxCommand(ns)
+				if !handled {
+					if nss[0].Cmd == common.CmdClientCalCorrelationID {
+						crd.preppendCorrID = false
+					}
+					return false, err
+				}
+			}
+			return true, nil
+		}
+		crd.nss = nil
+		// an individual request
+		if (request.Cmd == common.CmdPrepare) || (request.Cmd == common.CmdPrepareV2) || (request.Cmd == common.CmdPrepareSpecial) {
+			crd.isRead = crd.sqlParser.IsRead(string(request.Payload))
+			return false, nil
+		}
 	}
 	return crd.processMuxCommand(request)
 }
@@ -513,7 +545,7 @@ func (crd *Coordinator) resetWorkerInfo() {
  * or as part of end-of-data if the request was a select+fetch
  *
  */
-func (crd *Coordinator) dispatchRequest(request *mysqlpackets.Packet) error {
+func (crd *Coordinator) dispatchRequest(request *encoding.Packet) error {
 	if logger.GetLogger().V(logger.Verbose) {
 		logger.GetLogger().Log(logger.Verbose, "coordinator dispatchrequest: starting")
 	}
@@ -668,7 +700,7 @@ var (
  * exception happens (client disconnects, worker exits, timeout)
  * 2nd return parameter tells if the worker is still busy (in transaction or in cursor)
  */
-func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, request *mysqlpackets.Packet, clientWriter io.Writer, rqTimer *time.Timer) (bool, error) {
+func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, request *encoding.Packet, clientWriter io.Writer, rqTimer *time.Timer) (bool, error) {
 	if logger.GetLogger().V(logger.Verbose) {
 		logger.GetLogger().Log(logger.Verbose, "coordinator dorequeset: starting")
 	}
@@ -843,7 +875,7 @@ func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, req
 				// disable timeout once response was sent to the client
 				timeout = nil
 
-				_, err := worker.packager.NewMySQLPacket.Write(msg.data)
+				_, err := clientWriter.Write(msg.data)
 				if err != nil {
 					if logger.GetLogger().V(logger.Debug) {
 						logger.GetLogger().Log(logger.Debug, "Fail to reply to client")

@@ -20,6 +20,7 @@ package lib
 import (
 	"context"
 	"github.com/paypal/hera/utility/encoding"
+	"github.com/paypal/hera/utility/encoding/mysqlpackets"
 	"io"
 	"net"
 	"strconv"
@@ -31,10 +32,16 @@ import (
 
 // Spawns a goroutine which blocks waiting for a message on conn. When a message is received it writes
 // to the channel and exit. It basically wrapps the net.Conn in a channel
-func wrapNewNetstring(conn net.Conn) <-chan *encoding.Packet {
+func wrapNewNetstring(conn net.Conn, isMySQL bool) <-chan *encoding.Packet {
 	ch := make(chan *encoding.Packet, 1)
 	go func() {
-		ns, err := netstring.NewNetstring(conn)
+		var ns *encoding.Packet
+		var err error
+		if isMySQL {
+			ns, err = mysqlpackets.NewMySQLPacket(conn)
+		} else {
+			ns, err = netstring.NewNetstring(conn)
+		}
 		if err != nil {
 			if err == io.EOF {
 				if logger.GetLogger().V(logger.Debug) {
@@ -94,7 +101,7 @@ func HandleConnection(conn net.Conn) {
 	for {
 		var ns *encoding.Packet
 		select {
-		case ns = <-wrapNewNetstring(conn):
+		case ns = <-wrapNewNetstring(conn, false):
 		case timeout := <-crd.Done():
 			if logger.GetLogger().V(logger.Info) {
 				logger.GetLogger().Log(logger.Info, "Connection handler idle timeout", addr)

@@ -23,6 +23,7 @@ import (
 	"github.com/paypal/hera/common"
 	"github.com/paypal/hera/utility"
 	"github.com/paypal/hera/utility/encoding"
+	"github.com/paypal/hera/utility/encoding/mysqlpackets"
 	"github.com/paypal/hera/utility/encoding/netstring"
 	"io"
 	"net"
@@ -127,9 +128,15 @@ func IPAddrStr(address net.Addr) string {
 }
 
 // NetstringFromBytes creates a netstring containing data as payload.
-func NetstringFromBytes(data []byte) (*encoding.Packet, error) {
+func NetstringFromBytes(data []byte, IsMySQL bool) (*encoding.Packet, error) {
 	reader := bytes.NewReader(data)
-	ns, err := netstring.NewNetstring(reader)
+	var ns *encoding.Packet
+	var err error
+	if IsMySQL {
+		ns, err = mysqlpackets.NewMySQLPacket(reader)
+	} else {
+		ns, err = netstring.NewNetstring(reader)
+	}
 	if err != nil {
 		return nil, err
 	}

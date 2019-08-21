@@ -75,9 +75,9 @@ type workerMsg struct {
 	ns *encoding.Packet
 }
 
-func (msg *workerMsg) GetNetstring() *encoding.Packet {
+func (msg *workerMsg) GetNetstring(isMySQL bool) *encoding.Packet {
 	if msg.ns == nil {
-		msg.ns, _ = NetstringFromBytes(msg.data)
+		msg.ns, _ = NetstringFromBytes(msg.data, isMySQL)
 	}
 	return msg.ns
 }

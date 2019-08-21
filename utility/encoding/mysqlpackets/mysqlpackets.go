@@ -245,10 +245,14 @@ func (p *Packager) ReadNext() (ns *encoding.Packet, err error) {
 //	// TODO: Temporary... might have a placeholder for one general function that does all the results/rows heavylifting
 //}
 //
-//// Result sets function
+
+// Result sets function
+// https://dev.mysql.com/doc/dev/mysql-server/8.0.12/page_protocol_com_query_response_text_resultset_column_definition.html
+// This is specifically for ColumnDefinition41 packets.
 //func (p *Packager) ReconstructColumnDefinition() ([]*encoding.Packet, err error) {
-//	// TODO: Write code out for sending binary protocol result sets and COM_QUERY_RESPONSE, and the old fashioned result sets too.
+//
 //}
+
 //
 //// Result sets function
 //func (p *Packager) ReconstructResultsetRow() ([]*encoding.Packet, err error) {

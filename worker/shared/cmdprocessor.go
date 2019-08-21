@@ -23,6 +23,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/paypal/hera/utility/encoding"
+	"github.com/paypal/hera/utility/encoding/mysqlpackets"
 	"os"
 	"regexp"
 	"strconv"
@@ -121,6 +122,13 @@ type CmdProcessor struct {
 	//
 	bindPos []string
 	//
+	// indexed by stmt_id, stores all prepared statements sent by MySQL client
+	//
+	stmts map[int]string
+	currsid int 			// current available stmt.id
+	numColumns int				// number of columns specified in query
+	packager *mysqlpackets.Packager // in charge of writing packets
+	//
 	// hera protocol let client sends bindname in one ns command and bindvalue for the
 	// bindname in the very next ns command. this parameter is used to track which
 	// name is for the current value.
@@ -174,8 +182,9 @@ func NewCmdProcessor(adapter CmdProcessorAdapter, sockMux *os.File) *CmdProcesso
 	if cs == "" {
 		cs = "CLIENT_SESSION"
 	}
-
-	return &CmdProcessor{adapter: adapter, SocketOut: sockMux, calSessionTxnName: cs, heartbeat: true}
+	pkgr := &mysqlpackets.Packager{}
+	stmts := make(map[int]string)
+	return &CmdProcessor{adapter: adapter, SocketOut: sockMux, calSessionTxnName: cs, heartbeat: true, stmts:stmts, packager:pkgr}
 }
 
 // ProcessCmd implements the client commands like prepare, bind, execute, etc
@@ -719,6 +728,11 @@ func (cp *CmdProcessor) ProcessCmd(ns *encoding.Packet) error {
 		switch ns.Cmd {
 
 		case common.COM_QUERY:
+			/* Right now this is only good for simple queries that don't ask for anything aside from an OK packet.
+			* Reason being that COM_QUERY_RESPONSE packets fall into several categories. OK, ERR, or a series of packets
+			* that include ColumnDefinition packets. We currently have no good way of honest replication of
+			* ColumnDefinition.
+			*/
 			if logger.GetLogger().V(logger.Debug) {
 				logger.GetLogger().Log(logger.Debug, "Executing ", cp.inTrans)
 				logger.GetLogger().Log(logger.Debug, "No bindings")
@@ -768,28 +782,26 @@ func (cp *CmdProcessor) ProcessCmd(ns *encoding.Packet) error {
 				if logger.GetLogger().V(logger.Debug) {
 					logger.GetLogger().Log(logger.Debug, "exe row", rowcnt)
 				}
-				sz := 2
-				if len(cp.bindOuts) > 0 {
-					sz++
-					sz += len(cp.bindOuts)
-				}
-				if logger.GetLogger().V(logger.Verbose) {
-					logger.GetLogger().Log(logger.Verbose, "BINDOUTS", len(cp.bindOuts), cp.bindOuts)
-				}
 
-				nss := make([]*encoding.Packet, sz)
-				nss[0] = netstring.NewNetstringFrom(common.RcValue, []byte("0"))
-				nss[1] = netstring.NewNetstringFrom(common.RcValue, []byte(strconv.FormatInt(rowcnt, 10)))
-				if sz > 2 {
-					if len(cp.bindOuts) > 0 {
-						nss[2] = netstring.NewNetstringFrom(common.RcValue, []byte("1"))
-						for i := 0; i < len(cp.bindOuts); i++ {
-							nss[i+3] = netstring.NewNetstringFrom(common.RcValue, []byte(cp.bindOuts[i]))
-						}
+				// Get the last insert id from the sql.Result
+				var liid int64
+				liid, err = cp.result.LastInsertId()
+				if err != nil {
+					if logger.GetLogger().V(logger.Debug) {
+						logger.GetLogger().Log(logger.Debug, "LastInsertId():", err.Error())
 					}
+					cp.calExecErr("LastInsertId", err.Error())
+					break
 				}
-				resns := netstring.NewNetstringEmbedded(nss)
-				err = cp.eor(common.EORInTransaction, resns)
+				if logger.GetLogger().V(logger.Debug) {
+					logger.GetLogger().Log(logger.Debug, "exe LastInsertId", rowcnt)
+				}
+				// Set an OK packet reporting the number of rows affected and last insert id. I don't know what to put for the message though...
+				ns := mysqlpackets.NewMySQLPacketFrom(ns.Sqid + 1, mysqlpackets.OKPacket(int(rowcnt), int(liid), "This packet has to be over 7 bytes."))
+
+				// Send OK packet.
+				err = cp.eor(common.EORFree, ns)
+
 			}
 
 
@@ -799,6 +811,7 @@ func (cp *CmdProcessor) ProcessCmd(ns *encoding.Packet) error {
 			cp.lastErr = nil
 			cp.sqlHash = 0
 			cp.heartbeat = false // for hb
+
 			//
 			// need to turn "select * from table where ca=:a and cb=:b"
 			// to "select * from table where ca=? and cb=?"
@@ -810,6 +823,7 @@ func (cp *CmdProcessor) ProcessCmd(ns *encoding.Packet) error {
 			if logger.GetLogger().V(logger.Verbose) {
 				logger.GetLogger().Log(logger.Verbose, "Preparing:", sqlQuery)
 			}
+
 			//
 			// start a new transaction for the first dml request.
 			//
@@ -835,11 +849,39 @@ func (cp *CmdProcessor) ProcessCmd(ns *encoding.Packet) error {
 				cp.lastErr = err
 				err = nil
 			}
+
+			// Prepare to send out COM_STMT_PREPARE_OK response.
+			payload := make([]byte, 1 /* status */ + 4 + 2 + 2 + 1 + 2)
+			idx := 0
+			// https://dev.mysql.com/doc/internals/en/com-stmt-prepare-response.html
+			mysqlpackets.WriteFixedLenInt(payload, mysqlpackets.INT1, /* status OK */0x00, &idx)
+			mysqlpackets.WriteFixedLenInt(payload, mysqlpackets.INT4, /* stmt_id */ cp.currsid, &idx)
+			mysqlpackets.WriteFixedLenInt(payload, mysqlpackets.INT2, /* num_columns*/ cp.numColumns, &idx)
+			mysqlpackets.WriteFixedLenInt(payload, mysqlpackets.INT2, /* num_params*/ len(cp.bindVars), &idx)
+			mysqlpackets.WriteFixedLenInt(payload, mysqlpackets.INT1, /* reserved_1 */ 0x00, &idx)
+			mysqlpackets.WriteFixedLenInt(payload, mysqlpackets.INT2, /* warning_count */ 0x00, &idx)
+
+			// write payload to stream
+			WriteAll(cp.SocketOut, mysqlpackets.NewMySQLPacketFrom(ns.Sqid + 1, payload))
+
+			// Send ColumnDefinition packets for each parameter and each column.
+			//for i, param := range cp.bindVars {
+			//	// TODO: mysqlpackets.ReconstructColumnDefinition() ...
+			//	// Write to stream using WriteAll(cp.SocketOut, mysqlpackets.NewMySQLPacketFrom(ns.Sqid + i + 1, payload))
+			//}
+			//
+			//for j, column := range cp.bindOuts {
+			//	// TODO: mysqlpackets.ReconstructColumnDefinition() ...
+			//	// Write to stream using WriteAll(cp.SocketOut, mysqlpackets.NewMySQLPacketFrom(ns.Sqid + i + 1, payload))
+			//}
+
 			cp.rows = nil
 			cp.result = nil
 			cp.bindOuts = cp.bindOuts[:0]
 			cp.numBindOuts = 0
 
+			// Increment current stmt_id since this prepared statement has just been processed.
+			cp.currsid++
 
 		case common.COM_STMT_EXECUTE:
 			if cp.stmt != nil {
@@ -1220,10 +1262,47 @@ func (cp *CmdProcessor) preprocess(packet *encoding.Packet) string {
 			cp.bindPos[i] = val
 		}
 
+		// Get the number of columns in the query
+		splits := strings.Split(strings.ToLower(query), " as ")
+		if len(splits) != 0 {
+			cp.bindOuts = strings.SplitN(splits[1], ",", -1)
+			cp.numColumns = len(cp.bindOuts)
+			cp.numBindOuts = cp.numColumns
+		}
+		cp.stmts[cp.currsid] = query
+
 		return query
 	}
 }
 
 func (cp *CmdProcessor) isIdle() bool {
 	return !(cp.inCursor) && !(cp.inTrans)
+}
+
+/*
+* Rolling back current transaction for MySQL protocol queries. Copied code from CmdRollback, but separated
+* until I figure out what all needs to be logged.
+ */
+func (cp *CmdProcessor) RollbackCurrentTransaction() error {
+	var err error
+	if cp.tx != nil {
+		calevt := cal.NewCalEvent("ROLLBACK", "Local", cal.TransOK, "")
+		err = cp.tx.Rollback()
+		if err != nil {
+			cp.adapter.ProcessError(err, &cp.WorkerScope, &cp.queryScope)
+			if logger.GetLogger().V(logger.Warning) {
+				logger.GetLogger().Log(logger.Warning, "Rollback error:", err.Error())
+			}
+			calevt.AddDataStr("RC", err.Error())
+			calevt.SetStatus(cal.TransError)
+		} else {
+			cp.tx = nil
+		}
+		calevt.Completed()
+	} else {
+		if logger.GetLogger().V(logger.Warning) {
+			logger.GetLogger().Log(logger.Warning, "Rollback issued without a transaction")
+		}
+	}
+	return err
 }
