@@ -21,6 +21,8 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"github.com/paypal/hera/utility/encoding"
+	"github.com/paypal/hera/utility/encoding/mysqlpackets"
 	"math/rand"
 	"net"
 	"os"
@@ -49,7 +51,7 @@ const (
 	wsWait                          = 2 // the worker is waiting for the next request but not doing work, usually holding a db transaction open
 	wsBusy                          = 3 // the worker is busy executing a request
 	wsSchd                          = 4 //
-	wsFnsh                          = 5 // the worker just finished the requests, it will move to init state
+	 wsFnsh                          = 5 // the worker just finished the requests, it will move to init state
 	wsQuce                          = 6 // repurposed for a state when worker is restarting or recovering
 	MaxWorkerState                  = 7
 )
@@ -71,10 +73,10 @@ type workerMsg struct {
 	// the request counter / Id
 	rqId uint16
 	// the actual message to be sent to the client
-	ns *netstring.Netstring
+	ns *encoding.Packet
 }
 
-func (msg *workerMsg) GetNetstring() *netstring.Netstring {
+func (msg *workerMsg) GetNetstring() *encoding.Packet {
 	if msg.ns == nil {
 		msg.ns, _ = NetstringFromBytes(msg.data)
 	}
@@ -752,7 +754,12 @@ func (worker *WorkerClient) doRead() {
 		// blocking call. if something goes wrong, recycle will close uds from worker
 		// side to unblock this call.
 		//
+
 		ns, err := netstring.NewNetstring(worker.workerConn)
+		// If the packet is actually MySQLPacket, then try with MySQL functions.
+		if err == encoding.WRONGPACKET {
+			ns, err = mysqlpackets.NewMySQLPacket(worker.workerConn)
+		}
 		if err != nil {
 			if logger.GetLogger().V(logger.Warning) {
 				logger.GetLogger().Log(logger.Warning, "workerclient pid=", worker.pid, " read error:", err.Error())
@@ -766,71 +773,75 @@ func (worker *WorkerClient) doRead() {
 		//
 		// unblocked write to outchannel up to bfChannelSize messages
 		//
-		switch ns.Cmd {
-		case common.CmdEOR:
-			newPayload := ns.Payload[3:]
-			if len(payload) == 0 {
-				payload = newPayload
-			} else {
-				if len(newPayload) > 0 {
-					payload = append(payload, newPayload...)
-					if logger.GetLogger().V(logger.Verbose) {
-						logger.GetLogger().Log(logger.Verbose, "Appended payload", len(payload), len(newPayload))
+		// TODO: write for IsMySQL case? Unsure if necessary considering these are internal codes and results from
+		//  MySQL are returned up above with non-empty payload.
+		if !ns.IsMySQL {
+			switch ns.Cmd {
+			case common.CmdEOR:
+				newPayload := ns.Payload[3:]
+				if len(payload) == 0 {
+					payload = newPayload
+				} else {
+					if len(newPayload) > 0 {
+						payload = append(payload, newPayload...)
+						if logger.GetLogger().V(logger.Verbose) {
+							logger.GetLogger().Log(logger.Verbose, "Appended payload", len(payload), len(newPayload))
+						}
 					}
 				}
-			}
-			eor := int(ns.Payload[0] - '0')
-			rqId := (uint16(ns.Payload[1]) << 8) + uint16(ns.Payload[2])
-			if logger.GetLogger().V(logger.Verbose) {
-				logger.GetLogger().Log(logger.Verbose, "workerclient (<<< pid =", worker.pid, ",wrqId:", worker.rqId, "): EOR code:", eor, ", rqId: ", rqId, ", data:", DebugString(payload))
-			}
-			if eor == common.EORFree {
-				worker.setState(wsFnsh)
-				/*worker.sqlStartTimeMs = 0
+				eor := int(ns.Payload[0] - '0')
+				rqId := (uint16(ns.Payload[1]) << 8) + uint16(ns.Payload[2])
 				if logger.GetLogger().V(logger.Verbose) {
-					logger.GetLogger().Log(logger.Verbose, "workerclient sqltime=", worker.sqlStartTimeMs)
-				}*/
-			} else {
-				worker.setState(wsWait)
-			}
-			if eor != common.EORMoreIncomingRequests {
-				worker.outCh <- &workerMsg{data: payload, eor: true, free: (eor == common.EORFree), inTransaction: ((eor == common.EORInTransaction) || (eor == common.EORInCursorInTransaction)), rqId: rqId}
-				payload = nil
-			} else {
-				// buffer data to avoid race condition
-				// the data will be sent after the EOR that we expect to be sent by the worker when responding to the next request
-				if logger.GetLogger().V(logger.Verbose) {
-					logger.GetLogger().Log(logger.Verbose, "EORMoreIncomingRequests, buffering data", len(payload))
+					logger.GetLogger().Log(logger.Verbose, "workerclient (<<< pid =", worker.pid, ",wrqId:", worker.rqId, "): EOR code:", eor, ", rqId: ", rqId, ", data:", DebugString(payload))
 				}
-			}
+				if eor == common.EORFree {
+					worker.setState(wsFnsh)
+					/*worker.sqlStartTimeMs = 0
+					if logger.GetLogger().V(logger.Verbose) {
+						logger.GetLogger().Log(logger.Verbose, "workerclient sqltime=", worker.sqlStartTimeMs)
+					}*/
+				} else {
+					worker.setState(wsWait)
+				}
+				if eor != common.EORMoreIncomingRequests {
+					worker.outCh <- &workerMsg{data: payload, eor: true, free: (eor == common.EORFree), inTransaction: ((eor == common.EORInTransaction) || (eor == common.EORInCursorInTransaction)), rqId: rqId}
+					payload = nil
+				} else {
+					// buffer data to avoid race condition
+					// the data will be sent after the EOR that we expect to be sent by the worker when responding to the next request
+					if logger.GetLogger().V(logger.Verbose) {
+						logger.GetLogger().Log(logger.Verbose, "EORMoreIncomingRequests, buffering data", len(payload))
+					}
+				}
 
-		case common.CmdControlMsg:
-			if logger.GetLogger().V(logger.Verbose) {
-				logger.GetLogger().Log(logger.Verbose, "workerclient (<<< pid =", worker.pid, "): got control message, ", ns.Payload)
+			case common.CmdControlMsg:
+				if logger.GetLogger().V(logger.Verbose) {
+					logger.GetLogger().Log(logger.Verbose, "workerclient (<<< pid =", worker.pid, "): got control message, ", ns.Payload)
+				}
+				if len(payload) > 0 {
+					worker.outCh <- &workerMsg{data: payload, eor: false, free: false, inTransaction: false}
+					payload = nil
+				}
+				return
+			default:
+				if ns.Cmd != common.RcStillExecuting {
+					worker.setState(wsWait)
+				}
+				if logger.GetLogger().V(logger.Verbose) {
+					logger.GetLogger().Log(logger.Verbose, "workerclient (<<< pid =", worker.pid, "): data:", DebugString(ns.Serialized), len(ns.Serialized))
+				}
+				if len(payload) > 0 {
+					worker.outCh <- &workerMsg{data: payload, eor: false, free: false, inTransaction: false}
+					payload = nil
+				}
+				worker.outCh <- &workerMsg{data: ns.Serialized, eor: false, free: false, inTransaction: false, ns: ns}
 			}
-			if len(payload) > 0 {
-				worker.outCh <- &workerMsg{data: payload, eor: false, free: false, inTransaction: false}
-				payload = nil
-			}
-			return
-		default:
-			if ns.Cmd != common.RcStillExecuting {
-				worker.setState(wsWait)
-			}
-			if logger.GetLogger().V(logger.Verbose) {
-				logger.GetLogger().Log(logger.Verbose, "workerclient (<<< pid =", worker.pid, "): data:", DebugString(ns.Serialized), len(ns.Serialized))
-			}
-			if len(payload) > 0 {
-				worker.outCh <- &workerMsg{data: payload, eor: false, free: false, inTransaction: false}
-				payload = nil
-			}
-			worker.outCh <- &workerMsg{data: ns.Serialized, eor: false, free: false, inTransaction: false, ns: ns}
 		}
 	}
 }
 
 // Write sends a message to the worker
-func (worker *WorkerClient) Write(ns *netstring.Netstring, nsCount uint16) error {
+func (worker *WorkerClient) Write(ns *encoding.Packet, nsCount uint16) error {
 	worker.setState(wsBusy)
 
 	worker.rqId += nsCount

@@ -19,6 +19,8 @@ package shared
 
 import (
 	"fmt"
+	"github.com/paypal/hera/utility/encoding"
+	"github.com/paypal/hera/utility/encoding/mysqlpackets"
 	"os"
 	"os/signal"
 	"strconv"
@@ -132,12 +134,12 @@ func Start(adapter CmdProcessorAdapter) {
 
 // runworker is the infinite loop, serving requests
 func runworker(sockMux *os.File, cmdprocessor *CmdProcessor, cfg *workerConfig) {
-	var ns *netstring.Netstring
+	var ns *encoding.Packet
 	var ok = true
 	var sig int
 	var err error
 
-	nschannel := readNextNetstring(sockMux)
+	nschannel := readNextNetstring(sockMux) // TODO: Function still needs to be fixed to handle MySQL vs netstring.
 	cmdprocessor.moreIncomingRequests = func() bool {
 		return (len(nschannel) > 0)
 	}
@@ -229,26 +231,48 @@ outerloop:
  * reading the next command from socketpair and sending it to commandchannel.
  * block on read. exit only when readnext returns an error.
  */
-func readNextNetstring(sockMux *os.File) <-chan *netstring.Netstring {
+func readNextNetstring(sockMux *os.File) <-chan *encoding.Packet {
 	//
 	// up to 10 ns substrings will be queued up in the buffer.
 	//
-	commandch := make(chan *netstring.Netstring, 10)
-	nsreader := netstring.NewNetstringReader(sockMux)
-	go func() {
-		for {
-			ns, err := nsreader.ReadNext()
-			if err != nil {
-				if logger.GetLogger().V(logger.Warning) {
-					logger.GetLogger().Log(logger.Warning, sockMux.Name(), ":worker readerr", err.Error())
+	commandch := make(chan *encoding.Packet, 10)
+	isMySQL := false
+
+	// TODO: Revise to deal with WRONG PACKET. This isn't as simple as it was made out to be.
+	// Eventually want to read in packet and determine if it's netstring or mysql
+	if isMySQL {
+		mspreader := mysqlpackets.NewPackager(sockMux, nil)
+		go func() {
+			for {
+				ns, err := mspreader.ReadNext()
+				if err != nil {
+					if logger.GetLogger().V(logger.Warning) {
+						logger.GetLogger().Log(logger.Warning, sockMux.Name(), ":worker readerr", err.Error())
+					}
+					commandch <- nil
+				} else {
+					commandch <- ns
 				}
-				commandch <- nil
-			} else {
-				commandch <- ns
 			}
-		}
-		//close(commandch)
-	}()
+			//close(commandch)
+		}()
+	} else {
+		nsreader := netstring.NewNetstringReader(sockMux)
+		go func() {
+			for {
+				ns, err := nsreader.ReadNext()
+				if err != nil {
+					if logger.GetLogger().V(logger.Warning) {
+						logger.GetLogger().Log(logger.Warning, sockMux.Name(), ":worker readerr", err.Error())
+					}
+					commandch <- nil
+				} else {
+					commandch <- ns
+				}
+			}
+			//close(commandch)
+		}()
+	}
 	return commandch
 }
 
@@ -280,14 +304,16 @@ func waitForSignal() <-chan int {
 }
 
 // recoverworker drains the mux channel and rollbacks the current transaction
-func recoverworker(cmdprocessor *CmdProcessor, nschannel <-chan *netstring.Netstring) error {
+func recoverworker(cmdprocessor *CmdProcessor, nschannel <-chan *encoding.Packet) error {
 	drainIncomingChannel(cmdprocessor, nschannel)
 	err := cmdprocessor.ProcessCmd(netstring.NewNetstringFrom(common.CmdRollback, []byte("")))
+	// TODO: MySQL rollback. Needs to be implemented separately because ROLLBACK is sent through COM_QUERY
+	//  and not a special rollback opcode
 	return err
 }
 
 // drainIncomingChannel clears the mux channel
-func drainIncomingChannel(cmdprocessor *CmdProcessor, nschannel <-chan *netstring.Netstring) {
+func drainIncomingChannel(cmdprocessor *CmdProcessor, nschannel <-chan *encoding.Packet) {
 	for {
 		if logger.GetLogger().V(logger.Debug) {
 			logger.GetLogger().Log(logger.Debug, "draining nschannel")
@@ -305,7 +331,7 @@ func drainIncomingChannel(cmdprocessor *CmdProcessor, nschannel <-chan *netstrin
 				logger.GetLogger().Log(logger.Debug, "nschannel draining", DebugString(ns.Serialized))
 			}
 			//
-			// let readNextnetstring.Netstring reload nschannel if chann buffer was full.
+			// let readNextencoding.Packet reload nschannel if chann buffer was full.
 			//
 			if len(nschannel) != 0 {
 				time.Sleep(time.Microsecond * 10)

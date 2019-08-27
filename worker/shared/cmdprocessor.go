@@ -17,11 +17,14 @@
 
 package shared
 
+// TODO: MySQL packet processing in worker for all commands.
+
 import (
 	"bytes"
 	"context"
 	"errors"
 	"fmt"
+	"github.com/paypal/hera/utility/encoding"
 	"os"
 	"regexp"
 	"strconv"
@@ -177,8 +180,9 @@ func NewCmdProcessor(adapter CmdProcessorAdapter, sockMux *os.File) *CmdProcesso
 	return &CmdProcessor{adapter: adapter, SocketOut: sockMux, calSessionTxnName: cs, heartbeat: true}
 }
 
+// TODO: Needs MySQL integration
 // ProcessCmd implements the client commands like prepare, bind, execute, etc
-func (cp *CmdProcessor) ProcessCmd(ns *netstring.Netstring) error {
+func (cp *CmdProcessor) ProcessCmd(ns *encoding.Packet) error {
 	if ns == nil {
 		return errors.New("empty netstring passed to processcommand")
 	}
@@ -435,7 +439,7 @@ outloop:
 					logger.GetLogger().Log(logger.Verbose, "BINDOUTS", len(cp.bindOuts), cp.bindOuts)
 				}
 
-				nss := make([]*netstring.Netstring, sz)
+				nss := make([]*encoding.Packet, sz)
 				nss[0] = netstring.NewNetstringFrom(common.RcValue, []byte("0"))
 				nss[1] = netstring.NewNetstringFrom(common.RcValue, []byte(strconv.FormatInt(rowcnt, 10)))
 				if sz > 2 {
@@ -468,7 +472,7 @@ outloop:
 					sz++
 				}
 
-				nss := make([]*netstring.Netstring, sz)
+				nss := make([]*encoding.Packet, sz)
 				nss[0] = netstring.NewNetstringFrom(common.RcValue, []byte(strconv.Itoa(len(cols))))
 				nss[1] = netstring.NewNetstringFrom(common.RcValue, []byte("0"))
 				if sz > 2 {
@@ -515,7 +519,7 @@ outloop:
 				calt.Completed()
 				break
 			}
-			var nss []*netstring.Netstring
+			var nss []*encoding.Packet
 			cols, _ := cp.rows.Columns()
 			readCols := make([]interface{}, len(cols))
 			writeCols := make([]sql.NullString, len(cols))
@@ -567,7 +571,7 @@ outloop:
 			cp.rows = nil
 		} else {
 			// send back to client only if last result was ok
-			var nsr *netstring.Netstring
+			var nsr *encoding.Packet
 			if cp.lastErr == nil {
 				nsr = netstring.NewNetstringFrom(common.RcError, []byte("fetch requested but no statement exists"))
 			}
@@ -597,7 +601,7 @@ outloop:
 			ns := netstring.NewNetstringFrom(common.RcValue, []byte("0"))
 			err = WriteAll(cp.SocketOut, ns)
 		} else {
-			nss := make([]*netstring.Netstring, len(cts)*5+1)
+			nss := make([]*encoding.Packet, len(cts)*5+1)
 			nss[0] = netstring.NewNetstringFrom(common.RcValue, []byte(strconv.Itoa(len(cts))))
 			var cnt = 1
 			var width, prec, scale int64
@@ -749,7 +753,8 @@ func (cp *CmdProcessor) InitDB() error {
 	return nil
 }
 
-func (cp *CmdProcessor) eor(code int, ns *netstring.Netstring) error {
+// TODO: Needs MySQL integration
+func (cp *CmdProcessor) eor(code int, ns *encoding.Packet) error {
 	if (code == common.EORFree) && cp.moreIncomingRequests() {
 		code = common.EORMoreIncomingRequests
 	}

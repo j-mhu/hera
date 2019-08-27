@@ -177,7 +177,8 @@ func (srv *server) Run() {
 			logger.GetLogger().Log(logger.Info, "server: accepted from ", conn.RemoteAddr())
 		}
 
-		go srv.authAndHandle(conn, srv.handler)
+		// go srv.authAndHandle(conn, srv.handler)
+		srv.authAndHandle(conn, srv.handler)
 	}
 }
 

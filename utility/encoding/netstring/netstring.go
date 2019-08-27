@@ -22,6 +22,7 @@ import (
 	"bytes"
 	"errors"
 	"fmt"
+	"github.com/paypal/hera/utility/encoding"
 	"io"
 )
 
@@ -33,16 +34,11 @@ const (
 	CodeSubCommand = '0'
 )
 
-// Netstring is a netstring packed, which consists of a command plus a payload
-type Netstring struct {
-	Cmd        int
-	Serialized []byte // the entire netstring array. e.g. "100:1 xxx...yyy,"
-	Payload    []byte // the content section of a netstring. e.g. "xxx...yyy"
-}
-
-// NewNetstring creates a Netstring from the reader, reading exactly as many bytes as necessary
-func NewNetstring(_reader io.Reader) (*Netstring, error) {
-	ns := &Netstring{}
+// NewInitNetstring creates a Netstring from the reader, reading exactly as many bytes as necessary. Assumes
+// that this is the initial request received from the client, so it doesn't initially have the MySQL vs netstring
+// encoding indicator byte.
+func NewInitNetstring(_reader io.Reader) (*encoding.Packet, error) {
+	ns := &encoding.Packet{}
 
 	var buff bytes.Buffer
 	var tmp = make([]byte, 1)
@@ -50,6 +46,11 @@ func NewNetstring(_reader io.Reader) (*Netstring, error) {
 	var err error
 	// read length
 	length := 0
+
+	if err == io.EOF {
+		return nil, err
+	}
+
 	for {
 		_, err = _reader.Read(tmp)
 		b := tmp[0]
@@ -67,11 +68,13 @@ func NewNetstring(_reader io.Reader) (*Netstring, error) {
 			length = length*10 + digit
 		}
 	}
+
 	//read the rest
 	totalLen := length + buff.Len() + 1 /*comma*/
-	ns.Serialized = make([]byte, totalLen)
-	copy(ns.Serialized, buff.Bytes())
-	bytesRead := buff.Len()
+	ns.Serialized = make([]byte, totalLen + 1) // + 1 is for indicator byte
+	ns.Serialized[0] = 1 // indicates netstring
+	copy(ns.Serialized[1:], buff.Bytes())
+	bytesRead := buff.Len() + 1
 	var n int
 	for bytesRead < totalLen {
 		n, err = _reader.Read(ns.Serialized[bytesRead:])
@@ -81,8 +84,8 @@ func NewNetstring(_reader io.Reader) (*Netstring, error) {
 		bytesRead += n
 	}
 	// read command
-	next := buff.Len()
-	for next < (totalLen - 1) {
+	next := buff.Len() + 1
+	for next < (totalLen) {
 		if ns.Serialized[next] == space {
 			next++
 			break
@@ -94,13 +97,87 @@ func NewNetstring(_reader io.Reader) (*Netstring, error) {
 		ns.Cmd = ns.Cmd*10 + digit
 		next++
 	}
+	ns.IsMySQL = false
+	ns.Payload = ns.Serialized[next : totalLen]
+	return ns, nil
+}
 
-	ns.Payload = ns.Serialized[next : totalLen-1]
+// NewNetstring creates a Netstring from the reader, reading exactly as many bytes as necessary
+func NewNetstring(_reader io.Reader) (*encoding.Packet, error) {
+	ns := &encoding.Packet{}
+
+	var buff bytes.Buffer
+	var tp = make([]byte, 1)
+	var tmp = make([]byte, 1)
+	var digit int
+	var err error
+	// read length
+	length := 0
+	// Read in type byte
+	_, err = _reader.Read(tp)
+	if err == io.EOF {
+		return nil, err
+	}
+	if len(tp) != 0 && int(tp[0]) != 1 {
+		// fmt.Println("Expected netstring ", 1, " , instead got", tp[0])
+		if int(tp[0]) == 0 {
+			return nil, encoding.WRONGPACKET
+		}
+		return nil, encoding.UNKNOWNPACKET
+	}
+	for {
+		_, err = _reader.Read(tmp)
+		b := tmp[0]
+		if err != nil {
+			return nil, err
+		}
+		buff.WriteByte(b)
+		if b == colon {
+			break
+		} else {
+			digit = int(b - '0')
+			if (digit < 0) || (digit > 9) {
+				return nil, errors.New("Expected digit reading length")
+			}
+			length = length*10 + digit
+		}
+	}
+
+	//read the rest
+	totalLen := length + buff.Len() + 1 /*comma*/
+	ns.Serialized = make([]byte, totalLen + 1) // + 1 is for indicator byte
+	ns.Serialized[0] = 1 // indicates netstring
+	copy(ns.Serialized[1:], buff.Bytes())
+	bytesRead := buff.Len() + 1
+	var n int
+	for bytesRead < totalLen {
+		n, err = _reader.Read(ns.Serialized[bytesRead:])
+		if err != nil {
+			return nil, err
+		}
+		bytesRead += n
+	}
+	// read command
+	next := buff.Len() + 1
+	for next < (totalLen) {
+		if ns.Serialized[next] == space {
+			next++
+			break
+		}
+		digit = int(ns.Serialized[next] - '0')
+		if (digit < 0) || (digit > 9) {
+			return nil, errors.New("Expected digit reading command")
+		}
+		ns.Cmd = ns.Cmd*10 + digit
+		next++
+	}
+	ns.IsMySQL = false
+	ns.Payload = ns.Serialized[next : totalLen]
 	return ns, nil
 }
 
 // NewNetstringFrom creates a Netstring from command and Payload
-func NewNetstringFrom(_cmd int, _payload []byte) *Netstring {
+func NewNetstringFrom(_cmd int, _payload []byte) *encoding.Packet {
 	// TODO: optimize
 	payloadLen := len(_payload)
 	cmdStr := fmt.Sprintf("%d", _cmd)
@@ -110,19 +187,21 @@ func NewNetstringFrom(_cmd int, _payload []byte) *Netstring {
 	} else {
 		str = fmt.Sprintf("%d:%s %s,", payloadLen+len(cmdStr)+1 /*the space*/, cmdStr, string(_payload))
 	}
-	ns := new(Netstring)
+	ns := new(encoding.Packet)
 	ns.Cmd = _cmd
-	ns.Serialized = []byte(str)
+	ns.IsMySQL = false
+	byteStr := []byte(str)
+	ns.Serialized = append([]byte{1}, byteStr...)
 	if payloadLen > 0 {
-		totalLen := len(ns.Serialized)
-		ns.Payload = ns.Serialized[totalLen-payloadLen-1 : totalLen-1]
+		totalLen := len(ns.Serialized[1:])
+		ns.Payload = ns.Serialized[totalLen-payloadLen : totalLen]
 	}
 
 	return ns
 }
 
 // NewNetstringEmbedded embedds a set of Netstrings into a netstring
-func NewNetstringEmbedded(_netstrings []*Netstring) *Netstring {
+func NewNetstringEmbedded(_netstrings []*encoding.Packet) *encoding.Packet {
 	// TODO: optimize
 	payloadLen := 0
 	for _, i := range _netstrings {
@@ -130,10 +209,11 @@ func NewNetstringEmbedded(_netstrings []*Netstring) *Netstring {
 	}
 	lenStr := fmt.Sprintf("%d:", payloadLen+2 /*len("0 ")*/)
 	totalLen := len(lenStr) + payloadLen + 2 /*len("0 ")*/ + 1 /*ending comma*/
-	ns := new(Netstring)
-	ns.Serialized = make([]byte, totalLen)
-	copy(ns.Serialized, []byte(lenStr))
-	next := len(lenStr)
+	ns := new(encoding.Packet)
+	ns.Serialized = make([]byte, totalLen + 1) // plus indicator byte for nested netstring
+	ns.Serialized[0] = 1
+	copy(ns.Serialized[1:], []byte(lenStr))
+	next := len(lenStr) + 1
 	copy(ns.Serialized[next:], []byte{CodeSubCommand, space})
 	next += 2
 	for _, i := range _netstrings {
@@ -141,22 +221,25 @@ func NewNetstringEmbedded(_netstrings []*Netstring) *Netstring {
 		next += len(i.Serialized)
 	}
 	ns.Serialized[next] = byte(comma)
-	ns.Payload = ns.Serialized[totalLen-payloadLen-1 : totalLen-1]
+	ns.Payload = ns.Serialized[totalLen-payloadLen: totalLen]
+	ns.IsMySQL = false
 	return ns
 }
 
 // SubNetstrings parses the embedded Netstrings
-func SubNetstrings(_ns *Netstring) ([]*Netstring, error) {
+func SubNetstrings(_ns *encoding.Packet) ([]*encoding.Packet, error) {
 	//  TODO: optimize for zero-copy
-	var nss []*Netstring
+	var nss []*encoding.Packet
 	reader := bytes.NewReader(_ns.Payload)
-	var ns *Netstring
+	// fmt.Println("SubNetstrings: ", _ns.Payload)
+	var ns *encoding.Packet
 	var err error
 	for {
 		ns, err = NewNetstring(reader)
 		if err == io.EOF {
 			break
 		}
+		// fmt.Println(ns.Serialized)
 		if err != nil {
 			return nil, err
 		}
@@ -168,8 +251,8 @@ func SubNetstrings(_ns *Netstring) ([]*Netstring, error) {
 // Reader decodes netstrings from a buffer
 type Reader struct {
 	reader io.Reader
-	ns     *Netstring
-	nss    []*Netstring
+	ns     *encoding.Packet
+	nss    []*encoding.Packet
 	next   int
 }
 
@@ -182,7 +265,7 @@ func NewNetstringReader(_reader io.Reader) *Reader {
 
 // ReadNext returns the next Netstring from the stream. Note: in case of embedded netstrings,
 // the Reader will buffer some Netstrings
-func (reader *Reader) ReadNext() (ns *Netstring, err error) {
+func (reader *Reader) ReadNext() (ns *encoding.Packet, err error) {
 	for {
 		if reader.ns != nil {
 			ns = reader.ns
@@ -203,13 +286,9 @@ func (reader *Reader) ReadNext() (ns *Netstring, err error) {
 			if err != nil {
 				return nil, err
 			}
+
 			reader.ns = nil
 			reader.next = 0
 		}
 	}
-}
-
-// IsComposite returns if the netstring is compisite, embedding multiple netstrings in it
-func (ns *Netstring) IsComposite() bool {
-	return ns.Cmd == (CodeSubCommand - '0')
 }

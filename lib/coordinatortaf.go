@@ -23,6 +23,7 @@ import (
 	"fmt"
 	"github.com/paypal/hera/cal"
 	"github.com/paypal/hera/common"
+	"github.com/paypal/hera/utility/encoding"
 	"github.com/paypal/hera/utility/encoding/netstring"
 	"github.com/paypal/hera/utility/logger"
 	"net"
@@ -96,7 +97,7 @@ func (p *tafResponsePreproc) Write(bf []byte) (int, error) {
 }
 
 // removeFetchSize replaces fetch chunk size value with zero. For simplicity we remove the fetch size hint. Fetch hint should not be used anyways for TAF case
-func (crd *Coordinator) removeFetchSize(request *netstring.Netstring) *netstring.Netstring {
+func (crd *Coordinator) removeFetchSize(request *encoding.Packet) *encoding.Packet {
 	nss := crd.nss
 	for i := range nss {
 		if nss[i].Cmd == common.CmdFetch {
@@ -112,7 +113,7 @@ func (crd *Coordinator) removeFetchSize(request *netstring.Netstring) *netstring
 	return request
 }
 
-// DispatchTAFSession starts running a session, which is a series of netstring.Netstrings executed by the same resource.
+// DispatchTAFSession starts running a session, which is a series of encoding.Packets executed by the same resource.
 // Session is completed when the worker sends EOR free, for example after a commit, a rollback
 // or as part of end-of-data if the request was a select+fetch
 // When the primary database is OK all the requests go to it. When a request to the primary fails,
@@ -121,7 +122,7 @@ func (crd *Coordinator) removeFetchSize(request *netstring.Netstring) *netstring
 // When the primary database health decreases, we start sending the some requests directly to the fallback database.
 // If the primary is completely down, we still send 1% of requests to the primary, as a "health check", so that
 // we can c ompletely switch to the primary when the primary eventualy comes back up
-func (crd *Coordinator) DispatchTAFSession(request *netstring.Netstring) error {
+func (crd *Coordinator) DispatchTAFSession(request *encoding.Packet) error {
 	if logger.GetLogger().V(logger.Debug) {
 		logger.GetLogger().Log(logger.Debug, "TAFSession: starting")
 	}

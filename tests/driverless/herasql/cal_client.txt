@@ -1,0 +1,7 @@
+cal_pool_stack_enable=true
+cal_pool_name=jmhu.pg_hera
+enable_cal=true
+cal_handler=file
+cal_enable_mlog=false
+cal_log_file=./cal.log
+

@@ -22,6 +22,7 @@ import (
 	"context"
 	"errors"
 	"fmt"
+	"github.com/paypal/hera/utility/encoding"
 	"io"
 	"net"
 	"os"
@@ -42,12 +43,12 @@ import (
 // is completed (with COMMIT) or canceled (with ROLLBACK)
 type Coordinator struct {
 	conn          net.Conn                    // used to send back the response(s)
-	clientchannel <-chan *netstring.Netstring // channel where client netstring arrives
+	clientchannel <-chan *encoding.Packet // channel where client netstring arrives
 	ctx           context.Context
 	done          chan int
 	sqlParser     common.SQLParser
 
-	corrID         *netstring.Netstring
+	corrID         *encoding.Packet
 	preppendCorrID bool
 	// tells if the current request is SELECT
 	isRead bool
@@ -63,17 +64,18 @@ type Coordinator struct {
 	ticket        string        // the ticket for the worker
 
 	// if the current netstring is compositie, cache the subnetstrings so that it's not parsed again
-	nss []*netstring.Netstring
+	nss []*encoding.Packet
 
 	// if this handles an internal client like rac maintenance config or shard config
 	isInternal bool
 }
 
-// NewCoordinator creates a coordinator, clientchannel is used to read the requests, conn is used to write responses
-func NewCoordinator(ctx context.Context, clientchannel <-chan *netstring.Netstring, conn net.Conn) *Coordinator {
+// NewCoordinator creates a coordinator, clientchannel is used to read the requests, conn is used to write responses.
+func NewCoordinator(ctx context.Context, clientchannel <-chan *encoding.Packet, conn net.Conn) *Coordinator {
 	coordinator := &Coordinator{clientchannel: clientchannel, conn: conn, ctx: ctx, done: make(chan int, 1), id: conn.RemoteAddr().String(), shard: &shardInfo{sessionShardID: -1}, prevShard: &shardInfo{sessionShardID: -1}}
 	var err error
 	coordinator.sqlParser, err = common.NewRegexSQLParser()
+	logger.GetLogger().Log(logger.Verbose, "Created coordinator")
 	if err != nil {
 		logger.GetLogger().Log(logger.Alert, "Can't create regex SQL parser, R/W disabled, error:", err.Error())
 		coordinator.sqlParser = common.NewDummyParser()
@@ -116,8 +118,10 @@ func (crd *Coordinator) Run() {
 	var workerCtrlChan <-chan *workerMsg
 	running := true
 	for running {
+		logger.GetLogger().Log(logger.Verbose, "Running coordinator")
 		select {
 		case ns, ok := <-crd.clientchannel:
+			logger.GetLogger().Log(logger.Verbose, "Got msg from client channel", ns.Serialized)
 			if !ok {
 				if logger.GetLogger().V(logger.Debug) {
 					logger.GetLogger().Log(logger.Debug, "Coordinator exiting (closed channel) ...")
@@ -132,13 +136,16 @@ func (crd *Coordinator) Run() {
 				}
 				return
 			}
+			logger.GetLogger().Log(logger.Verbose, "coordinator run got client request.")
 			if logger.GetLogger().V(logger.Debug) {
 				logger.GetLogger().Log(logger.Debug, "coordinator run got client request.")
 			}
 			crd.nss = nil
 			// new session
+			logger.GetLogger().Log(logger.Verbose, "About to enter handleMux.")
 			handle, _ := crd.handleMux(ns)
 			if !handle {
+				logger.GetLogger().Log(logger.Verbose, "Not handled by handleMux")
 				// not handled by mux, it means it is a worker command
 
 				// if the current worker is not in transaction we recover the current worker and dispatch to a new worker
@@ -158,6 +165,7 @@ func (crd *Coordinator) Run() {
 					workerCtrlChan = nil
 				}
 
+				logger.GetLogger().Log(logger.Verbose, "about to enter crd.dispatch with", ns.Serialized)
 				running = crd.dispatch(ns)
 				if crd.worker != nil {
 					workerChan = crd.worker.channel()
@@ -185,6 +193,7 @@ func (crd *Coordinator) Run() {
 			idleTimer = nil
 
 		case msg, ok := <-workerChan:
+			logger.GetLogger().Log(logger.Verbose, "Received message from workerChan", msg.data)
 			if !ok {
 				if logger.GetLogger().V(logger.Debug) {
 					logger.GetLogger().Log(logger.Debug, "Run: worker closed, exiting")
@@ -293,7 +302,7 @@ func (crd *Coordinator) Run() {
 	}
 }
 
-func (crd *Coordinator) dispatch(request *netstring.Netstring) bool {
+func (crd *Coordinator) dispatch(request *encoding.Packet) bool {
 	if GetConfig().EnableTAF && (crd.worker == nil) {
 		taferr := crd.DispatchTAFSession(request)
 		crd.processError(taferr)
@@ -305,7 +314,7 @@ func (crd *Coordinator) dispatch(request *netstring.Netstring) bool {
 	return (deferr == nil)
 }
 
-func (crd *Coordinator) computeSQLHash(request *netstring.Netstring) {
+func (crd *Coordinator) computeSQLHash(request *encoding.Packet) {
 	hash, found := ExtractSQLHash(request)
 	if found {
 		crd.sqlhash = int32(hash)
@@ -316,52 +325,70 @@ func (crd *Coordinator) computeSQLHash(request *netstring.Netstring) {
  * it handles the command if it is the case. if the command is indended for a worker, it will return false.
  * worker commands start with one of the prepare/prepare_v2
  */
-func (crd *Coordinator) handleMux(request *netstring.Netstring) (bool, error) {
+func (crd *Coordinator) handleMux(request *encoding.Packet) (bool, error) {
 	crd.isRead = false
-	crd.preppendCorrID = (crd.worker == nil)
-	if request.IsComposite() {
-		// TODO: avoid full parsing if necessary
-		// if this is a worker command, only a shallow parse might be needed (if sharding is enabled, full parsing still needed anyway)
-		nss, err := netstring.SubNetstrings(request)
-		if err != nil {
-			return false, err
-		}
-		crd.nss = nss
-		for _, ns := range nss {
-			if (ns.Cmd == common.CmdPrepare) || (ns.Cmd == common.CmdPrepareV2) || (ns.Cmd == common.CmdPrepareSpecial) {
-				crd.sqlhash = int32(utility.GetSQLHash(string(ns.Payload)))
-				crd.isRead = crd.sqlParser.IsRead(string(ns.Payload))
-				handled := false
-				if GetConfig().EnableSharding {
-					hangup, err := crd.PreprocessSharding(nss)
-					if err != nil {
-						handled = true
-						if logger.GetLogger().V(logger.Debug) {
-							logger.GetLogger().Log(logger.Debug, "Error preprocessing sharding, hangup:", err.Error(), hangup)
-						}
-						if hangup {
-							crd.conn.Close()
-						}
-					}
-				}
-				return handled, err
-			}
-
-			handled, err := crd.processMuxCommand(ns)
-			if !handled {
-				if nss[0].Cmd == common.CmdClientCalCorrelationID {
-					crd.preppendCorrID = false
-				}
+	if !request.IsMySQL{
+		crd.preppendCorrID = (crd.worker == nil)
+		if request.IsComposite() {
+			// TODO: avoid full parsing if necessary
+			// if this is a worker command, only a shallow parse might be needed (if sharding is enabled, full parsing still needed anyway)
+			nss, err := netstring.SubNetstrings(request)
+			if err != nil {
 				return false, err
 			}
+			crd.nss = nss
+			for _, ns := range nss {
+				if (ns.Cmd == common.CmdPrepare) || (ns.Cmd == common.CmdPrepareV2) || (ns.Cmd == common.CmdPrepareSpecial) {
+					crd.sqlhash = int32(utility.GetSQLHash(string(ns.Payload)))
+					crd.isRead = crd.sqlParser.IsRead(string(ns.Payload))
+					handled := false
+					if GetConfig().EnableSharding {
+						hangup, err := crd.PreprocessSharding(nss)
+						if err != nil {
+							handled = true
+							if logger.GetLogger().V(logger.Debug) {
+								logger.GetLogger().Log(logger.Debug, "Error preprocessing sharding, hangup:", err.Error(), hangup)
+							}
+							if hangup {
+								crd.conn.Close()
+							}
+						}
+					}
+					return handled, err
+				}
+
+				handled, err := crd.processMuxCommand(ns)
+				if !handled {
+					if nss[0].Cmd == common.CmdClientCalCorrelationID {
+						crd.preppendCorrID = false
+					}
+					return false, err
+				}
+			}
+			return true, nil
 		}
-		return true, nil
-	}
-	crd.nss = nil
-	// an individual request
-	if (request.Cmd == common.CmdPrepare) || (request.Cmd == common.CmdPrepareV2) || (request.Cmd == common.CmdPrepareSpecial) {
-		crd.isRead = crd.sqlParser.IsRead(string(request.Payload))
-		return false, nil
+		crd.nss = nil
+		// an individual request
+		if (request.Cmd == common.CmdPrepare) || (request.Cmd == common.CmdPrepareV2) || (request.Cmd == common.CmdPrepareSpecial) {
+			crd.isRead = crd.sqlParser.IsRead(string(request.Payload))
+			return false, nil
+		}
+	} else {
+		// Generally speaking, a MySQL request will be one packet. Clients don't usually send over 16 MB.
+		// Multi-statements might be a different story.
+
+		crd.preppendCorrID = crd.worker == nil // i kept this line because i don't know what it does
+
+		// The equivalent condition for composite netstrings is MAX_PACKET_SIZE length MySQL packets.
+		// But it usually isn't the case that the client will send more than one packet over with commands.
+		// Since packets aren't nested, we want to process them 1-by-1 anyway.
+
+		// Processing a single request
+		crd.nss = nil // this probably doesn't have to be set because mysqlpackets don't get put into nss...
+		if request.Cmd == common.COM_STMT_PREPARE {
+			crd.isRead = crd.sqlParser.IsRead(string(request.Payload[1:]))
+			return false, nil
+		}
 	}
 	return crd.processMuxCommand(request)
 }
@@ -369,57 +396,65 @@ func (crd *Coordinator) handleMux(request *netstring.Netstring) (bool, error) {
 /*
  * process one mux command
  */
-func (crd *Coordinator) processMuxCommand(request *netstring.Netstring) (bool, error) {
+func (crd *Coordinator) processMuxCommand(request *encoding.Packet) (bool, error) {
 	if logger.GetLogger().V(logger.Debug) {
 		logger.GetLogger().Log(logger.Debug, "Mux handle command:", request.Cmd)
 	}
 
-	switch request.Cmd {
-	case common.CmdClientCalCorrelationID:
-		crd.corrID = request
-	case common.CmdServerPingCommand:
-		crd.respond([]byte("4:1009,"))
-	case common.CmdBacktrace: // TODO passing command to worker
-	case common.CmdClientInfo:
-		crd.processClientInfoMuxCommand(string(request.Payload))
-	case common.CmdCommit, common.CmdRollback:
-		if crd.worker != nil {
-			// in transaction, it will be handled by the worker
-			return false, nil
-		}
-		if logger.GetLogger().V(logger.Debug) {
-			logger.GetLogger().Log(logger.Debug, "Mux handle command sent alone:", request.Cmd)
-		}
-		// send OK. client did not need to send it, but it is a NOOP anyway
-		crd.respond([]byte("1:5,"))
-	// TODO: add all other case ...
-	case common.CmdFetch:
-		if crd.worker != nil {
-			return false, nil
-		}
-		crd.respond([]byte("41:2 fetch requested but no statement exists,"))
-	case common.CmdPrepare, common.CmdPrepareV2, common.CmdPrepareSpecial:
+	if request.IsMySQL {
+		// MySQL protocol packets are not mux commands, so anything from MySQL packets should be handled by
+		// a worker. Therefore automatically return false.
+		logger.GetLogger().Log(logger.Info, "Request is MySQL packet", request.Serialized[1:])
 		return false, nil
-	// sharding commands
-	case common.CmdSetShardID:
-		err := crd.processSetShardID(request.Payload)
-		if err == nil {
-			// send OK
+
+	} else {
+		switch request.Cmd {
+		case common.CmdClientCalCorrelationID:
+			crd.corrID = request
+		case common.CmdServerPingCommand:
+			crd.respond([]byte("4:1009,"))
+		case common.CmdBacktrace: // TODO passing command to worker
+		case common.CmdClientInfo:
+			crd.processClientInfoMuxCommand(string(request.Payload))
+		case common.CmdCommit, common.CmdRollback:
+			if crd.worker != nil {
+				// in transaction, it will be handled by the worker
+				return false, nil
+			}
+			if logger.GetLogger().V(logger.Debug) {
+				logger.GetLogger().Log(logger.Debug, "Mux handle command sent alone:", request.Cmd)
+			}
+			// send OK. client did not need to send it, but it is a NOOP anyway
 			crd.respond([]byte("1:5,"))
-		} else {
-			ns := netstring.NewNetstringFrom(common.RcError, []byte(err.Error()))
+		// TODO: add all other case ...
+		case common.CmdFetch:
+			if crd.worker != nil {
+				return false, nil
+			}
+			crd.respond([]byte("41:2 fetch requested but no statement exists,"))
+		case common.CmdPrepare, common.CmdPrepareV2, common.CmdPrepareSpecial:
+			return false, nil
+		// sharding commands
+		case common.CmdSetShardID:
+			err := crd.processSetShardID(request.Payload)
+			if err == nil {
+				// send OK
+				crd.respond([]byte("1:5,"))
+			} else {
+				ns := netstring.NewNetstringFrom(common.RcError, []byte(err.Error()))
+				crd.respond(ns.Serialized)
+				// critical error, close
+				crd.conn.Close()
+				return true, err
+			}
+		case common.CmdGetNumShards:
+			numShards := fmt.Sprintf("%d", GetConfig().NumOfShards)
+			ns := netstring.NewNetstringFrom(common.RcOK, []byte(numShards))
 			crd.respond(ns.Serialized)
-			// critical error, close
-			crd.conn.Close()
-			return true, err
-		}
-	case common.CmdGetNumShards:
-		numShards := fmt.Sprintf("%d", GetConfig().NumOfShards)
-		ns := netstring.NewNetstringFrom(common.RcOK, []byte(numShards))
-		crd.respond(ns.Serialized)
-	default:
-		if logger.GetLogger().V(logger.Debug) {
-			logger.GetLogger().Log(logger.Debug, "Mux ignores command:", request.Cmd)
+		default:
+			if logger.GetLogger().V(logger.Debug) {
+				logger.GetLogger().Log(logger.Debug, "Mux ignores command:", request.Cmd)
+			}
 		}
 	}
 	return true, nil
@@ -500,12 +535,12 @@ func (crd *Coordinator) resetWorkerInfo() {
 }
 
 /*
- * Starts running a session, which is a series of netstring.Netstrings executed by the same resource.
+ * Starts running a session, which is a series of encoding.Packets executed by the same resource.
  * Session is completed when the worker sends EOR free, for example after a commit, a rollback
  * or as part of end-of-data if the request was a select+fetch
  *
  */
-func (crd *Coordinator) dispatchRequest(request *netstring.Netstring) error {
+func (crd *Coordinator) dispatchRequest(request *encoding.Packet) error {
 	if logger.GetLogger().V(logger.Verbose) {
 		logger.GetLogger().Log(logger.Verbose, "coordinator dispatchrequest: starting")
 	}
@@ -522,16 +557,20 @@ func (crd *Coordinator) dispatchRequest(request *netstring.Netstring) error {
 	xShardRead := false
 
 	if worker == nil {
+		logger.GetLogger().Log(logger.Info, "worker is nil")
 		if crd.isRead && (GetConfig().ReadonlyPct != 0) {
+			logger.GetLogger().Log(logger.Info, "This case!")
 			workerpool, err = GetWorkerBrokerInstance().GetWorkerPool(wtypeRO, 0, crd.shard.shardID)
 			if err != nil {
 				return err
 			}
+			logger.GetLogger().Log(logger.Info, "Tried to re-acquire workerpool!")
 			if crd.isInternal {
 				worker, ticket, err = workerpool.GetWorker(crd.sqlhash, 0 /*no backlog timeout*/)
 			} else {
 				worker, ticket, err = workerpool.GetWorker(crd.sqlhash)
 			}
+			logger.GetLogger().Log(logger.Info, "Got a worker!")
 			if err != nil {
 				if logger.GetLogger().V(logger.Warning) {
 					logger.GetLogger().Log(logger.Warning, "coordinator dispatchrequest: no worker in RO pool", err)
@@ -539,14 +578,22 @@ func (crd *Coordinator) dispatchRequest(request *netstring.Netstring) error {
 				return err
 			}
 		} else {
+			logger.GetLogger().Log(logger.Info, "This case!")
 			workerpool, err = GetWorkerBrokerInstance().GetWorkerPool(wtypeRW, 0, crd.shard.shardID)
 			if err != nil {
 				return err
 			}
+			logger.GetLogger().Log(logger.Info, "shard ID problems...?")
 			if crd.isInternal {
+				logger.GetLogger().Log(logger.Info, "isInternal")
 				worker, ticket, err = workerpool.GetWorker(crd.sqlhash, 0 /*no backlog timeout*/)
 			} else {
+				logger.GetLogger().Log(logger.Info, "isNotInternal")
+				logger.GetLogger().Log(logger.Info, workerpool)
 				worker, ticket, err = workerpool.GetWorker(crd.sqlhash)
+				// if err == nil && worker != nil {
+				logger.GetLogger().Log(logger.Info, "Got a worker!")
+				// }
 			}
 			if err != nil {
 				if logger.GetLogger().V(logger.Warning) {
@@ -557,6 +604,7 @@ func (crd *Coordinator) dispatchRequest(request *netstring.Netstring) error {
 		}
 	} else {
 		if crd.isRead {
+			logger.GetLogger().Log(logger.Info, "crd.isRead")
 			if crd.shard.shardID != worker.shardID {
 				// we allow this but we need to have a different worker since it is a different shard
 				wType := wtypeRO
@@ -581,7 +629,9 @@ func (crd *Coordinator) dispatchRequest(request *netstring.Netstring) error {
 				xShardRead = true
 				// for now change change to fetch all
 				// TODO: later when doing scatter-gather review this
-				request = crd.removeFetchSize(request)
+				if !request.IsMySQL {
+					request = crd.removeFetchSize(request)
+				}
 				if !crd.inTransaction {
 					if logger.GetLogger().V(logger.Alert) {
 						logger.GetLogger().Log(logger.Alert, "Expected to be in transaction")
@@ -591,6 +641,7 @@ func (crd *Coordinator) dispatchRequest(request *netstring.Netstring) error {
 		}
 	}
 
+	logger.GetLogger().Log(logger.Info, "Reached doRequest")
 	wait, err := crd.doRequest(crd.ctx, worker, request, crd.conn, nil)
 
 	if !xShardRead {
@@ -660,7 +711,7 @@ var (
  * exception happens (client disconnects, worker exits, timeout)
  * 2nd return parameter tells if the worker is still busy (in transaction or in cursor)
  */
-func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, request *netstring.Netstring, clientWriter io.Writer, rqTimer *time.Timer) (bool, error) {
+func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, request *encoding.Packet, clientWriter io.Writer, rqTimer *time.Timer) (bool, error) {
 	if logger.GetLogger().V(logger.Verbose) {
 		logger.GetLogger().Log(logger.Verbose, "coordinator dorequeset: starting")
 	}
@@ -693,20 +744,33 @@ func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, req
 		}
 	}
 	if request != nil {
-		cnt := 1
-		if request.IsComposite() {
-			cnt = len(crd.nss)
-			if cnt == 0 {
-				logger.GetLogger().Log(logger.Alert, "Unexpected embedded ns length")
+		if !request.IsMySQL {
+			cnt := 1
+			if request.IsComposite() {
+				cnt = len(crd.nss)
+				if cnt == 0 {
+					logger.GetLogger().Log(logger.Alert, "Unexpected embedded ns length")
+				}
 			}
-		}
 
-		err := worker.Write(request, uint16(cnt))
-		if err != nil {
-			if logger.GetLogger().V(logger.Debug) {
-				logger.GetLogger().Log(logger.Debug, "doRequest: can't send the session starter request to worker")
+			err := worker.Write(request, uint16(cnt))
+			if err != nil {
+				if logger.GetLogger().V(logger.Debug) {
+					logger.GetLogger().Log(logger.Debug, "doRequest: can't send the session starter request to worker")
+				}
+				return false, ErrWorkerFail
 			}
-			return false, ErrWorkerFail
+		} else {
+			// TODO: MySQL Packet case for sending session starter request to worker.
+			// It's written down below, but not too sure whether or not it's as simple as this.
+			err := worker.Write(request, uint16(1))
+			if err != nil {
+				if logger.GetLogger().V(logger.Debug) {
+					logger.GetLogger().Log(logger.Debug, "doRequest: can't send the session starter request to worker")
+				}
+				return false, ErrWorkerFail
+			}
+
 		}
 	}
 
@@ -746,7 +810,10 @@ func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, req
 		case <-idleTimer.C:
 			crd.done <- GetTrIdleTimeoutMs()
 			return false, ErrTimeout
+			// TODO: make mysql case
+			// I added some changes into here for mysqlpackets. Unsure if this covers all the cases...
 		case ns, ok := <-clientChannel:
+			logger.GetLogger().Log(logger.Verbose, "Got message from client channel", ns.Serialized)
 			if !ok {
 				if logger.GetLogger().V(logger.Verbose) {
 					logger.GetLogger().Log(logger.Verbose, "doRequest: client channel closed", logmsg)
@@ -755,7 +822,8 @@ func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, req
 				evt.Completed()
 				return false, ErrClientFail
 			}
-			if (ns != nil) && (ns.Cmd != common.CmdFetch) && (ns.Cmd != common.CmdCols) && (ns.Cmd != common.CmdColsInfo) {
+
+			if (ns != nil) && !ns.IsMySQL && (ns.Cmd != common.CmdFetch) && (ns.Cmd != common.CmdCols) && (ns.Cmd != common.CmdColsInfo) {
 				//
 				// if one dorequest gets multiple multiple_client_req, do this once.
 				//
@@ -789,7 +857,7 @@ func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, req
 			// this is typically for the JDBCs "execute" use case
 			//? TODO: we should actually modify the worker to send a IN_CURSOR_IN_TRANSACTION / IN_CURSOR_NOT_IN_TRANSACTION EOR after the execute
 			cnt := 1
-			if ns.IsComposite() {
+			if !ns.IsMySQL && ns.IsComposite() {
 				nss, err := netstring.SubNetstrings(ns)
 				if err != nil {
 					logger.GetLogger().Log(logger.Alert, "Can't parse embedded ns, size", len(ns.Serialized))
@@ -817,6 +885,7 @@ func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, req
 			evt.Completed()
 			return false, ErrCanceled
 		case msg, ok := <-worker.channel():
+			logger.GetLogger().Log(logger.Verbose, "Got message from worker channel. Expect sql packet: ", msg.data)
 			if !ok {
 				if logger.GetLogger().V(logger.Debug) {
 					logger.GetLogger().Log(logger.Debug, "doRequest: worker closed, exiting")
@@ -887,6 +956,7 @@ func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, req
 			//
 			// workerctrlchan is closed on worker restart. return worker error to skip recover.
 			//
+			logger.GetLogger().Log(logger.Verbose, "Got message from worker ctrlCh", msg.data)
 			if !ok {
 				if logger.GetLogger().V(logger.Debug) {
 					logger.GetLogger().Log(logger.Debug, "doRequest: worker ctrlchan closed, exiting")

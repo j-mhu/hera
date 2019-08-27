@@ -1,0 +1,1359 @@
+16:02:42.477447 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+16:02:42.477632 info: [PROXY config.go:314] Error initializing ops config: open cal_client.txt: no such file or directory
+16:02:42.477959 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+16:02:42.477997 verbose: [PROXY statelog.go:387] init statelog
+16:03:05.784479 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+16:03:05.784647 info: [PROXY config.go:314] Error initializing ops config: open cal_client.txt: no such file or directory
+16:03:05.784998 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+16:03:05.785056 verbose: [PROXY statelog.go:387] init statelog
+16:06:03.232943 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+16:06:03.233222 info: [PROXY config.go:314] Error initializing ops config: open cal_client.txt: no such file or directory
+16:06:03.233899 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+16:06:03.234031 verbose: [PROXY statelog.go:387] init statelog
+10:07:34.438768 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:07:34.439026 info: [PROXY config.go:314] Error initializing ops config: open cal_client.txt: no such file or directory
+10:07:34.439436 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+10:07:55.138683 verbose: [PROXY statelog.go:387] init statelog
+10:07:58.577507 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:07:58.578142 info: [PROXY config.go:314] Error initializing ops config: open cal_client.txt: no such file or directory
+10:07:58.579142 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+10:08:01.497749 verbose: [PROXY statelog.go:387] init statelog
+10:08:11.002475 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:08:11.002690 info: [PROXY config.go:314] Error initializing ops config: open cal_client.txt: no such file or directory
+10:08:11.003097 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+10:08:12.839284 verbose: [PROXY statelog.go:387] init statelog
+10:08:51.915229 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:08:51.915838 info: [PROXY config.go:314] Error initializing ops config: open cal_client.txt: no such file or directory
+10:08:51.916854 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+10:08:51.917020 verbose: [PROXY statelog.go:387] init statelog
+10:10:27.008224 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:10:27.008835 info: [PROXY config.go:314] Error initializing ops config: open cal_client.txt: no such file or directory
+10:10:27.011794 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:10:27.011926 verbose: [PROXY statelog.go:387] init statelog
+10:11:41.878594 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:11:41.878818 info: [PROXY config.go:314] Error initializing ops config: open cal_client.txt: no such file or directory
+10:11:41.880905 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:11:56.133143 verbose: [PROXY statelog.go:387] init statelog
+10:13:07.623926 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:13:07.624527 info: [PROXY config.go:314] Error initializing ops config: open cal_client.txt: no such file or directory
+10:13:07.627475 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:13:07.627618 verbose: [PROXY statelog.go:387] init statelog
+10:13:21.676474 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:13:21.676689 info: [PROXY config.go:314] Error initializing ops config: open cal_client.txt: no such file or directory
+10:13:21.678674 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:13:25.158257 verbose: [PROXY statelog.go:387] init statelog
+10:17:13.595529 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:17:13.596552 info: [PROXY logger.go:149] Change log level to verbose:
+10:17:13.599015 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:17:18.467930 verbose: [PROXY statelog.go:387] init statelog
+10:17:18.468129 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:17:18.468450 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:17:18.468503 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:17:18.468531 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:17:18.468551 debug: [PROXY workerbroker.go:166] workercnt  3
+10:17:18.468628 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:17:18.468677 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:17:18.468733 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:17:24.418815 verbose: [PROXY server.go:236] bouncer checking checktime= 0  checkcount= 0  activated= false  msg= no active worker
+10:17:24.418875 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51264
+10:17:24.418923 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:17:24.419000 verbose: [PROXY statelog.go:181] publish state event 1
+10:17:24.419051 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:17:24.420537 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [0 58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:17:24.420574 verbose: [PROXY connectionhandler.go:143] :Wrote 62 bytes, expected 58  >>>
+10:17:24.420858 verbose: [PROXY coordinator.go:78] Created coordinator
+10:17:24.420946 info: [PROXY connectionhandler.go:59] 127.0.0.1:51264 : Connection handler read error Unknown packet type. Neither netstring nor mysql
+10:17:24.420970 info: [PROXY connectionhandler.go:326] ======== Connection handler exits 127.0.0.1:51264
+10:17:24.421017 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+10:17:24.421049 verbose: [PROXY coordinator.go:121] Running coordinator
+10:17:24.421017 verbose: [PROXY statelog.go:181] publish state event 1
+10:27:22.591300 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:27:22.591813 info: [PROXY logger.go:149] Change log level to verbose:
+10:27:22.593848 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:27:22.593900 verbose: [PROXY statelog.go:387] init statelog
+10:27:22.593981 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:27:22.594031 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:27:22.594053 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:27:22.594072 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:27:22.594088 debug: [PROXY workerbroker.go:166] workercnt  3
+10:27:22.594115 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:27:22.594134 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:27:22.594150 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:27:24.196060 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51295
+10:27:24.196129 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:27:24.196182 verbose: [PROXY statelog.go:181] publish state event 1
+10:27:24.196745 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:27:24.197066 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:27:24.197236 verbose: [PROXY coordinator.go:78] Created coordinator
+10:29:43.178846 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:29:43.179358 info: [PROXY logger.go:149] Change log level to verbose:
+10:29:43.181353 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:29:43.181406 verbose: [PROXY statelog.go:387] init statelog
+10:29:43.181490 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:29:43.181539 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:29:43.181566 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:29:43.181587 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:29:43.181602 debug: [PROXY workerbroker.go:166] workercnt  3
+10:29:43.181626 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:29:43.181644 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:29:43.181659 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:30:59.436961 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:30:59.437449 info: [PROXY logger.go:149] Change log level to verbose:
+10:30:59.439543 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:30:59.439601 verbose: [PROXY statelog.go:387] init statelog
+10:30:59.439680 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:30:59.439732 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:30:59.439757 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:30:59.439775 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:30:59.439788 debug: [PROXY workerbroker.go:166] workercnt  3
+10:30:59.439812 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:30:59.439829 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:30:59.439841 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:31:01.302130 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51320
+10:31:01.302205 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:31:01.302242 verbose: [PROXY statelog.go:181] publish state event 1
+10:31:01.302278 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:31:01.303229 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:31:01.303404 verbose: [PROXY coordinator.go:78] Created coordinator
+10:31:38.475903 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:31:38.476367 info: [PROXY logger.go:149] Change log level to verbose:
+10:31:38.478405 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:31:41.940035 verbose: [PROXY statelog.go:387] init statelog
+10:31:41.940226 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:31:41.940296 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:31:41.940330 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:31:41.940352 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:31:41.940371 debug: [PROXY workerbroker.go:166] workercnt  3
+10:31:41.940402 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:31:41.940421 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:31:41.940440 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:31:41.940869 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51332
+10:31:41.940918 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:31:41.940959 verbose: [PROXY statelog.go:181] publish state event 1
+10:31:41.941042 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:31:41.941980 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:31:41.942151 verbose: [PROXY coordinator.go:78] Created coordinator
+10:31:47.901235 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:31:47.901725 info: [PROXY logger.go:149] Change log level to verbose:
+10:31:47.904063 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:31:50.741170 verbose: [PROXY statelog.go:387] init statelog
+10:31:50.742545 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:31:50.742617 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:31:50.742653 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:31:50.742675 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:31:50.742691 debug: [PROXY workerbroker.go:166] workercnt  3
+10:31:50.742717 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:31:50.742734 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:31:50.742748 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:32:45.976912 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:32:45.977394 info: [PROXY logger.go:149] Change log level to verbose:
+10:32:45.979432 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:32:47.734977 verbose: [PROXY statelog.go:387] init statelog
+10:32:47.735127 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:32:47.735188 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:32:47.735211 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:32:47.735228 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:32:47.735243 debug: [PROXY workerbroker.go:166] workercnt  3
+10:32:47.735269 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:32:47.735286 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:32:47.735301 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:33:08.159340 verbose: [PROXY server.go:236] bouncer checking checktime= 0  checkcount= 0  activated= false  msg= no active worker
+10:33:10.899044 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51358
+10:33:16.614009 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:33:17.915236 verbose: [PROXY statelog.go:181] publish state event 1
+10:33:17.915910 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:33:17.916061 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:33:23.784197 verbose: [PROXY coordinator.go:78] Created coordinator
+10:36:19.514668 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:36:19.515168 info: [PROXY logger.go:149] Change log level to verbose:
+10:36:19.517320 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:36:19.517387 verbose: [PROXY statelog.go:387] init statelog
+10:36:19.517489 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:36:19.517546 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:36:19.517572 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:36:19.517591 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:36:19.517609 debug: [PROXY workerbroker.go:166] workercnt  3
+10:36:19.517637 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:36:19.517658 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:36:19.517677 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:36:26.899851 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51378
+10:36:26.899925 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:36:32.870172 verbose: [PROXY statelog.go:181] publish state event 1
+10:36:35.139279 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:36:39.643012 info: [PROXY connectionhandler.go:277] Sending handshake
+10:36:40.717599 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:36:46.404274 info: [PROXY connectionhandler.go:279] Sending handshake response
+10:38:05.024576 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+10:38:50.339503 verbose: [PROXY coordinator.go:78] Created coordinator
+10:39:06.303313 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+10:39:08.158818 verbose: [PROXY coordinator.go:121] Running coordinator
+10:39:13.329465 info: [PROXY connectionhandler.go:59] 127.0.0.1:51378 : Connection handler read error Unknown packet type. Neither netstring nor mysql
+10:39:22.802642 info: [PROXY connectionhandler.go:327] ======== Connection handler exits 127.0.0.1:51378
+10:42:08.805026 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:42:08.805508 info: [PROXY logger.go:149] Change log level to verbose:
+10:42:08.807901 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:42:08.807967 verbose: [PROXY statelog.go:387] init statelog
+10:42:08.808068 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:42:08.808120 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:42:08.808145 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:42:08.808164 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:42:08.808177 debug: [PROXY workerbroker.go:166] workercnt  3
+10:42:08.808204 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:42:08.808222 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:42:08.808235 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:42:11.545678 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51411
+10:42:11.545737 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:42:11.545764 verbose: [PROXY statelog.go:181] publish state event 1
+10:42:11.545788 info: [PROXY connectionhandler.go:277] Sending handshake
+10:42:11.546243 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:42:11.546592 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:42:11.546625 info: [PROXY connectionhandler.go:279] Sending handshake response
+10:42:11.546677 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+10:42:11.546786 verbose: [PROXY coordinator.go:78] Created coordinator
+10:42:11.546845 info: [PROXY connectionhandler.go:59] 127.0.0.1:51411 : Connection handler read error Unknown packet type. Neither netstring nor mysql
+10:42:11.546872 info: [PROXY connectionhandler.go:327] ======== Connection handler exits 127.0.0.1:51411
+10:42:11.546874 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+10:42:11.546923 verbose: [PROXY statelog.go:181] publish state event 1
+10:42:11.546927 verbose: [PROXY coordinator.go:121] Running coordinator
+10:42:11.546980 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 1 4
+10:42:20.453985 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:42:20.454463 info: [PROXY logger.go:149] Change log level to verbose:
+10:42:20.456596 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:42:20.456655 verbose: [PROXY statelog.go:387] init statelog
+10:42:20.456746 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:42:20.456820 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:42:20.456843 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:42:20.456859 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:42:20.456871 debug: [PROXY workerbroker.go:166] workercnt  3
+10:42:20.456891 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:42:20.456905 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:42:20.456917 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:42:22.311528 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51421
+10:42:22.311635 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:42:22.311673 verbose: [PROXY statelog.go:181] publish state event 1
+10:42:22.311695 info: [PROXY connectionhandler.go:277] Sending handshake
+10:42:22.312439 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:42:22.312451 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:42:22.312508 info: [PROXY connectionhandler.go:279] Sending handshake response
+10:42:22.312560 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+10:42:22.312672 verbose: [PROXY coordinator.go:78] Created coordinator
+10:42:22.312737 info: [PROXY connectionhandler.go:59] 127.0.0.1:51421 : Connection handler read error Unknown packet type. Neither netstring nor mysql
+10:42:22.312764 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+10:42:22.312796 verbose: [PROXY coordinator.go:121] Running coordinator
+10:42:22.312769 info: [PROXY connectionhandler.go:327] ======== Connection handler exits 127.0.0.1:51421
+10:42:22.312864 verbose: [PROXY statelog.go:181] publish state event 1
+10:42:47.825544 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:42:47.826046 info: [PROXY logger.go:149] Change log level to verbose:
+10:42:47.828483 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:42:47.828567 verbose: [PROXY statelog.go:387] init statelog
+10:42:47.828685 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:42:47.828749 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:42:47.828783 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:42:47.828824 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:42:47.828835 debug: [PROXY workerbroker.go:166] workercnt  3
+10:42:47.828866 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:42:47.828893 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:42:47.828919 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:42:49.191622 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51438
+10:42:49.191673 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:43:25.723814 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:43:25.724310 info: [PROXY logger.go:149] Change log level to verbose:
+10:43:25.726564 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:43:25.726626 verbose: [PROXY statelog.go:387] init statelog
+10:43:25.726720 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:43:25.726776 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:43:25.726805 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:43:25.726824 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:43:25.726840 debug: [PROXY workerbroker.go:166] workercnt  3
+10:43:25.726866 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:43:25.726885 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:43:25.726901 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:43:28.710535 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51456
+10:43:28.710625 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:43:28.710684 verbose: [PROXY statelog.go:181] publish state event 1
+10:43:28.710708 info: [PROXY connectionhandler.go:277] Sending handshake
+10:43:28.710734 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:43:33.326349 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:43:33.326440 info: [PROXY connectionhandler.go:279] Sending handshake response
+10:43:37.125679 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+10:43:37.125865 verbose: [PROXY coordinator.go:78] Created coordinator
+10:43:37.125986 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+10:43:37.126026 verbose: [PROXY coordinator.go:121] Running coordinator
+10:43:39.558751 info: [PROXY connectionhandler.go:59] 127.0.0.1:51456 : Connection handler read error Unknown packet type. Neither netstring nor mysql
+10:43:39.558817 info: [PROXY connectionhandler.go:327] ======== Connection handler exits 127.0.0.1:51456
+10:43:39.558894 verbose: [PROXY statelog.go:181] publish state event 1
+10:43:53.048645 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:43:53.049130 info: [PROXY logger.go:149] Change log level to verbose:
+10:43:53.051119 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:43:53.051168 verbose: [PROXY statelog.go:387] init statelog
+10:43:53.051256 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:43:53.051309 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:43:53.051334 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:43:53.051352 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:43:53.051365 debug: [PROXY workerbroker.go:166] workercnt  3
+10:43:53.051386 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:43:53.051405 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:43:53.051421 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:45:11.115300 verbose: [PROXY server.go:236] bouncer checking checktime= 0  checkcount= 0  activated= false  msg= no active worker
+10:45:11.115378 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51495
+10:45:11.115426 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:45:17.631323 verbose: [PROXY statelog.go:181] publish state event 1
+10:45:19.817573 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:45:21.808790 info: [PROXY connectionhandler.go:277] Sending handshake
+10:45:31.583690 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:45:32.749883 info: [PROXY connectionhandler.go:279] Sending handshake response
+10:45:36.091688 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+10:45:37.379255 verbose: [PROXY coordinator.go:78] Created coordinator
+10:46:53.940237 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:46:53.940727 info: [PROXY logger.go:149] Change log level to verbose:
+10:46:53.942906 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:46:53.942965 verbose: [PROXY statelog.go:387] init statelog
+10:46:53.943065 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:46:53.943115 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:46:53.943143 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:46:53.943162 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:46:53.943177 debug: [PROXY workerbroker.go:166] workercnt  3
+10:46:53.943199 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:46:53.943218 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:46:53.943247 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:46:57.775886 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51516
+10:46:57.775968 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:47:00.749882 verbose: [PROXY statelog.go:181] publish state event 1
+10:47:01.202933 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:47:01.984389 info: [PROXY connectionhandler.go:277] Sending handshake
+10:47:02.852552 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:47:03.607636 info: [PROXY connectionhandler.go:279] Sending handshake response
+10:47:05.876124 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+10:47:07.292861 verbose: [PROXY coordinator.go:78] Created coordinator
+10:48:37.772099 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:48:37.772842 info: [PROXY logger.go:149] Change log level to verbose:
+10:48:37.775834 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:48:37.775959 verbose: [PROXY statelog.go:387] init statelog
+10:48:37.776087 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:48:37.776168 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:48:37.776211 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:48:37.776242 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:48:37.776252 debug: [PROXY workerbroker.go:166] workercnt  3
+10:48:37.776297 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:48:37.776311 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:48:37.776338 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:48:40.843848 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51540
+10:48:40.843906 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:48:44.235069 verbose: [PROXY statelog.go:181] publish state event 1
+10:48:44.235115 info: [PROXY connectionhandler.go:277] Sending handshake
+10:48:44.235704 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:48:44.235830 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:48:44.235878 info: [PROXY connectionhandler.go:279] Sending handshake response
+10:48:45.853123 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+10:48:45.853325 verbose: [PROXY coordinator.go:78] Created coordinator
+10:48:45.853462 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+10:48:45.853507 verbose: [PROXY coordinator.go:121] Running coordinator
+10:51:18.211498 info: [PROXY connectionhandler.go:59] 127.0.0.1:51540 : Connection handler read error Unknown packet type. Neither netstring nor mysql
+10:51:18.211557 info: [PROXY connectionhandler.go:327] ======== Connection handler exits 127.0.0.1:51540
+10:51:18.211615 verbose: [PROXY statelog.go:181] publish state event 1
+10:55:11.080565 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:55:11.081047 info: [PROXY logger.go:149] Change log level to verbose:
+10:55:11.083115 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:55:11.083176 verbose: [PROXY statelog.go:387] init statelog
+10:55:11.083259 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:55:11.083307 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:55:11.083333 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:55:11.083352 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:55:11.083368 debug: [PROXY workerbroker.go:166] workercnt  3
+10:55:11.083391 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:55:11.083424 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:55:11.083438 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:55:13.007619 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51588
+10:55:13.007677 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:55:17.664059 verbose: [PROXY statelog.go:181] publish state event 1
+10:55:17.664118 info: [PROXY connectionhandler.go:277] Sending handshake
+10:55:17.664134 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:55:17.665394 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:55:17.665438 info: [PROXY connectionhandler.go:279] Sending handshake response
+10:55:17.665502 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+10:55:17.665633 verbose: [PROXY coordinator.go:78] Created coordinator
+10:55:44.818684 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+10:55:55.916949 verbose: [PROXY coordinator.go:121] Running coordinator
+10:57:21.742991 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:57:21.745165 info: [PROXY logger.go:149] Change log level to verbose:
+10:57:21.747305 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:57:21.747370 verbose: [PROXY statelog.go:387] init statelog
+10:57:21.747457 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:57:21.747505 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:57:21.747531 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:57:21.747553 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:57:21.747568 debug: [PROXY workerbroker.go:166] workercnt  3
+10:57:21.747595 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:57:21.747612 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:57:21.747626 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:57:23.422525 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51611
+10:57:23.422611 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:57:25.040952 verbose: [PROXY statelog.go:181] publish state event 1
+10:57:25.041024 info: [PROXY connectionhandler.go:277] Sending handshake
+10:57:25.041870 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:57:25.042121 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:57:25.042177 info: [PROXY connectionhandler.go:279] Sending handshake response
+10:57:25.042299 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+10:57:25.042468 verbose: [PROXY coordinator.go:78] Created coordinator
+10:57:37.157043 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+10:57:43.837565 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:57:43.838029 info: [PROXY logger.go:149] Change log level to verbose:
+10:57:43.840136 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+10:57:43.840195 verbose: [PROXY statelog.go:387] init statelog
+10:57:43.840284 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:57:43.840332 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:57:43.840353 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:57:43.840374 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:57:43.840391 debug: [PROXY workerbroker.go:166] workercnt  3
+10:57:43.840419 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:57:43.840437 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:57:43.840453 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:57:44.568301 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51621
+10:57:44.568363 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:57:45.345828 verbose: [PROXY statelog.go:181] publish state event 1
+10:57:45.345908 info: [PROXY connectionhandler.go:277] Sending handshake
+10:57:45.346696 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:57:45.346750 info: [PROXY connectionhandler.go:279] Sending handshake response
+10:57:45.347023 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+10:57:45.347097 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:57:45.347179 verbose: [PROXY coordinator.go:78] Created coordinator
+10:57:53.623916 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+10:57:55.142398 verbose: [PROXY coordinator.go:121] Running coordinator
+11:01:16.466287 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+11:01:16.466767 info: [PROXY logger.go:149] Change log level to verbose:
+11:01:16.468797 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+11:01:16.468848 verbose: [PROXY statelog.go:387] init statelog
+11:01:16.468929 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+11:01:16.468979 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+11:01:16.469008 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+11:01:16.469027 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+11:01:16.469043 debug: [PROXY workerbroker.go:166] workercnt  3
+11:01:16.469071 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+11:01:16.469088 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+11:01:16.469102 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+11:01:17.685774 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51634
+11:01:17.685840 debug: [PROXY tcp_listener.go:77] Authenticated OK
+11:01:18.791722 verbose: [PROXY statelog.go:181] publish state event 1
+11:01:18.791794 info: [PROXY connectionhandler.go:277] Sending handshake
+11:01:18.792812 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+11:01:18.792837 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+11:01:18.792886 info: [PROXY connectionhandler.go:279] Sending handshake response
+11:01:18.792950 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+11:01:18.793083 verbose: [PROXY coordinator.go:78] Created coordinator
+11:02:31.701776 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+11:02:31.702262 info: [PROXY logger.go:149] Change log level to verbose:
+11:02:31.704325 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+11:02:31.704386 verbose: [PROXY statelog.go:387] init statelog
+11:02:31.704498 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+11:02:31.704558 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+11:02:31.704589 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+11:02:31.704609 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+11:02:31.704626 debug: [PROXY workerbroker.go:166] workercnt  3
+11:02:31.704656 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+11:02:31.704676 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+11:02:31.704692 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+11:02:33.350680 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51648
+11:02:33.350750 debug: [PROXY tcp_listener.go:77] Authenticated OK
+11:02:34.588840 verbose: [PROXY statelog.go:181] publish state event 1
+11:02:34.588934 info: [PROXY connectionhandler.go:277] Sending handshake
+11:02:34.588974 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+11:02:34.590324 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+11:02:34.590383 info: [PROXY connectionhandler.go:279] Sending handshake response
+11:02:34.590466 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+11:02:34.590616 verbose: [PROXY coordinator.go:78] Created coordinator
+11:02:42.628929 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+11:04:30.012967 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+11:04:30.013447 info: [PROXY logger.go:149] Change log level to verbose:
+11:04:30.015483 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+11:04:30.015534 verbose: [PROXY statelog.go:387] init statelog
+11:04:30.015614 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+11:04:30.015659 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+11:04:30.015678 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+11:04:30.015695 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+11:04:30.015713 debug: [PROXY workerbroker.go:166] workercnt  3
+11:04:30.015740 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+11:04:30.015757 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+11:04:30.015773 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+11:04:30.961658 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51663
+11:04:30.961731 debug: [PROXY tcp_listener.go:77] Authenticated OK
+11:04:33.091241 verbose: [PROXY statelog.go:181] publish state event 1
+11:04:33.091277 info: [PROXY connectionhandler.go:277] Sending handshake
+11:04:33.091990 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+11:04:33.092041 info: [PROXY connectionhandler.go:279] Sending handshake response
+11:04:33.092068 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+11:04:33.092097 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+11:04:33.092199 verbose: [PROXY coordinator.go:78] Created coordinator
+11:06:58.876128 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+11:06:58.876606 info: [PROXY logger.go:149] Change log level to verbose:
+11:06:58.878708 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+11:06:58.878763 verbose: [PROXY statelog.go:387] init statelog
+11:06:58.878845 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+11:06:58.878894 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+11:06:58.878916 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+11:06:58.878934 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+11:06:58.878950 debug: [PROXY workerbroker.go:166] workercnt  3
+11:06:58.878992 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+11:06:58.879011 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+11:06:58.879026 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+11:07:00.556553 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51677
+11:07:00.556624 debug: [PROXY tcp_listener.go:77] Authenticated OK
+11:07:01.783008 verbose: [PROXY statelog.go:181] publish state event 1
+11:07:01.783080 info: [PROXY connectionhandler.go:277] Sending handshake
+11:07:01.784018 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+11:07:01.784124 info: [PROXY connectionhandler.go:279] Sending handshake response
+11:07:01.784051 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+11:07:01.784359 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+11:07:01.784509 verbose: [PROXY coordinator.go:78] Created coordinator
+11:08:10.922131 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+11:08:10.922654 info: [PROXY logger.go:149] Change log level to verbose:
+11:08:10.924830 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+11:08:10.924882 verbose: [PROXY statelog.go:387] init statelog
+11:08:10.924968 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+11:08:10.925018 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+11:08:10.925046 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+11:08:10.925066 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+11:08:10.925082 debug: [PROXY workerbroker.go:166] workercnt  3
+11:08:10.925111 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+11:08:10.925130 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+11:08:10.925145 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+11:08:11.779742 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51686
+11:08:11.779823 debug: [PROXY tcp_listener.go:77] Authenticated OK
+11:08:13.941779 verbose: [PROXY statelog.go:181] publish state event 1
+11:08:21.624865 info: [PROXY connectionhandler.go:277] Sending handshake
+11:08:22.809057 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+11:08:22.809057 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+11:08:25.692583 info: [PROXY connectionhandler.go:279] Sending handshake response
+11:08:31.567388 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+11:08:31.567875 info: [PROXY logger.go:149] Change log level to verbose:
+11:08:31.570037 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+11:08:31.570094 verbose: [PROXY statelog.go:387] init statelog
+11:08:31.570185 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+11:08:31.570231 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+11:08:31.570251 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+11:08:31.570268 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+11:08:31.570282 debug: [PROXY workerbroker.go:166] workercnt  3
+11:08:31.570309 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+11:08:31.570326 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+11:08:31.570341 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+11:08:32.393942 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51695
+11:08:32.394012 debug: [PROXY tcp_listener.go:77] Authenticated OK
+11:08:34.431964 verbose: [PROXY statelog.go:181] publish state event 1
+11:08:37.747042 info: [PROXY connectionhandler.go:277] Sending handshake
+11:08:38.744581 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+11:08:38.744601 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+11:08:39.794780 info: [PROXY connectionhandler.go:279] Sending handshake response
+11:08:59.636237 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+11:08:59.636707 info: [PROXY logger.go:149] Change log level to verbose:
+11:08:59.638882 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+11:08:59.638951 verbose: [PROXY statelog.go:387] init statelog
+11:08:59.639037 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+11:08:59.639084 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+11:08:59.639108 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+11:08:59.639123 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+11:08:59.639136 debug: [PROXY workerbroker.go:166] workercnt  3
+11:08:59.639161 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+11:08:59.639175 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+11:08:59.639187 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+11:09:00.893792 info: [PROXY server.go:177] server: accepted from  127.0.0.1:51704
+11:09:00.893874 debug: [PROXY tcp_listener.go:77] Authenticated OK
+11:09:03.274606 verbose: [PROXY statelog.go:181] publish state event 1
+11:09:05.661083 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+11:09:07.401840 info: [PROXY connectionhandler.go:277] Sending handshake
+11:09:08.099011 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+11:09:09.083609 info: [PROXY connectionhandler.go:279] Sending handshake response
+11:10:29.034819 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+11:10:30.812218 verbose: [PROXY coordinator.go:78] Created coordinator
+13:03:37.891062 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+13:03:37.891964 info: [PROXY logger.go:149] Change log level to verbose:
+13:03:37.894114 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+13:03:37.894181 verbose: [PROXY statelog.go:387] init statelog
+13:03:37.894267 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+13:03:37.894326 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+13:03:37.894353 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+13:03:37.894372 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+13:03:37.894388 debug: [PROXY workerbroker.go:166] workercnt  3
+13:03:37.894415 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+13:03:37.894435 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+13:03:37.894451 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+13:03:38.987569 info: [PROXY server.go:177] server: accepted from  127.0.0.1:52125
+13:03:38.987636 debug: [PROXY tcp_listener.go:77] Authenticated OK
+13:03:40.462222 verbose: [PROXY statelog.go:181] publish state event 1
+13:03:40.462306 info: [PROXY connectionhandler.go:277] Sending handshake
+13:03:40.462338 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+13:03:40.463538 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+13:03:40.463728 info: [PROXY connectionhandler.go:279] Reading handshake response
+13:03:40.463817 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+13:03:40.463980 verbose: [PROXY coordinator.go:78] Created coordinator
+13:03:58.110364 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+13:58:14.527897 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+13:58:14.528538 info: [PROXY logger.go:149] Change log level to verbose:
+13:58:14.529604 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+13:58:14.529648 verbose: [PROXY statelog.go:387] init statelog
+13:58:14.529714 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+13:58:14.529764 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+13:58:14.529790 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+13:58:14.529813 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+13:58:14.529822 debug: [PROXY workerbroker.go:166] workercnt  3
+13:58:14.529836 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+13:58:14.529844 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+13:58:14.529852 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+13:58:22.728167 info: [PROXY server.go:177] server: accepted from  127.0.0.1:52349
+13:58:22.728221 debug: [PROXY tcp_listener.go:77] Authenticated OK
+13:58:22.728243 verbose: [PROXY statelog.go:181] publish state event 1
+13:58:22.728260 info: [PROXY connectionhandler.go:277] Sending handshake
+13:58:22.728774 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+13:58:22.728791 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+13:58:22.728933 info: [PROXY connectionhandler.go:279] Reading handshake response
+13:58:22.728971 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+13:58:22.729061 verbose: [PROXY coordinator.go:78] Created coordinator
+15:03:55.660714 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:03:55.661214 info: [PROXY logger.go:149] Change log level to verbose:
+15:03:55.663452 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+15:03:55.663510 verbose: [PROXY statelog.go:387] init statelog
+15:03:55.663597 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:03:55.663651 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:03:55.663679 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:03:55.663697 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:03:55.663711 debug: [PROXY workerbroker.go:166] workercnt  3
+15:03:55.663742 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:03:55.663759 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:03:55.663774 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:04:02.564995 info: [PROXY server.go:177] server: accepted from  127.0.0.1:52664
+15:04:02.565056 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:04:02.565113 verbose: [PROXY statelog.go:181] publish state event 1
+15:04:02.565133 info: [PROXY connectionhandler.go:277] Sending handshake
+15:04:02.565587 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:04:02.565913 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:04:02.565947 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:04:02.565992 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+15:04:02.566094 verbose: [PROXY coordinator.go:78] Created coordinator
+15:04:28.463886 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:04:28.464373 info: [PROXY logger.go:149] Change log level to verbose:
+15:04:28.466548 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+15:04:28.466603 verbose: [PROXY statelog.go:387] init statelog
+15:04:28.466688 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:04:28.466741 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:04:28.466762 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:04:28.466779 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:04:28.466795 debug: [PROXY workerbroker.go:166] workercnt  3
+15:04:28.466822 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:04:28.466839 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:04:28.466854 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:04:31.257654 info: [PROXY server.go:177] server: accepted from  127.0.0.1:52671
+15:04:31.257729 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:04:31.257770 verbose: [PROXY statelog.go:181] publish state event 1
+15:04:31.257820 info: [PROXY connectionhandler.go:277] Sending handshake
+15:04:31.258581 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:04:31.258728 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:04:31.258757 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:04:31.258804 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+15:04:31.258912 verbose: [PROXY coordinator.go:78] Created coordinator
+15:04:37.076379 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+15:05:22.206757 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:05:22.208057 info: [PROXY logger.go:149] Change log level to verbose:
+15:05:22.210092 info: [PROXY tcp_listener.go:47] server: listening on localhost:3333  for https, connects to worker through socket
+15:05:22.210149 verbose: [PROXY statelog.go:387] init statelog
+15:05:22.210235 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:05:22.210289 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:05:22.210309 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:05:22.210325 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:05:22.210343 debug: [PROXY workerbroker.go:166] workercnt  3
+15:05:22.210370 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:05:22.210387 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:05:22.210404 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:05:24.312499 info: [PROXY server.go:177] server: accepted from  127.0.0.1:52680
+15:05:24.312608 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:05:24.312646 verbose: [PROXY statelog.go:181] publish state event 1
+15:05:24.312668 info: [PROXY connectionhandler.go:277] Sending handshake
+15:05:24.313279 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:05:24.313372 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:05:24.313511 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:05:24.313581 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+15:05:24.313698 verbose: [PROXY coordinator.go:78] Created coordinator
+15:05:26.377452 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+15:05:30.339679 verbose: [PROXY coordinator.go:121] Running coordinator
+15:05:42.051604 info: [PROXY connectionhandler.go:327] ======== Connection handler exits 127.0.0.1:52680
+15:05:42.051702 verbose: [PROXY statelog.go:181] publish state event 1
+15:07:08.574290 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:07:08.574808 info: [PROXY logger.go:149] Change log level to verbose:
+15:07:08.575238 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+15:07:08.575286 verbose: [PROXY statelog.go:387] init statelog
+15:07:08.575374 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:07:08.575443 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:07:08.575468 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:07:08.575487 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:07:08.575506 debug: [PROXY workerbroker.go:166] workercnt  3
+15:07:08.575534 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:07:08.575552 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:07:08.575570 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:07:19.649507 verbose: [PROXY server.go:236] bouncer checking checktime= 0  checkcount= 0  activated= false  msg= no active worker
+15:07:19.649553 info: [PROXY server.go:177] server: accepted from  127.0.0.1:52698
+15:07:19.649595 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:07:19.649618 verbose: [PROXY statelog.go:181] publish state event 1
+15:07:19.649637 info: [PROXY connectionhandler.go:277] Sending handshake
+15:07:19.650182 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:07:19.650214 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:07:19.650323 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:07:20.578383 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+15:07:20.579707 verbose: [PROXY coordinator.go:78] Created coordinator
+15:08:04.976351 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+15:08:07.923555 verbose: [PROXY coordinator.go:121] Running coordinator
+15:08:12.862785 info: [PROXY connectionhandler.go:327] ======== Connection handler exits 127.0.0.1:52698
+15:09:56.473745 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:09:56.475146 info: [PROXY logger.go:149] Change log level to verbose:
+15:09:56.476045 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+15:09:56.476171 verbose: [PROXY statelog.go:387] init statelog
+15:09:56.476301 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:09:56.476531 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:09:56.476556 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:09:56.476574 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:09:56.476590 debug: [PROXY workerbroker.go:166] workercnt  3
+15:09:56.476674 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:09:56.476691 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:09:56.476704 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:09:57.566512 info: [PROXY server.go:177] server: accepted from  127.0.0.1:52711
+15:09:57.566625 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:09:57.566695 verbose: [PROXY statelog.go:181] publish state event 1
+15:09:57.566761 info: [PROXY connectionhandler.go:277] Sending handshake
+15:10:01.027487 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:10:01.029036 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:10:01.029084 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:10:04.107523 info: [PROXY connectionhandler.go:283] Created coordinator in connection handler
+15:10:04.107853 verbose: [PROXY coordinator.go:78] Created coordinator
+15:10:17.741240 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+15:10:28.581223 verbose: [PROXY coordinator.go:121] Running coordinator
+15:20:03.023364 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:20:03.023831 info: [PROXY logger.go:149] Change log level to verbose:
+15:20:03.024230 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+15:20:03.024278 verbose: [PROXY statelog.go:387] init statelog
+15:20:03.024356 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:20:03.024408 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:20:03.024431 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:20:03.024450 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:20:03.024465 debug: [PROXY workerbroker.go:166] workercnt  3
+15:20:03.024488 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:20:03.024525 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:20:03.024538 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:20:05.587685 info: [PROXY server.go:177] server: accepted from  127.0.0.1:52809
+15:20:05.587751 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:20:05.587783 verbose: [PROXY statelog.go:181] publish state event 1
+15:20:05.587799 info: [PROXY connectionhandler.go:277] Sending handshake
+15:20:05.588307 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:20:05.588628 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:20:05.588663 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:20:23.060626 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+15:20:23.571082 verbose: [PROXY coordinator.go:78] Created coordinator
+15:20:30.502291 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+15:20:33.410346 verbose: [PROXY coordinator.go:121] Running coordinator
+15:20:37.054382 info: [PROXY connectionhandler.go:334] ======== Connection handler exits 127.0.0.1:52809
+15:20:54.113882 verbose: [PROXY statelog.go:181] publish state event 1
+15:25:26.119226 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:25:26.120463 info: [PROXY logger.go:149] Change log level to verbose:
+15:25:26.121522 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+15:25:26.121661 verbose: [PROXY statelog.go:387] init statelog
+15:25:26.121825 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:25:26.122036 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:25:26.122088 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:25:26.122107 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:25:26.122121 debug: [PROXY workerbroker.go:166] workercnt  3
+15:25:26.122174 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:25:26.122192 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:25:26.122205 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:25:28.524590 info: [PROXY server.go:177] server: accepted from  127.0.0.1:52835
+15:25:28.524665 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:25:28.524728 verbose: [PROXY statelog.go:181] publish state event 1
+15:25:28.524764 info: [PROXY connectionhandler.go:277] Sending handshake
+15:25:28.525840 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:25:28.526126 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:25:28.526160 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:27:58.903630 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:27:58.904122 info: [PROXY logger.go:149] Change log level to verbose:
+15:27:58.904507 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+15:27:58.904562 verbose: [PROXY statelog.go:387] init statelog
+15:27:58.904653 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:27:58.904736 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:27:58.904781 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:27:58.904801 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:27:58.904817 debug: [PROXY workerbroker.go:166] workercnt  3
+15:27:58.904842 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:27:58.904859 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:27:58.904876 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:28:00.034655 info: [PROXY server.go:177] server: accepted from  127.0.0.1:52851
+15:28:00.034739 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:28:00.034766 verbose: [PROXY statelog.go:181] publish state event 1
+15:28:00.034785 info: [PROXY connectionhandler.go:277] Sending handshake
+15:28:00.034819 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:28:00.035763 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:28:00.035792 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:28:18.316869 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:28:18.317349 info: [PROXY logger.go:149] Change log level to verbose:
+15:28:18.317765 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+15:28:18.317814 verbose: [PROXY statelog.go:387] init statelog
+15:28:18.317907 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:28:18.317979 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:28:18.318021 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:28:18.318048 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:28:18.318065 debug: [PROXY workerbroker.go:166] workercnt  3
+15:28:18.318090 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:28:18.318107 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:28:18.318122 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:28:19.538151 info: [PROXY server.go:177] server: accepted from  127.0.0.1:52862
+15:28:19.538216 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:28:19.538246 verbose: [PROXY statelog.go:181] publish state event 1
+15:28:19.538265 info: [PROXY connectionhandler.go:277] Sending handshake
+15:28:19.538772 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:28:19.539240 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:28:19.539278 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:29:37.387728 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+15:29:38.096806 verbose: [PROXY coordinator.go:78] Created coordinator
+15:29:44.487873 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+15:29:47.278805 verbose: [PROXY coordinator.go:121] Running coordinator
+15:32:30.296759 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:32:30.297249 info: [PROXY logger.go:149] Change log level to verbose:
+15:32:30.297650 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+15:32:30.297702 verbose: [PROXY statelog.go:387] init statelog
+15:32:30.297810 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:32:30.297872 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:32:30.297904 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:32:30.297924 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:32:30.297940 debug: [PROXY workerbroker.go:166] workercnt  3
+15:32:30.297970 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:32:30.297987 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:32:30.298003 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:32:32.096653 info: [PROXY server.go:177] server: accepted from  127.0.0.1:52923
+15:32:32.096724 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:32:32.096758 verbose: [PROXY statelog.go:181] publish state event 1
+15:32:32.096778 info: [PROXY connectionhandler.go:277] Sending handshake
+15:32:32.096807 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:32:32.097769 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:32:32.097807 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:33:54.332102 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+15:33:54.902818 verbose: [PROXY coordinator.go:78] Created coordinator
+15:34:05.491242 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+15:34:08.840606 verbose: [PROXY coordinator.go:121] Running coordinator
+15:34:17.527723 info: [PROXY connectionhandler.go:334] ======== Connection handler exits 127.0.0.1:52923
+15:36:08.778851 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:36:08.779341 info: [PROXY logger.go:149] Change log level to verbose:
+15:36:08.779749 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+15:36:08.779804 verbose: [PROXY statelog.go:387] init statelog
+15:36:08.779901 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:36:08.779965 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:36:08.779989 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:36:08.780011 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:36:08.780028 debug: [PROXY workerbroker.go:166] workercnt  3
+15:36:08.780052 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:36:08.780070 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:36:08.780085 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:36:11.220309 info: [PROXY server.go:177] server: accepted from  127.0.0.1:52939
+15:36:11.220388 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:36:11.220419 verbose: [PROXY statelog.go:181] publish state event 1
+15:36:11.220438 info: [PROXY connectionhandler.go:277] Sending handshake
+15:36:11.221052 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:36:11.221218 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:36:11.221229 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:37:02.297028 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+15:37:02.828570 verbose: [PROXY coordinator.go:78] Created coordinator
+15:37:04.863688 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+15:37:05.414431 verbose: [PROXY coordinator.go:121] Running coordinator
+15:38:08.347806 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:38:08.349036 info: [PROXY logger.go:149] Change log level to verbose:
+15:38:08.350064 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+15:38:08.350199 verbose: [PROXY statelog.go:387] init statelog
+15:38:08.350359 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:38:08.350564 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:38:08.350607 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:38:08.350626 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:38:08.350642 debug: [PROXY workerbroker.go:166] workercnt  3
+15:38:08.350695 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:38:08.350713 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:38:08.350727 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:38:09.907076 info: [PROXY server.go:177] server: accepted from  127.0.0.1:52951
+15:38:09.907146 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:38:09.907206 verbose: [PROXY statelog.go:181] publish state event 1
+15:38:09.907240 info: [PROXY connectionhandler.go:277] Sending handshake
+15:38:09.908311 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:38:09.908566 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:38:09.908606 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:39:45.480739 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:39:45.481255 info: [PROXY logger.go:149] Change log level to verbose:
+15:39:45.481665 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+15:39:45.481716 verbose: [PROXY statelog.go:387] init statelog
+15:39:45.481815 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:39:45.481878 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:39:45.481906 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:39:45.481924 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:39:45.481941 debug: [PROXY workerbroker.go:166] workercnt  3
+15:39:45.481969 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:39:45.481986 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:39:45.482001 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:39:47.664973 info: [PROXY server.go:177] server: accepted from  127.0.0.1:52968
+15:39:47.665034 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:39:47.665066 verbose: [PROXY statelog.go:181] publish state event 1
+15:39:47.665087 info: [PROXY connectionhandler.go:277] Sending handshake
+15:39:47.665656 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:39:47.665965 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:39:47.666011 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:39:52.205309 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+15:39:52.205560 verbose: [PROXY coordinator.go:78] Created coordinator
+15:40:08.013473 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+15:40:10.028744 verbose: [PROXY coordinator.go:121] Running coordinator
+15:41:25.607860 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:52968 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+15:41:25.607931 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+15:41:25.621971 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+15:41:25.622003 debug: [PROXY coordinator.go:141] coordinator run got client request.
+15:41:25.622017 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+15:41:25.622037 debug: [PROXY coordinator.go:401] Mux handle command: 3
+15:41:25.622050 debug: [PROXY coordinator.go:455] Mux ignores command: 3
+15:41:25.622063 verbose: [PROXY coordinator.go:121] Running coordinator
+15:45:04.052020 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:45:04.052566 info: [PROXY logger.go:149] Change log level to verbose:
+15:45:04.052970 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+15:45:04.053018 verbose: [PROXY statelog.go:387] init statelog
+15:45:04.053140 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:45:04.053198 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:45:04.053229 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:45:04.053249 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:45:04.053267 debug: [PROXY workerbroker.go:166] workercnt  3
+15:45:04.053294 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:45:04.053311 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:45:04.053329 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:45:05.976001 info: [PROXY server.go:177] server: accepted from  127.0.0.1:52996
+15:45:05.976093 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:45:05.976137 verbose: [PROXY statelog.go:181] publish state event 1
+15:45:05.976167 info: [PROXY connectionhandler.go:277] Sending handshake
+15:45:05.976948 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:45:05.976962 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:45:05.977005 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:45:05.977058 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+15:45:05.977171 verbose: [PROXY coordinator.go:78] Created coordinator
+15:45:05.977236 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:52996 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+15:45:05.977240 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+15:45:05.977309 verbose: [PROXY coordinator.go:121] Running coordinator
+15:45:05.977337 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+15:45:05.977352 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+15:45:05.977364 debug: [PROXY coordinator.go:141] coordinator run got client request.
+15:45:05.977379 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+15:45:05.977398 debug: [PROXY coordinator.go:401] Mux handle command: 3
+15:45:05.977422 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+15:45:05.977437 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+15:45:05.977458 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+15:45:05.977479 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+15:47:11.520540 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:47:11.521004 info: [PROXY logger.go:149] Change log level to verbose:
+15:47:11.521415 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+15:47:11.521464 verbose: [PROXY statelog.go:387] init statelog
+15:47:11.521550 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:47:11.521628 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:47:11.521654 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:47:11.521673 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:47:11.521689 debug: [PROXY workerbroker.go:166] workercnt  3
+15:47:11.521711 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:47:11.521728 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:47:11.521743 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:47:13.403290 info: [PROXY server.go:177] server: accepted from  127.0.0.1:53020
+15:47:13.403363 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:47:13.403411 verbose: [PROXY statelog.go:181] publish state event 1
+15:47:13.403464 info: [PROXY connectionhandler.go:277] Sending handshake
+15:47:13.403478 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:47:13.404460 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:47:13.404492 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:47:13.404543 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+15:47:13.404660 verbose: [PROXY coordinator.go:78] Created coordinator
+15:47:13.404727 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:53020 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+15:47:13.404758 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+15:47:13.404798 verbose: [PROXY coordinator.go:121] Running coordinator
+15:47:13.404824 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+15:47:13.404842 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+15:47:13.404859 debug: [PROXY coordinator.go:141] coordinator run got client request.
+15:47:13.404872 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+15:47:13.404887 debug: [PROXY coordinator.go:401] Mux handle command: 3
+15:47:13.404906 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+15:47:13.404928 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+15:47:13.404946 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+15:47:13.404965 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+15:47:13.404981 info: [PROXY coordinator.go:560] worker is nil
+15:48:16.959238 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:48:16.959744 info: [PROXY logger.go:149] Change log level to verbose:
+15:48:16.960161 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+15:48:16.960209 verbose: [PROXY statelog.go:387] init statelog
+15:48:16.960297 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:48:16.960365 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:48:16.960392 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:48:16.960410 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:48:16.960424 debug: [PROXY workerbroker.go:166] workercnt  3
+15:48:16.960448 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:48:16.960468 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:48:16.960484 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:48:19.301132 info: [PROXY server.go:177] server: accepted from  127.0.0.1:53031
+15:48:19.301201 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:48:19.301232 verbose: [PROXY statelog.go:181] publish state event 1
+15:48:19.301281 info: [PROXY connectionhandler.go:277] Sending handshake
+15:48:19.301286 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:48:19.302371 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:48:19.302401 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:48:19.302460 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+15:48:19.302581 verbose: [PROXY coordinator.go:78] Created coordinator
+15:48:19.302650 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:53031 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+15:48:19.302679 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+15:48:19.302708 verbose: [PROXY coordinator.go:121] Running coordinator
+15:48:19.302732 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+15:48:19.302748 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+15:48:19.302763 debug: [PROXY coordinator.go:141] coordinator run got client request.
+15:48:19.302776 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+15:48:19.302794 debug: [PROXY coordinator.go:401] Mux handle command: 3
+15:48:19.302817 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+15:48:19.302835 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+15:48:19.302855 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+15:48:19.302872 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+15:48:19.302891 info: [PROXY coordinator.go:560] worker is nil
+15:49:33.200721 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:49:33.201062 info: [PROXY logger.go:149] Change log level to verbose:
+15:49:33.201382 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+15:49:33.201427 verbose: [PROXY statelog.go:387] init statelog
+15:49:33.201488 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:49:33.201529 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:49:33.201546 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:49:33.201559 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:49:33.201572 debug: [PROXY workerbroker.go:166] workercnt  3
+15:49:33.201590 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:49:33.201603 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:49:33.201615 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:49:38.902990 info: [PROXY server.go:177] server: accepted from  127.0.0.1:53065
+15:49:38.903038 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:49:38.903063 verbose: [PROXY statelog.go:181] publish state event 1
+15:49:38.903096 info: [PROXY connectionhandler.go:277] Sending handshake
+15:49:38.903097 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:49:38.903824 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:49:38.903952 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:49:38.903997 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+15:49:38.904066 verbose: [PROXY coordinator.go:78] Created coordinator
+15:49:38.904107 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:53065 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+15:49:38.904134 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+15:49:38.904161 verbose: [PROXY coordinator.go:121] Running coordinator
+15:49:38.904189 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+15:49:38.904206 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+15:49:38.904223 debug: [PROXY coordinator.go:141] coordinator run got client request.
+15:49:38.904236 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+15:49:38.904252 debug: [PROXY coordinator.go:401] Mux handle command: 3
+15:49:38.904267 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+15:49:38.904286 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+15:49:38.904302 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+15:49:38.904324 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+15:49:38.904339 info: [PROXY coordinator.go:560] worker is nil
+15:49:38.904355 info: [PROXY coordinator.go:581] This case!
+15:49:38.904372 info: [PROXY coordinator.go:586] shard ID problems...?
+15:49:38.904388 info: [PROXY coordinator.go:587] This case!
+15:49:38.904444 verbose: [PROXY coordinator.go:549] coordinator dispatchrequest: exiting
+15:51:45.819836 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+15:51:45.820109 info: [PROXY logger.go:149] Change log level to verbose:
+15:51:45.820400 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+15:51:45.820442 verbose: [PROXY statelog.go:387] init statelog
+15:51:45.820505 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+15:51:45.820537 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+15:51:45.820551 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:51:45.820562 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+15:51:45.820574 debug: [PROXY workerbroker.go:166] workercnt  3
+15:51:45.820591 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+15:51:45.820603 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+15:51:45.820619 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+15:51:49.275720 info: [PROXY server.go:177] server: accepted from  127.0.0.1:53078
+15:51:49.275770 debug: [PROXY tcp_listener.go:77] Authenticated OK
+15:51:49.275799 verbose: [PROXY statelog.go:181] publish state event 1
+15:51:49.275816 info: [PROXY connectionhandler.go:277] Sending handshake
+15:51:49.275884 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+15:51:49.276696 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+15:51:49.276735 info: [PROXY connectionhandler.go:279] Reading handshake response
+15:51:49.276792 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+15:51:49.276870 verbose: [PROXY coordinator.go:78] Created coordinator
+15:51:49.276933 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:53078 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+15:51:49.276942 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+15:51:49.276989 verbose: [PROXY coordinator.go:121] Running coordinator
+15:51:49.277017 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+15:51:49.277035 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+15:51:49.277051 debug: [PROXY coordinator.go:141] coordinator run got client request.
+15:51:49.277065 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+15:51:49.277083 debug: [PROXY coordinator.go:401] Mux handle command: 3
+15:51:49.277101 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+15:51:49.277117 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+15:51:49.277136 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+15:51:49.277158 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+15:51:49.277173 info: [PROXY coordinator.go:560] worker is nil
+15:51:49.277187 info: [PROXY coordinator.go:581] This case!
+15:51:49.277205 info: [PROXY coordinator.go:586] shard ID problems...?
+15:51:49.277221 info: [PROXY coordinator.go:591] isNotInternal
+15:51:49.277309 info: [PROXY coordinator.go:592] &{<nil> <nil> 0 0 0 0 0 0  0 0 map[] <nil> []}
+15:51:49.277352 verbose: [PROXY coordinator.go:549] coordinator dispatchrequest: exiting
+16:02:46.516785 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+16:02:46.517104 info: [PROXY logger.go:149] Change log level to verbose:
+16:02:46.517426 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+16:02:46.517469 verbose: [PROXY statelog.go:387] init statelog
+16:02:46.517535 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+16:02:46.517573 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+16:02:46.517591 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:02:46.517604 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:02:46.517621 debug: [PROXY workerbroker.go:166] workercnt  3
+16:02:46.517642 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+16:02:46.517657 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+16:02:46.517670 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+16:02:49.655097 info: [PROXY server.go:177] server: accepted from  127.0.0.1:53137
+16:02:49.655142 debug: [PROXY tcp_listener.go:77] Authenticated OK
+16:02:49.655186 verbose: [PROXY statelog.go:181] publish state event 1
+16:02:49.655204 info: [PROXY connectionhandler.go:277] Sending handshake
+16:02:49.655675 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+16:02:49.655801 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+16:02:49.655827 info: [PROXY connectionhandler.go:279] Reading handshake response
+16:02:49.655874 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+16:02:49.655939 verbose: [PROXY coordinator.go:78] Created coordinator
+16:02:49.656002 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+16:02:49.656024 verbose: [PROXY coordinator.go:121] Running coordinator
+16:02:49.656047 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:53137 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+16:02:49.656098 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:02:49.656125 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+16:02:49.656146 debug: [PROXY coordinator.go:141] coordinator run got client request.
+16:02:49.656161 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+16:02:49.656178 debug: [PROXY coordinator.go:401] Mux handle command: 3
+16:02:49.656194 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:02:49.656211 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+16:02:49.656227 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:02:49.656247 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+16:02:49.656261 info: [PROXY coordinator.go:560] worker is nil
+16:02:49.656275 info: [PROXY coordinator.go:581] This case!
+16:02:49.656292 info: [PROXY coordinator.go:586] shard ID problems...?
+16:02:49.656306 info: [PROXY coordinator.go:591] isNotInternal
+16:02:49.656371 info: [PROXY coordinator.go:592] &{<nil> <nil> 0 0 0 0 0 0  0 0 map[] <nil> []}
+16:02:49.656406 verbose: [PROXY coordinator.go:549] coordinator dispatchrequest: exiting
+16:27:09.754586 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+16:27:09.754910 info: [PROXY logger.go:149] Change log level to verbose:
+16:27:09.755209 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+16:27:09.755254 verbose: [PROXY statelog.go:387] init statelog
+16:27:09.755321 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+16:27:09.755360 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+16:27:09.755378 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:27:09.755391 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:27:09.755403 debug: [PROXY workerbroker.go:166] workercnt  3
+16:27:09.755422 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+16:27:09.755440 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+16:27:09.755452 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+16:27:12.149355 info: [PROXY server.go:177] server: accepted from  127.0.0.1:53221
+16:27:12.149430 debug: [PROXY tcp_listener.go:77] Authenticated OK
+16:27:12.149455 verbose: [PROXY statelog.go:181] publish state event 1
+16:27:12.149479 info: [PROXY connectionhandler.go:277] Sending handshake
+16:27:12.149527 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+16:27:12.150258 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+16:27:12.150405 info: [PROXY connectionhandler.go:279] Reading handshake response
+16:27:12.150480 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+16:27:12.150571 verbose: [PROXY coordinator.go:78] Created coordinator
+16:27:12.150658 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:53221 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+16:27:12.150664 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+16:27:12.150729 verbose: [PROXY coordinator.go:121] Running coordinator
+16:27:12.150757 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:27:12.150773 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+16:27:12.150792 debug: [PROXY coordinator.go:141] coordinator run got client request.
+16:27:12.150808 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+16:27:12.150826 debug: [PROXY coordinator.go:401] Mux handle command: 3
+16:27:12.150841 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:27:12.150859 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+16:27:12.150875 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:27:12.150896 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+16:27:12.150910 info: [PROXY coordinator.go:560] worker is nil
+16:27:12.150927 info: [PROXY coordinator.go:581] This case!
+16:27:12.150947 info: [PROXY coordinator.go:586] shard ID problems...?
+16:27:12.150961 info: [PROXY coordinator.go:591] isNotInternal
+16:27:12.151045 info: [PROXY coordinator.go:592] &{<nil> <nil> 0 0 0 0 0 0  0 0 map[] <nil> []}
+16:27:12.151086 verbose: [PROXY coordinator.go:549] coordinator dispatchrequest: exiting
+16:58:30.920696 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+16:58:30.921346 info: [PROXY logger.go:149] Change log level to verbose:
+16:58:30.921950 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+16:58:30.922064 verbose: [PROXY statelog.go:387] init statelog
+16:58:30.922145 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+16:58:30.922311 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+16:58:30.922329 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:58:30.922344 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:58:30.922362 debug: [PROXY workerbroker.go:166] workercnt  3
+16:58:30.922411 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+16:58:30.922424 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+16:58:30.922436 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+16:58:50.202805 verbose: [PROXY server.go:236] bouncer checking checktime= 0  checkcount= 0  activated= false  msg= no active worker
+16:58:50.202878 info: [PROXY server.go:177] server: accepted from  127.0.0.1:53388
+16:58:50.202908 debug: [PROXY tcp_listener.go:77] Authenticated OK
+16:58:50.202945 verbose: [PROXY statelog.go:181] publish state event 1
+16:58:50.202974 info: [PROXY connectionhandler.go:277] Sending handshake
+16:58:50.202995 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+16:58:50.204478 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+16:58:50.204511 info: [PROXY connectionhandler.go:279] Reading handshake response
+16:58:50.204601 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+16:58:50.204738 verbose: [PROXY coordinator.go:78] Created coordinator
+16:58:50.204788 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:53388 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+16:58:50.204880 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+16:58:50.204904 verbose: [PROXY coordinator.go:121] Running coordinator
+16:58:50.204948 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:58:50.204967 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+16:58:50.204983 debug: [PROXY coordinator.go:141] coordinator run got client request.
+16:58:50.204996 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+16:58:50.205051 debug: [PROXY coordinator.go:401] Mux handle command: 3
+16:58:50.205066 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:58:50.205081 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+16:58:50.205096 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:58:50.205156 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+16:58:50.205170 info: [PROXY coordinator.go:560] worker is nil
+16:58:50.205183 info: [PROXY coordinator.go:581] This case!
+16:58:50.205210 info: [PROXY coordinator.go:586] shard ID problems...?
+16:58:50.205224 info: [PROXY coordinator.go:591] isNotInternal
+16:58:50.205560 info: [PROXY coordinator.go:592] &{<nil> <nil> 0 0 0 0 0 0  0 0 map[] <nil> []}
+16:58:50.205645 verbose: [PROXY coordinator.go:549] coordinator dispatchrequest: exiting
+16:59:06.276419 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+16:59:06.277050 info: [PROXY logger.go:149] Change log level to verbose:
+16:59:06.277639 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+16:59:06.277746 verbose: [PROXY statelog.go:387] init statelog
+16:59:06.277830 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+16:59:06.277979 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+16:59:06.277997 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:59:06.278007 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:59:06.278016 debug: [PROXY workerbroker.go:166] workercnt  3
+16:59:06.278057 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+16:59:06.278069 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+16:59:06.278077 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+16:59:10.460540 info: [PROXY server.go:177] server: accepted from  127.0.0.1:53393
+16:59:10.460587 debug: [PROXY tcp_listener.go:77] Authenticated OK
+16:59:10.460638 verbose: [PROXY statelog.go:181] publish state event 1
+16:59:10.460669 info: [PROXY connectionhandler.go:277] Sending handshake
+16:59:10.462058 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+16:59:10.462230 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+16:59:10.462262 info: [PROXY connectionhandler.go:279] Reading handshake response
+16:59:10.462351 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+16:59:10.462495 verbose: [PROXY coordinator.go:78] Created coordinator
+16:59:10.462543 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:53393 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+16:59:10.462623 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+16:59:10.462648 verbose: [PROXY coordinator.go:121] Running coordinator
+16:59:10.462685 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:59:10.462701 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+16:59:10.462716 debug: [PROXY coordinator.go:141] coordinator run got client request.
+16:59:10.462729 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+16:59:10.462783 debug: [PROXY coordinator.go:401] Mux handle command: 3
+16:59:10.462798 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:59:10.462816 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+16:59:10.462832 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:59:10.462877 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+16:59:10.462891 info: [PROXY coordinator.go:560] worker is nil
+16:59:10.462907 info: [PROXY coordinator.go:581] This case!
+16:59:10.462950 info: [PROXY coordinator.go:586] shard ID problems...?
+16:59:10.462964 info: [PROXY coordinator.go:591] isNotInternal
+16:59:10.463233 info: [PROXY coordinator.go:592] &{<nil> <nil> 0 0 0 0 0 0  0 0 map[] <nil> []}
+16:59:10.463325 verbose: [PROXY coordinator.go:549] coordinator dispatchrequest: exiting
+10:18:13.614053 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:18:13.614755 info: [PROXY logger.go:149] Change log level to verbose:
+10:18:13.615054 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+10:18:13.615099 verbose: [PROXY statelog.go:387] init statelog
+10:18:13.615160 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:18:13.615196 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:18:13.615213 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:18:13.615225 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:18:13.615237 debug: [PROXY workerbroker.go:166] workercnt  3
+10:18:13.615253 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:18:13.615265 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:18:13.615276 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:18:16.790331 info: [PROXY server.go:177] server: accepted from  127.0.0.1:53773
+10:18:16.790385 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:18:16.790407 verbose: [PROXY statelog.go:181] publish state event 1
+10:18:16.790423 info: [PROXY connectionhandler.go:277] Sending handshake
+10:18:16.790502 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:18:16.791345 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:18:16.791372 info: [PROXY connectionhandler.go:279] Reading handshake response
+10:18:16.791420 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+10:18:16.791490 verbose: [PROXY coordinator.go:78] Created coordinator
+10:18:16.791548 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+10:18:16.791563 verbose: [PROXY coordinator.go:121] Running coordinator
+10:18:16.791576 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:53773 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+10:18:16.791627 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+10:18:16.791648 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+10:18:16.791664 debug: [PROXY coordinator.go:141] coordinator run got client request.
+10:18:16.791685 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+10:18:16.791702 debug: [PROXY coordinator.go:401] Mux handle command: 3
+10:18:16.791717 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+10:18:16.791733 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+10:18:16.791750 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+10:18:16.791769 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+10:18:16.791785 info: [PROXY coordinator.go:560] worker is nil
+10:18:16.791798 info: [PROXY coordinator.go:581] This case!
+10:18:16.791811 info: [PROXY coordinator.go:586] shard ID problems...?
+10:18:16.791824 info: [PROXY coordinator.go:591] isNotInternal
+10:18:16.791891 info: [PROXY coordinator.go:592] &{<nil> <nil> 0 0 0 0 0 0  0 0 map[] <nil> []}
+10:18:16.791926 verbose: [PROXY coordinator.go:549] coordinator dispatchrequest: exiting
+10:22:41.598466 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:22:41.598767 info: [PROXY logger.go:149] Change log level to verbose:
+10:22:41.599056 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+10:22:41.599104 verbose: [PROXY statelog.go:387] init statelog
+10:22:41.599166 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:22:41.599204 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:22:41.599224 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:22:41.599236 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:22:41.599248 debug: [PROXY workerbroker.go:166] workercnt  3
+10:22:41.599266 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:22:41.599280 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:22:41.599291 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:22:45.201997 info: [PROXY server.go:177] server: accepted from  127.0.0.1:53812
+10:22:45.202046 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:22:45.202070 verbose: [PROXY statelog.go:181] publish state event 1
+10:22:45.202087 info: [PROXY connectionhandler.go:277] Sending handshake
+10:22:45.202483 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:22:45.202526 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:22:45.202679 info: [PROXY connectionhandler.go:279] Reading handshake response
+10:22:45.202725 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+10:22:45.202794 verbose: [PROXY coordinator.go:78] Created coordinator
+10:22:45.202830 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:53812 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+10:22:45.202867 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+10:22:45.202891 verbose: [PROXY coordinator.go:121] Running coordinator
+10:22:45.202915 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+10:22:45.202930 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+10:22:45.202944 debug: [PROXY coordinator.go:141] coordinator run got client request.
+10:22:45.202955 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+10:22:45.202972 debug: [PROXY coordinator.go:401] Mux handle command: 3
+10:22:45.202987 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+10:22:45.203001 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+10:22:45.203014 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+10:22:45.203032 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+10:22:45.203047 info: [PROXY coordinator.go:560] worker is nil
+10:22:45.203060 info: [PROXY coordinator.go:581] This case!
+10:22:45.203076 info: [PROXY coordinator.go:586] shard ID problems...?
+10:22:45.203089 info: [PROXY coordinator.go:591] isNotInternal
+10:22:45.203142 info: [PROXY coordinator.go:592] &{<nil> <nil> 0 0 0 0 0 0  0 0 map[] <nil> []}
+10:22:45.203173 verbose: [PROXY coordinator.go:549] coordinator dispatchrequest: exiting
+10:24:23.922050 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+10:24:23.922755 info: [PROXY logger.go:149] Change log level to verbose:
+10:24:23.923397 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+10:24:23.923510 verbose: [PROXY statelog.go:387] init statelog
+10:24:23.923593 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+10:24:23.923780 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+10:24:23.923800 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:24:23.923813 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+10:24:23.923823 debug: [PROXY workerbroker.go:166] workercnt  3
+10:24:23.923865 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+10:24:23.923877 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+10:24:23.923886 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+10:24:27.284603 info: [PROXY server.go:177] server: accepted from  127.0.0.1:53817
+10:24:27.284646 debug: [PROXY tcp_listener.go:77] Authenticated OK
+10:24:27.284704 verbose: [PROXY statelog.go:181] publish state event 1
+10:24:27.284744 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+10:24:27.284750 info: [PROXY connectionhandler.go:277] Sending handshake
+10:24:27.285992 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+10:24:27.286014 info: [PROXY connectionhandler.go:279] Reading handshake response
+10:24:27.286092 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+10:24:27.286203 verbose: [PROXY coordinator.go:78] Created coordinator
+10:24:27.286250 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:53817 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+10:24:27.286331 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+10:24:27.286356 verbose: [PROXY coordinator.go:121] Running coordinator
+10:24:27.286393 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+10:24:27.286408 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+10:24:27.286425 debug: [PROXY coordinator.go:141] coordinator run got client request.
+10:24:27.286438 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+10:24:27.286489 debug: [PROXY coordinator.go:401] Mux handle command: 3
+10:24:27.286502 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+10:24:27.286518 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+10:24:27.286533 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+10:24:27.286576 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+10:24:27.286602 info: [PROXY coordinator.go:560] worker is nil
+10:24:27.286615 info: [PROXY coordinator.go:581] This case!
+10:24:27.286642 info: [PROXY coordinator.go:586] shard ID problems...?
+10:24:27.286655 info: [PROXY coordinator.go:591] isNotInternal
+10:24:27.286950 info: [PROXY coordinator.go:592] &{<nil> <nil> 0 0 0 0 0 0  0 0 map[] <nil> []}
+10:24:27.287034 verbose: [PROXY coordinator.go:549] coordinator dispatchrequest: exiting

@@ -22,6 +22,7 @@ import (
 	"database/sql/driver"
 	"errors"
 	"fmt"
+	"github.com/paypal/hera/utility/encoding"
 	"net"
 
 	"github.com/paypal/hera/common"
@@ -38,7 +39,7 @@ type heraConnection struct {
 	// for the sharding extension
 	shardKeyPayload []byte
 	// correlation id
-	corrID *netstring.Netstring
+	corrID *encoding.Packet
 }
 
 // NewHeraConnection creates a structure implementing a driver.Con interface
@@ -88,7 +89,7 @@ func (c *heraConnection) exec(cmd int, payload []byte) error {
 }
 
 // internal function to execute commands
-func (c *heraConnection) execNs(ns *netstring.Netstring) error {
+func (c *heraConnection) execNs(ns *encoding.Packet) error {
 	if logger.GetLogger().V(logger.Verbose) {
 		payload := string(ns.Payload)
 		if len(payload) > 1000 {
@@ -101,7 +102,7 @@ func (c *heraConnection) execNs(ns *netstring.Netstring) error {
 }
 
 // returns the next message from the connection
-func (c *heraConnection) getResponse() (*netstring.Netstring, error) {
+func (c *heraConnection) getResponse() (*encoding.Packet, error) {
 	ns, err := c.reader.ReadNext()
 	if err != nil {
 		if logger.GetLogger().V(logger.Warning) {

@@ -161,7 +161,7 @@ type OpsConfig struct {
 var gAppConfig *Config
 var gOpsConfig *OpsConfig
 
-// GetConfig returns the application config
+// GetConfig returns the application configç
 func GetConfig() *Config {
 	return gAppConfig
 }
@@ -233,7 +233,7 @@ func InitConfig() error {
 		gAppConfig.StateLogInterval = 1
 	}
 
-	databaseType := cdb.GetOrDefaultString(ConfigDatabaseType, "oracle")
+	databaseType := "mysql" // cdb.GetOrDefaultString(ConfigDatabaseType, "oracle")
 	if strings.EqualFold(databaseType, "oracle") {
 		gAppConfig.DatabaseType = Oracle
 		if gAppConfig.ChildExecutable == "" {
@@ -251,7 +251,7 @@ func InitConfig() error {
 		}
 	}
 
-	gAppConfig.EnableSharding = cdb.GetOrDefaultBool("enable_sharding", false)
+	gAppConfig.EnableSharding = false // cdb.GetOrDefaultBool("enable_sharding", false)
 	gAppConfig.NumOfShards = 1
 	if gAppConfig.EnableSharding {
 		gAppConfig.UseShardMap = cdb.GetOrDefaultBool("use_shardmap", true)
@@ -294,7 +294,7 @@ func InitConfig() error {
 	gAppConfig.HostnamePrefix = parseMapStrStr(cdb.GetOrDefaultString("hostname_prefix", ""))
 
 	// TAF stuff
-	gAppConfig.EnableTAF = cdb.GetOrDefaultBool("enable_taf", false)
+	gAppConfig.EnableTAF = false // cdb.GetOrDefaultBool("enable_taf", false)
 	if gAppConfig.EnableTAF {
 		gAppConfig.TAFTimeoutMs = uint32(cdb.GetOrDefaultInt("taf_timeout_ms", 200))
 		gAppConfig.TAFBinDuration = cdb.GetOrDefaultInt("taf_bin_duration", 3600*24)

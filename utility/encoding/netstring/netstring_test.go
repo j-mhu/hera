@@ -18,6 +18,7 @@
 package netstring
 
 import (
+	"github.com/paypal/hera/utility/encoding"
 	"io"
 	"strings"
 	"testing"
@@ -25,13 +26,16 @@ import (
 
 type nsCase struct {
 	Serialized string
-	ns         *Netstring
+	ns         *encoding.Packet
 }
 
 func tcase(tcases []nsCase, t *testing.T) {
 	for _, tcase := range tcases {
 		t.Log("Testing for: ", tcase.Serialized)
-		ns, _ := NewNetstring(strings.NewReader(tcase.Serialized))
+		ns, err := NewNetstring(strings.NewReader(tcase.Serialized))
+		if err != nil {
+			t.Log(err.Error())
+		}
 		if ns.Cmd != tcase.ns.Cmd {
 			t.Log("Command expected", tcase.ns.Cmd, "instead got", ns.Cmd)
 			t.Fail()
@@ -48,44 +52,67 @@ func tcase(tcases []nsCase, t *testing.T) {
 	}
 }
 
+func reEncodeNetstring(str string) string {
+	byteStr := []byte(str)
+	return string(append([]byte{1}, byteStr...))
+}
+
 func TestBasic(t *testing.T) {
 	t.Log("Start TestBasic ++++++++++++++")
 
-	basic := []nsCase{{Serialized: "5:502 0,", ns: &Netstring{Cmd: 502, Payload: []byte("0"), Serialized: []byte("5:502 0,")}},
-		{Serialized: "3:502,", ns: &Netstring{Cmd: 502, Payload: []byte(""), Serialized: []byte("3:502,")}}}
+	serialized1 := []byte{1}
+	query1 := []byte("5:502 0,")
+	serialized1 = append(serialized1, query1...)
+	t.Log("serialized1: ", serialized1)
+
+	query2 := []byte("3:502,")
+	serialized2 := []byte{1}
+	serialized2 = append(serialized2, query2...)
+	t.Log("serialized2: ", serialized2)
+
+	basic := []nsCase{{Serialized: string(serialized1), ns: &encoding.Packet{Cmd: 502, Payload: []byte("0"), Serialized: serialized1}},
+		{Serialized: string(serialized2), ns: &encoding.Packet{Cmd: 502, Payload: []byte(""), Serialized: serialized2}}}
 	tcase(basic, t)
 
 	t.Log("End TestBasic ++++++++++++++")
 }
 
 func TestWriteEmbedded(t *testing.T) {
-	nss := make([]*Netstring, 3)
+	nss := make([]*encoding.Packet, 3)
 	nss[0] = NewNetstringFrom(502, []byte("abc"))
 	nss[1] = NewNetstringFrom(5, []byte(""))
 	nss[2] = NewNetstringFrom(25, []byte("1234567890?1234567890?1234567890?"))
 
+	t.Log(nss[0].Serialized)
+	t.Log(nss[1].Serialized)
+	t.Log(nss[2].Serialized)
+
 	ns := NewNetstringEmbedded(nss)
+	t.Log(ns.Serialized)
 	if ns.Cmd != 0 {
 		t.Log("Command expected '0' instead got", ns.Cmd)
 		t.Fail()
 	}
-	if strings.Compare(string(ns.Payload), "7:502 abc,1:5,36:25 1234567890?1234567890?1234567890?,") != 0 {
+	plod := reEncodeNetstring("7:502 abc,") + reEncodeNetstring("1:5,") + reEncodeNetstring("36:25 1234567890?1234567890?1234567890?,")
+	query := reEncodeNetstring("59:0 " + plod + ",")
+	if strings.Compare(string(ns.Payload), plod) != 0 {
 		t.Log("Payload expected '7:502 abc,1:5,36:25 1234567890?1234567890?1234567890?,' instead got ", string(ns.Payload))
 		t.Fail()
 	}
-	if strings.Compare(string(ns.Serialized), "56:0 7:502 abc,1:5,36:25 1234567890?1234567890?1234567890?,,") != 0 {
-		t.Log("Serialized expected '56:0 7:502 abc,1:5,36:25 1234567890?1234567890?1234567890?,,' instead got", string(ns.Serialized))
+	if strings.Compare(string(ns.Serialized), query) != 0 {
+		t.Log("Serialized expected",  query, " instead got", string(ns.Serialized))
 		t.Fail()
 	}
 }
 
 func TestReadEmbedded(t *testing.T) {
-	nss := make([]*Netstring, 3)
+	nss := make([]*encoding.Packet, 3)
 	nss[0] = NewNetstringFrom(502, []byte("xyzwx*abcdef"))
 	nss[1] = NewNetstringFrom(5, []byte(""))
 	nss[2] = NewNetstringFrom(25, []byte("1234567890*1234567890"))
 
 	ns := NewNetstringEmbedded(nss)
+	t.Log(ns.Serialized)
 
 	t.Log("NS::::", string(ns.Serialized))
 
@@ -113,16 +140,40 @@ func TestReadEmbedded(t *testing.T) {
 }
 
 func TestNetstringReader(t *testing.T) {
-	reader := NewNetstringReader(strings.NewReader("54:0 16:502 xyzwx*abcdef,1:5,24:25 1234567890*1234567890,,55:0 17:502 xyzwx*WWWWWWW,1:5,24:25 1234567890*1234567890,,"))
-	nss := make([]*Netstring, 6)
+
+
+
+	nss := make([]*encoding.Packet, 6)
 	nss[0] = NewNetstringFrom(502, []byte("xyzwx*abcdef"))
+	t.Log(nss[0].Serialized)
 	nss[1] = NewNetstringFrom(5, []byte(""))
+	t.Log(nss[1].Serialized)
 	nss[2] = NewNetstringFrom(25, []byte("1234567890*1234567890"))
+	t.Log(nss[2].Serialized)
 	nss[3] = NewNetstringFrom(502, []byte("xyzwx*WWWWWWW"))
+	t.Log(nss[3].Serialized)
 	nss[4] = NewNetstringFrom(5, []byte(""))
+	t.Log(nss[4].Serialized)
 	nss[5] = NewNetstringFrom(25, []byte("1234567890*1234567890"))
+	t.Log(nss[5].Serialized)
+
+	str := NewNetstringEmbedded(nss[0:3])
+	t.Log(string(str.Serialized))
+	str2 := NewNetstringEmbedded(nss[3:])
+	t.Log(string(str2.Serialized))
+
+	testStr := reEncodeNetstring("57:0 " + reEncodeNetstring("16:502 xyzwx*abcdef,") +
+					reEncodeNetstring("1:5,") +
+					reEncodeNetstring("24:25 1234567890*1234567890,") + ",") +
+		reEncodeNetstring("58:0 " +
+					reEncodeNetstring("17:502 xyzwx*WWWWWWW,") +
+					reEncodeNetstring("1:5,") +
+					reEncodeNetstring("24:25 1234567890*1234567890,") + ",")
+
+	// reader := NewNetstringReader(strings.NewReader(string(append(str.Serialized, str2.Serialized...))))
+	reader := NewNetstringReader(strings.NewReader(testStr))
 	idx := -1
-	var ns *Netstring
+	var ns *encoding.Packet
 	var err error
 	for {
 		ns, err = reader.ReadNext()
@@ -155,7 +206,7 @@ func TestNetstringReader(t *testing.T) {
 }
 
 func TestBadInput(t *testing.T) {
-	reader := NewNetstringReader(strings.NewReader("54:0 16:502 "))
+	reader := NewNetstringReader(strings.NewReader(reEncodeNetstring("54:0 " + reEncodeNetstring("16:502 "))))
 	_, err := reader.ReadNext()
 	if err != nil {
 		t.Log("OK: expected error:", err.Error())
@@ -163,7 +214,7 @@ func TestBadInput(t *testing.T) {
 		t.Log("Bad input should have failed - incomplete Netstring")
 		t.Fail()
 	}
-	reader = NewNetstringReader(strings.NewReader("55:0 16:502 xyzwx*abcdef,50:5,24:25 1234567890*1234567890,,"))
+	reader = NewNetstringReader(strings.NewReader(reEncodeNetstring("55:0 " +reEncodeNetstring ("16:502 xyzwx*abcdef,") + reEncodeNetstring("50:5,") + reEncodeNetstring("24:25 1234567890*1234567890,,"))))
 	// first NS is fine
 	_, err = reader.ReadNext()
 	if err != nil {
@@ -181,11 +232,11 @@ func TestBadInput(t *testing.T) {
 }
 
 // per https://dave.cheney.net/2013/06/30/how-to-write-benchmarks-in-go, to avoid compiler optimizations
-var result *Netstring
+var result *encoding.Packet
 
 func BenchmarkEncode(b *testing.B) {
-	var ns *Netstring
-	nss := make([]*Netstring, 10)
+	var ns *encoding.Packet
+	nss := make([]*encoding.Packet, 10)
 	for i := 0; i < b.N; i++ {
 		nss[0] = NewNetstringFrom(25, []byte("select id, int_val, str_val from test where id = :account_id and name = :name and address = :address  /*12345-123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890-123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901*/"))
 		nss[1] = NewNetstringFrom(4, []byte("account_id"))
@@ -203,18 +254,18 @@ func BenchmarkEncode(b *testing.B) {
 }
 
 func BenchmarkEncodeOne(b *testing.B) {
-	var ns *Netstring
+	var ns *encoding.Packet
 	for i := 0; i < b.N; i++ {
 		ns = NewNetstringFrom(25, []byte("select id, int_val, str_val from test where id = :account_id and name = :name and address = :address"))
 	}
 	result = ns
 }
 
-var results []*Netstring
+var results []*encoding.Packet
 
 func BenchmarkDecode(b *testing.B) {
-	var nss2 []*Netstring
-	nss := make([]*Netstring, 10)
+	var nss2 []*encoding.Packet
+	nss := make([]*encoding.Packet, 10)
 	nss[0] = NewNetstringFrom(25, []byte("select id, int_val, str_val from test where id = :account_id and name = :name and address = :address  /*12345-123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890-123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901234567890123456789012345678901*/"))
 	nss[1] = NewNetstringFrom(4, []byte("account_id"))
 	nss[2] = NewNetstringFrom(3, []byte("1234567890"))
@@ -234,7 +285,7 @@ func BenchmarkDecode(b *testing.B) {
 }
 
 func BenchmarkDecodeOne(b *testing.B) {
-	var ns2 *Netstring
+	var ns2 *encoding.Packet
 	ns := NewNetstringFrom(25, []byte("select id, int_val, str_val from test where id = :account_id and name = :name and address = :address"))
 	for i := 0; i < b.N; i++ {
 		ns2, _ = NewNetstring(strings.NewReader(string(ns.Serialized)))
