@@ -139,6 +139,7 @@ func runworker(sockMux *os.File, cmdprocessor *CmdProcessor, cfg *workerConfig) 
 	var sig int
 	var err error
 
+	logger.GetLogger().Log(logger.Info, "About to use readNextNetstring")
 	nschannel := readNextNetstring(sockMux) // TODO: Function still needs to be fixed to handle MySQL vs netstring.
 	cmdprocessor.moreIncomingRequests = func() bool {
 		return (len(nschannel) > 0)
@@ -198,7 +199,7 @@ outerloop:
 			break
 		}
 		if logger.GetLogger().V(logger.Verbose) {
-			logger.GetLogger().Log(logger.Verbose, sockMux.Name(), ": worker read <<<", DebugString(ns.Serialized))
+			logger.GetLogger().Log(logger.Verbose, sockMux.Name(), ": worker read <<<", DebugString(ns.Serialized), ns.IsMySQL)
 		}
 		//
 		// process one netstring command at a time.
@@ -219,6 +220,7 @@ outerloop:
 			break
 		}
 	}
+
 
 	if logger.GetLogger().V(logger.Info) {
 		logger.GetLogger().Log(logger.Info, "======== worker exits")
@@ -253,8 +255,10 @@ func readNextNetstring(sockMux *os.File) <-chan *encoding.Packet {
 
 			// If it's the wrong packet, then
 			if err != nil && err == encoding.WRONGPACKET {
+				logger.GetLogger().Log(logger.Info, "Using mysql packager reader/writer")
 				reader = mspreader
 				ns, err = reader.ReadNext()
+				logger.GetLogger().Log(logger.Info, "Finished using mysql packager reader/writer")
 			}
 
 			if err != nil {

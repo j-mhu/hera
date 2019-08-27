@@ -15,5 +15,7 @@ export TWO_TASK='tcp(localhost:3306)/'
 export TWO_TASK_READ='tcp(localhost:3306)/'
 
 # Run the test specified by variable n
+$GOROOT/bin/go install github.com/paypal/hera/{mux,worker/mysqlworker}
+
 cd $GOPATH/src/github.com/paypal/hera/tests/driverless/herasql
 go run driverless.go

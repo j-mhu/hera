@@ -25,6 +25,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/paypal/hera/utility/encoding"
+	"github.com/paypal/hera/utility/encoding/mysqlpackets"
 	"os"
 	"regexp"
 	"strconv"
@@ -192,9 +193,11 @@ func (cp *CmdProcessor) ProcessCmd(ns *encoding.Packet) error {
 	var err error
 
 	cp.queryScope.NsCmd = fmt.Sprintf("%d", ns.Cmd)
+	if !ns.IsMySQL {
 outloop:
 	switch ns.Cmd {
 	case common.CmdClientCalCorrelationID:
+		logger.GetLogger().Log(logger.Verbose, "Got to CmdClientCalCorrelationID")
 		//
 		// @TODO parse out correlationid.
 		//
@@ -706,7 +709,94 @@ outloop:
 			err = nil
 		}
 	}
+	} else {
+		logger.GetLogger().Log(logger.Info, "Out here in cmdprocessor for MySQL with cmd ", ns.Cmd)
+		// otherloop:
+		switch ns.Cmd {
+		case common.COM_QUERY:
+			logger.GetLogger().Log(logger.Info, "Going for gold in common.COM_QUERY")
+			/* Right now this is only good for simple queries that don't ask for anything aside from an OK packet.
+			* Reason being that COM_QUERY_RESPONSE packets fall into several categories. OK, ERR, or a series of packets
+			* that include ColumnDefinition packets. We currently have no good way of honest replication of
+			* ColumnDefinition.
+			 */
+			if logger.GetLogger().V(logger.Debug) {
+				logger.GetLogger().Log(logger.Debug, "Executing ", cp.inTrans)
+				logger.GetLogger().Log(logger.Debug, "No bindings")
+			}
 
+			// Get the query from the payload
+			sqlQuery := cp.preprocess(string(ns.Payload[1:]))
+
+			// If the sqlQuery contains a select, use Query -- otherwise use Exec
+			if cp.hasResult {
+				cp.rows, err = cp.db.Query(sqlQuery)
+			} else {
+				cp.result, err = cp.db.Exec(sqlQuery)
+			}
+
+			if err != nil {
+				cp.adapter.ProcessError(err, &cp.WorkerScope, &cp.queryScope)
+				cp.calExecErr("RC", err.Error())
+				if logger.GetLogger().V(logger.Warning) {
+					logger.GetLogger().Log(logger.Warning, "Execute error:", err.Error())
+				}
+				if cp.inTrans {
+					cp.eor(common.EORInTransaction, netstring.NewNetstringFrom(common.RcSQLError, []byte(err.Error())))
+				} else {
+					cp.eor(common.EORFree, netstring.NewNetstringFrom(common.RcSQLError, []byte(err.Error())))
+				}
+				cp.lastErr = err
+				err = nil
+				break
+			}
+
+			if cp.tx != nil {
+				cp.inTrans = true
+			}
+
+			cp.calExecTxn.Completed()
+			cp.calExecTxn = nil
+
+			if cp.result != nil {
+				var rowcnt int64
+				rowcnt, err = cp.result.RowsAffected()
+				if err != nil {
+					if logger.GetLogger().V(logger.Debug) {
+						logger.GetLogger().Log(logger.Debug, "RowsAffected():", err.Error())
+					}
+					cp.calExecErr("RowsAffected", err.Error())
+					break
+				}
+				if logger.GetLogger().V(logger.Debug) {
+					logger.GetLogger().Log(logger.Debug, "exe row", rowcnt)
+				}
+
+				// Get the last insert id from the sql.Result
+				var liid int64
+				liid, err = cp.result.LastInsertId()
+				if err != nil {
+					if logger.GetLogger().V(logger.Debug) {
+						logger.GetLogger().Log(logger.Debug, "LastInsertId():", err.Error())
+					}
+					cp.calExecErr("LastInsertId", err.Error())
+					break
+				}
+				if logger.GetLogger().V(logger.Debug) {
+					logger.GetLogger().Log(logger.Debug, "exe LastInsertId", rowcnt)
+				}
+				// Set an OK packet reporting the number of rows affected and last insert id. I don't know what to put for the message though...
+				ns := mysqlpackets.NewMySQLPacketFrom(ns.Sqid + 1, mysqlpackets.OKPacket(int(rowcnt), int(liid), "This packet has to be over 7 bytes."))
+
+				// Send OK packet.
+				err = cp.eor(common.EORFree, ns)
+
+			}
+
+		}
+	}
+
+	logger.GetLogger().Log(logger.Verbose, "Finished outerloop")
 	return err
 }
 
