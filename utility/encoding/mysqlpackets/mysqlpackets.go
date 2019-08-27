@@ -191,7 +191,6 @@ func NewMySQLPacket(_reader io.Reader) (*encoding.Packet, error) {
 	// Encode sequence id
 	sqid := ReadFixedLenInt(tmp, INT1, &idx)
 
-
 	// The total length is the header + payload, given by HEADER_SIZE + payload
 	// length read from the packet
 	totalLen := payload_length + HEADER_SIZE

@@ -236,43 +236,40 @@ func readNextNetstring(sockMux *os.File) <-chan *encoding.Packet {
 	// up to 10 ns substrings will be queued up in the buffer.
 	//
 	commandch := make(chan *encoding.Packet, 10)
-	isMySQL := false
 
-	// TODO: Revise to deal with WRONG PACKET. This isn't as simple as it was made out to be.
-	// Eventually want to read in packet and determine if it's netstring or mysql
-	if isMySQL {
-		mspreader := mysqlpackets.NewPackager(sockMux, nil)
-		go func() {
-			for {
-				ns, err := mspreader.ReadNext()
-				if err != nil {
-					if logger.GetLogger().V(logger.Warning) {
-						logger.GetLogger().Log(logger.Warning, sockMux.Name(), ":worker readerr", err.Error())
-					}
-					commandch <- nil
-				} else {
-					commandch <- ns
-				}
+	logger.GetLogger().Log(logger.Info, "Will pick between mysqlpackets and netstring packager.")
+
+	nsreader := netstring.NewNetstringReader(sockMux)
+	mspreader := mysqlpackets.NewPackager(sockMux, nil)
+	var reader encoding.Reader
+
+	reader = nsreader
+
+	logger.GetLogger().Log(logger.Info, "Using netstring packager reader/writer")
+	go func() {
+		for {
+			// Assuming that we're starting out with netstring.
+			ns, err := reader.ReadNext()
+
+			// If it's the wrong packet, then
+			if err != nil && err == encoding.WRONGPACKET {
+				reader = mspreader
+				ns, err = reader.ReadNext()
 			}
-			//close(commandch)
-		}()
-	} else {
-		nsreader := netstring.NewNetstringReader(sockMux)
-		go func() {
-			for {
-				ns, err := nsreader.ReadNext()
-				if err != nil {
-					if logger.GetLogger().V(logger.Warning) {
-						logger.GetLogger().Log(logger.Warning, sockMux.Name(), ":worker readerr", err.Error())
-					}
-					commandch <- nil
-				} else {
-					commandch <- ns
+
+			if err != nil {
+				if logger.GetLogger().V(logger.Warning) {
+					logger.GetLogger().Log(logger.Warning, sockMux.Name(), ":worker readerr", err.Error())
+					logger.GetLogger().Log(logger.Info, "Serialized: ", ns.Serialized)
 				}
+				commandch <- nil
+			} else {
+				commandch <- ns
 			}
-			//close(commandch)
-		}()
-	}
+		}
+		//close(commandch)
+	}()
+
 	return commandch
 }
 

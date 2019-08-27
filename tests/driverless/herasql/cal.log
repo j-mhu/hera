@@ -780,3 +780,544 @@ H10:24:24.92	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=
 H10:24:25.92	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
 H10:24:26.93	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
 E10:24:27.28	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:53817&laddr=127.0.0.1:3333
+E10:36:51.46	MSG	STATELOG	0	Created.
+H10:36:52.46	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H10:36:53.46	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H10:36:54.46	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H10:36:55.47	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H10:36:56.47	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E10:36:56.78	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:54007&laddr=127.0.0.1:3333
+E10:37:10.12	MSG	STATELOG	0	Created.
+H10:37:11.12	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H10:37:12.12	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E10:37:13.11	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:54014&laddr=127.0.0.1:3333
+E10:50:47.24	LOGGER	ALERT	0	Data=alert: [PROXY driverless.go:25]missing --name parameter
+E10:52:23.16	LOGGER	ALERT	0	Data=alert: [PROXY driverless.go:25]missing --name parameter
+A10:52:56.62	API	mux-go	0		
+E10:52:56.62	LOGGER	ALERT	0	Data=alert: [PROXY workerclient.go:325]TWO_TASK is not defined
+E10:52:56.62	ERROR	TWO_TASK	0	
+E10:52:56.62	LOGGER	ALERT	0	Data=alert: [PROXY workerpool.go:123]failed starting worker: TWO_TASK is not defined
+E10:52:56.62	LOGGER	ALERT	0	Data=alert: [PROXY workerbroker.go:188]failed to start workerpoolTWO_TASK is not defined
+A11:03:37.03	API	mux-go	0		
+E11:03:37.03	MUX	new_worker_child_0	0	
+E11:03:37.04	WARNING	spawn_error	0	execl errored out with no such file or directory
+E11:03:47.04	LOGGER	ALERT	0	Data=alert: [PROXY workerpool.go:123]failed starting worker: no such file or directory
+E11:03:47.04	LOGGER	ALERT	0	Data=alert: [PROXY workerbroker.go:188]failed to start workerpoolno such file or directory
+E11:03:47.04	LOGGER	ALERT	0	Data=alert: [PROXY driverless.go:80]failed to start hera worker
+A11:04:48.38	API	mux-go	0		
+E11:04:48.38	MUX	new_worker_child_0	0	
+E11:04:48.38	WARNING	spawn_error	0	execl errored out with no such file or directory
+E11:04:58.38	LOGGER	ALERT	0	Data=alert: [PROXY workerpool.go:123]failed starting worker: no such file or directory
+E11:04:58.38	LOGGER	ALERT	0	Data=alert: [PROXY workerbroker.go:188]failed to start workerpoolno such file or directory
+E11:04:58.38	LOGGER	ALERT	0	Data=alert: [PROXY driverless.go:80]failed to start hera worker
+A11:51:45.55	API	mux-go	0		
+E11:51:45.55	LOGGER	ALERT	0	Data=alert: [PROXY workerclient.go:325]TWO_TASK is not defined
+E11:51:45.55	ERROR	TWO_TASK	0	
+E11:51:45.55	LOGGER	ALERT	0	Data=alert: [PROXY workerpool.go:123]failed starting worker: TWO_TASK is not defined
+E11:51:45.55	LOGGER	ALERT	0	Data=alert: [PROXY workerbroker.go:188]failed to start workerpoolTWO_TASK is not defined
+E11:51:45.55	LOGGER	ALERT	0	Data=alert: [PROXY driverless.go:84]failed to start hera worker
+A11:54:00.51	API	mux-go	0		
+E11:54:00.51	LOGGER	ALERT	0	Data=alert: [PROXY workerclient.go:325]TWO_TASK is not defined
+E11:54:00.51	ERROR	TWO_TASK	0	
+E11:54:00.51	LOGGER	ALERT	0	Data=alert: [PROXY workerpool.go:123]failed starting worker: TWO_TASK is not defined
+E11:54:00.51	LOGGER	ALERT	0	Data=alert: [PROXY workerbroker.go:188]failed to start workerpoolTWO_TASK is not defined
+A11:55:22.57	API	mux-go	0		
+E11:55:22.57	LOGGER	ALERT	0	Data=alert: [PROXY workerclient.go:325]TWO_TASK is not defined
+E11:55:22.57	ERROR	TWO_TASK	0	
+E11:55:22.57	LOGGER	ALERT	0	Data=alert: [PROXY workerpool.go:123]failed starting worker: TWO_TASK is not defined
+E11:55:22.57	LOGGER	ALERT	0	Data=alert: [PROXY workerbroker.go:188]failed to start workerpoolTWO_TASK is not defined
+E11:55:22.57	LOGGER	ALERT	0	Data=alert: [PROXY driverless.go:84]failed to start hera worker
+A11:56:06.17	API	mux-go	0		
+E11:56:06.17	MUX	new_worker_child_0	0	
+E11:56:06.17	WARNING	spawn_error	0	execl errored out with no such file or directory
+E11:56:16.17	LOGGER	ALERT	0	Data=alert: [PROXY workerpool.go:123]failed starting worker: no such file or directory
+E11:56:16.17	LOGGER	ALERT	0	Data=alert: [PROXY workerbroker.go:188]failed to start workerpoolno such file or directory
+E11:56:16.17	LOGGER	ALERT	0	Data=alert: [PROXY driverless.go:84]failed to start hera worker
+A11:56:54.50	API	mux-go	0		
+E11:56:54.50	MUX	new_worker_child_0	0	
+E11:56:54.51	MSG	STATELOG	0	Created.
+E11:56:54.51	MUX	new_worker_child_0	0	
+E11:56:54.52	MUX	new_worker_child_0	0	
+A11:56:54.52	API	mux-go-start	0		
+E11:56:54.52	MSG	STATE	mux_start_time	tv_sec=1566932214&tv_usec=524939
+E11:56:54.54	SERVER_INFO	worker-go-start	0	
+E11:56:54.54	SERVER_INFO	worker-go-start	0	
+E11:56:54.54	SERVER_INFO	worker-go-start	0	
+H11:56:55.51	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:56:56.51	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:56:57.51	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:56:58.51	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:56:59.52	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:57:00.52	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:57:01.53	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:57:02.53	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:57:03.53	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E11:57:04.52	GO	stat	0	goroutines=9
+H11:57:04.53	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:57:05.53	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:57:06.54	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:57:07.54	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:57:08.54	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:57:09.54	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:57:10.54	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:57:11.54	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:57:12.55	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H11:57:13.55	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+A13:05:57.23	API	mux-go	0		
+E13:05:57.23	MUX	new_worker_child_0	0	
+E13:05:57.23	MSG	STATELOG	0	Created.
+E13:05:57.23	MUX	new_worker_child_0	0	
+E13:05:57.23	MUX	new_worker_child_0	0	
+A13:05:57.23	API	mux-go-start	0		
+E13:05:57.23	MSG	STATE	mux_start_time	tv_sec=1566936357&tv_usec=239952
+E13:05:57.24	SERVER_INFO	worker-go-start	0	
+E13:05:57.25	SERVER_INFO	worker-go-start	0	
+E13:05:57.25	SERVER_INFO	worker-go-start	0	
+H13:05:58.24	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:05:59.24	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:06:00.24	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:06:01.25	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:06:02.25	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:06:02.36	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:54498&laddr=127.0.0.1:3333
+A13:08:56.56	API	mux-go	0		
+E13:08:56.56	MUX	new_worker_child_0	0	
+E13:08:56.56	MSG	STATELOG	0	Created.
+E13:08:56.56	MUX	new_worker_child_0	0	
+E13:08:56.57	MUX	new_worker_child_0	0	
+A13:08:56.57	API	mux-go-start	0		
+E13:08:56.57	MSG	STATE	mux_start_time	tv_sec=1566936536&tv_usec=573438
+E13:08:56.58	SERVER_INFO	worker-go-start	0	
+E13:08:56.58	SERVER_INFO	worker-go-start	0	
+E13:08:56.58	SERVER_INFO	worker-go-start	0	
+H13:08:57.57	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:08:58.57	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:08:59.57	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:09:00.07	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:54529&laddr=127.0.0.1:3333
+A13:09:42.35	API	mux-go	0		
+E13:09:42.35	MUX	new_worker_child_0	0	
+E13:09:42.35	MSG	STATELOG	0	Created.
+E13:09:42.36	MUX	new_worker_child_0	0	
+E13:09:42.36	MUX	new_worker_child_0	0	
+A13:09:42.36	API	mux-go-start	0		
+E13:09:42.36	MSG	STATE	mux_start_time	tv_sec=1566936582&tv_usec=364189
+E13:09:42.37	SERVER_INFO	worker-go-start	0	
+E13:09:42.37	SERVER_INFO	worker-go-start	0	
+E13:09:42.37	SERVER_INFO	worker-go-start	0	
+H13:09:43.36	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:09:44.36	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:09:45.36	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:09:45.83	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:54564&laddr=127.0.0.1:3333
+A13:11:12.73	API	mux-go	0		
+E13:11:12.73	MUX	new_worker_child_0	0	
+E13:11:12.74	MSG	STATELOG	0	Created.
+E13:11:12.74	MUX	new_worker_child_0	0	
+E13:11:12.74	MUX	new_worker_child_0	0	
+A13:11:12.74	API	mux-go-start	0		
+E13:11:12.74	MSG	STATE	mux_start_time	tv_sec=1566936672&tv_usec=744295
+E13:11:12.75	SERVER_INFO	worker-go-start	0	
+E13:11:12.75	SERVER_INFO	worker-go-start	0	
+E13:11:12.75	SERVER_INFO	worker-go-start	0	
+H13:11:13.74	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:11:14.74	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:11:15.74	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:11:16.11	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:54584&laddr=127.0.0.1:3333
+A13:27:06.38	API	mux-go	0		
+E13:27:06.38	MUX	new_worker_child_0	0	
+E13:27:06.38	MSG	STATELOG	0	Created.
+E13:27:06.38	MUX	new_worker_child_0	0	
+E13:27:06.38	MUX	new_worker_child_0	0	
+A13:27:06.39	API	mux-go-start	0		
+E13:27:06.39	MSG	STATE	mux_start_time	tv_sec=1566937626&tv_usec=391348
+E13:27:06.40	SERVER_INFO	worker-go-start	0	
+E13:27:06.40	SERVER_INFO	worker-go-start	0	
+E13:27:06.40	SERVER_INFO	worker-go-start	0	
+H13:27:07.39	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:27:08.39	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:27:09.39	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:27:09.40	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:54808&laddr=127.0.0.1:3333
+A13:27:43.67	API	mux-go	0		
+E13:27:43.67	MUX	new_worker_child_0	0	
+E13:27:43.67	MSG	STATELOG	0	Created.
+E13:27:43.67	MUX	new_worker_child_0	0	
+E13:27:43.67	MUX	new_worker_child_0	0	
+A13:27:43.68	API	mux-go-start	0		
+E13:27:43.68	MSG	STATE	mux_start_time	tv_sec=1566937663&tv_usec=680325
+E13:27:43.68	SERVER_INFO	worker-go-start	0	
+E13:27:43.69	SERVER_INFO	worker-go-start	0	
+E13:27:43.69	SERVER_INFO	worker-go-start	0	
+H13:27:44.68	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:27:45.68	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:27:46.68	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:27:46.81	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:54822&laddr=127.0.0.1:3333
+A13:35:31.68	API	mux-go	0		
+E13:35:31.68	MUX	new_worker_child_0	0	
+E13:35:31.68	MSG	STATELOG	0	Created.
+E13:35:31.68	MUX	new_worker_child_0	0	
+E13:35:31.68	MUX	new_worker_child_0	0	
+A13:35:31.68	API	mux-go-start	0		
+E13:35:31.68	MSG	STATE	mux_start_time	tv_sec=1566938131&tv_usec=689549
+E13:35:31.69	SERVER_INFO	worker-go-start	0	
+E13:35:31.70	SERVER_INFO	worker-go-start	0	
+E13:35:31.70	SERVER_INFO	worker-go-start	0	
+H13:35:32.69	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:35:33.69	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:35:34.69	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:35:35.69	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:35:36.70	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:35:37.70	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:35:38.70	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:35:39.70	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:35:40.71	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:35:41.69	GO	stat	0	goroutines=12
+H13:35:41.71	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:35:42.71	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:35:43.72	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:35:44.72	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:35:45.72	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:35:46.72	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+A13:36:00.73	API	mux-go	0		
+E13:36:00.73	MUX	new_worker_child_0	0	
+E13:36:00.73	MSG	STATELOG	0	Created.
+E13:36:00.73	MUX	new_worker_child_0	0	
+E13:36:00.74	MUX	new_worker_child_0	0	
+A13:36:00.74	API	mux-go-start	0		
+E13:36:00.74	MSG	STATE	mux_start_time	tv_sec=1566938160&tv_usec=742292
+E13:36:00.75	SERVER_INFO	worker-go-start	0	
+E13:36:00.75	SERVER_INFO	worker-go-start	0	
+E13:36:00.75	SERVER_INFO	worker-go-start	0	
+H13:36:01.73	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:02.74	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:03.74	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:04.74	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:05.75	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:06.75	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+A13:36:13.16	API	mux-go	0		
+E13:36:13.16	LOGGER	ALERT	0	Data=alert: [PROXY workerclient.go:325]TWO_TASK is not defined
+E13:36:13.16	ERROR	TWO_TASK	0	
+E13:36:13.16	LOGGER	ALERT	0	Data=alert: [PROXY workerpool.go:123]failed starting worker: TWO_TASK is not defined
+E13:36:13.16	LOGGER	ALERT	0	Data=alert: [PROXY workerbroker.go:188]failed to start workerpoolTWO_TASK is not defined
+E13:36:13.16	LOGGER	ALERT	0	Data=alert: [PROXY driverless.go:85]failed to start hera worker
+A13:36:27.48	API	mux-go	0		
+E13:36:27.48	MUX	new_worker_child_0	0	
+E13:36:27.48	MSG	STATELOG	0	Created.
+E13:36:27.48	MUX	new_worker_child_0	0	
+E13:36:27.48	MUX	new_worker_child_0	0	
+A13:36:27.48	API	mux-go-start	0		
+E13:36:27.48	MSG	STATE	mux_start_time	tv_sec=1566938187&tv_usec=485951
+E13:36:27.49	SERVER_INFO	worker-go-start	0	
+E13:36:27.49	SERVER_INFO	worker-go-start	0	
+E13:36:27.49	SERVER_INFO	worker-go-start	0	
+H13:36:28.48	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:29.48	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:30.49	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:31.49	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:32.49	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:33.50	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:34.50	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:35.51	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:36.51	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:36:37.48	GO	stat	0	goroutines=12
+H13:36:37.51	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:38.51	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:39.51	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:40.51	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:41.51	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:42.51	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:43.52	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:44.52	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:45.52	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:46.53	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:36:47.48	GO	stat	0	goroutines=12
+H13:36:47.53	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:48.53	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:49.53	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:50.53	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:51.54	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:52.54	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:53.54	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:54.54	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:55.54	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:56.55	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:36:57.49	GO	stat	0	goroutines=12
+H13:36:57.55	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:58.55	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:36:59.55	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:00.56	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:01.56	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:02.56	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:03.57	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:04.57	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:05.57	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:06.58	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:37:07.49	GO	stat	0	goroutines=12
+H13:37:07.58	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:08.58	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:09.58	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:10.58	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:11.59	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:12.59	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:13.59	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:14.59	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:15.59	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:16.60	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:37:17.49	GO	stat	0	goroutines=12
+H13:37:17.60	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:18.60	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:19.60	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:20.61	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:21.61	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:22.61	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:23.61	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:24.61	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:25.61	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:26.62	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:37:27.49	GO	stat	0	goroutines=12
+H13:37:27.62	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:28.62	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:29.62	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:30.63	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:31.63	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:32.63	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:33.63	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:34.64	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:35.64	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:36.64	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:37:37.50	GO	stat	0	goroutines=12
+H13:37:37.64	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:38.64	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:39.64	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:40.65	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:41.65	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:42.66	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:43.66	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:44.66	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:45.67	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:46.67	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:37:47.50	GO	stat	0	goroutines=12
+H13:37:47.67	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:48.67	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:49.68	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:50.68	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:51.68	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:52.69	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:53.69	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:54.69	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:55.69	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:56.69	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:37:57.50	GO	stat	0	goroutines=12
+H13:37:57.69	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:58.70	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:37:59.70	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:00.70	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:01.70	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+A13:38:03.78	API	mux-go	0		
+E13:38:03.78	MUX	new_worker_child_0	0	
+E13:38:03.78	MSG	STATELOG	0	Created.
+E13:38:03.78	MUX	new_worker_child_0	0	
+E13:38:03.79	MUX	new_worker_child_0	0	
+A13:38:03.79	API	mux-go-start	0		
+E13:38:03.79	MSG	STATE	mux_start_time	tv_sec=1566938283&tv_usec=792836
+E13:38:03.80	SERVER_INFO	worker-go-start	0	
+E13:38:03.80	SERVER_INFO	worker-go-start	0	
+E13:38:03.80	SERVER_INFO	worker-go-start	0	
+H13:38:04.79	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:05.79	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:06.80	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:07.80	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:08.80	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:09.80	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:10.81	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:11.81	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:12.81	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:38:13.79	GO	stat	0	goroutines=12
+H13:38:13.81	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:14.81	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:15.82	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:16.82	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:17.83	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:18.83	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:19.83	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:20.83	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:21.84	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:22.84	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:38:23.79	GO	stat	0	goroutines=12
+H13:38:23.85	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:24.85	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:25.85	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:26.86	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:27.86	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:28.86	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:29.86	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:30.86	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:31.86	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:32.87	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:38:33.79	GO	stat	0	goroutines=12
+H13:38:33.87	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:34.87	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:35.87	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:36.88	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:37.88	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:38.88	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:39.88	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:40.88	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:41.89	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:42.89	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:38:43.80	GO	stat	0	goroutines=12
+H13:38:43.89	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:44.90	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:45.90	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:46.90	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:47.90	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:48.91	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:49.91	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:50.91	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:51.91	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:52.91	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:38:53.80	GO	stat	0	goroutines=12
+H13:38:53.92	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:54.92	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:55.92	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:56.93	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:57.93	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:58.93	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:38:59.93	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:39:00.94	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:39:01.94	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:39:02.94	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:39:03.81	GO	stat	0	goroutines=12
+H13:39:03.95	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+A13:39:12.36	API	mux-go	0		
+E13:39:12.36	MUX	new_worker_child_0	0	
+E13:39:12.36	MSG	STATELOG	0	Created.
+E13:39:12.36	MUX	new_worker_child_0	0	
+E13:39:12.36	MUX	new_worker_child_0	0	
+A13:39:12.36	API	mux-go-start	0		
+E13:39:12.36	MSG	STATE	mux_start_time	tv_sec=1566938352&tv_usec=368283
+E13:39:12.37	SERVER_INFO	worker-go-start	0	
+E13:39:12.37	SERVER_INFO	worker-go-start	0	
+E13:39:12.38	SERVER_INFO	worker-go-start	0	
+H13:39:13.36	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:39:14.36	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:39:15.35	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:54956&laddr=127.0.0.1:3333
+A13:39:25.56	API	mux-go	0		
+E13:39:25.56	MUX	new_worker_child_0	0	
+E13:39:25.56	MSG	STATELOG	0	Created.
+E13:39:25.56	MUX	new_worker_child_0	0	
+E13:39:25.57	MUX	new_worker_child_0	0	
+A13:39:25.57	API	mux-go-start	0		
+E13:39:25.57	MSG	STATE	mux_start_time	tv_sec=1566938365&tv_usec=575611
+E13:39:25.58	SERVER_INFO	worker-go-start	0	
+E13:39:25.58	SERVER_INFO	worker-go-start	0	
+E13:39:25.59	SERVER_INFO	worker-go-start	0	
+H13:39:26.56	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:39:27.57	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:39:28.57	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:39:29.18	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:54970&laddr=127.0.0.1:3333
+A13:40:47.14	API	mux-go	0		
+E13:40:47.15	MUX	new_worker_child_0	0	
+E13:40:47.15	MSG	STATELOG	0	Created.
+E13:40:47.15	MUX	new_worker_child_0	0	
+E13:40:47.15	MUX	new_worker_child_0	0	
+A13:40:47.15	API	mux-go-start	0		
+E13:40:47.15	MSG	STATE	mux_start_time	tv_sec=1566938447&tv_usec=155163
+E13:40:47.16	SERVER_INFO	worker-go-start	0	
+E13:40:47.16	SERVER_INFO	worker-go-start	0	
+E13:40:47.16	SERVER_INFO	worker-go-start	0	
+H13:40:48.15	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:40:49.15	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:40:50.15	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:40:50.43	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:55012&laddr=127.0.0.1:3333
+A13:42:30.64	API	mux-go	0		
+E13:42:30.64	MUX	new_worker_child_0	0	
+E13:42:30.64	MSG	STATELOG	0	Created.
+E13:42:30.64	MUX	new_worker_child_0	0	
+E13:42:30.64	MUX	new_worker_child_0	0	
+A13:42:30.65	API	mux-go-start	0		
+E13:42:30.65	MSG	STATE	mux_start_time	tv_sec=1566938550&tv_usec=650997
+E13:42:30.66	SERVER_INFO	worker-go-start	0	
+E13:42:30.66	SERVER_INFO	worker-go-start	0	
+E13:42:30.66	SERVER_INFO	worker-go-start	0	
+H13:42:31.64	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:42:32.65	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:42:33.65	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:42:34.65	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:42:35.65	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:42:36.66	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:42:37.66	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:42:38.66	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:42:39.66	STATE	hera	0	init=3&acpt=0&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+A13:43:32.19	API	mux-go	0		
+E13:43:32.19	MUX	new_worker_child_0	0	
+E13:43:32.19	MSG	STATELOG	0	Created.
+E13:43:32.19	MUX	new_worker_child_0	0	
+E13:43:32.19	MUX	new_worker_child_0	0	
+A13:43:32.19	API	mux-go-start	0		
+E13:43:32.19	MSG	STATE	mux_start_time	tv_sec=1566938612&tv_usec=198744
+E13:43:32.20	SERVER_INFO	worker-go-start	0	
+E13:43:32.20	SERVER_INFO	worker-go-start	0	
+E13:43:32.20	SERVER_INFO	worker-go-start	0	
+H13:43:33.19	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:43:34.20	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:43:35.20	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:43:35.63	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:55040&laddr=127.0.0.1:3333
+A13:44:24.50	API	mux-go	0		
+E13:44:24.51	MUX	new_worker_child_0	0	
+E13:44:24.51	MSG	STATELOG	0	Created.
+E13:44:24.51	MUX	new_worker_child_0	0	
+E13:44:24.51	MUX	new_worker_child_0	0	
+A13:44:24.51	API	mux-go-start	0		
+E13:44:24.51	MSG	STATE	mux_start_time	tv_sec=1566938664&tv_usec=515489
+E13:44:24.52	SERVER_INFO	worker-go-start	0	
+E13:44:24.52	SERVER_INFO	worker-go-start	0	
+E13:44:24.52	SERVER_INFO	worker-go-start	0	
+H13:44:25.51	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:44:26.51	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:44:26.95	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:55054&laddr=127.0.0.1:3333
+A13:47:15.51	API	mux-go	0		
+E13:47:15.51	MUX	new_worker_child_0	0	
+E13:47:15.51	MSG	STATELOG	0	Created.
+E13:47:15.51	MUX	new_worker_child_0	0	
+E13:47:15.51	MUX	new_worker_child_0	0	
+A13:47:15.51	API	mux-go-start	0		
+E13:47:15.51	MSG	STATE	mux_start_time	tv_sec=1566938835&tv_usec=517455
+E13:47:15.52	SERVER_INFO	worker-go-start	0	
+E13:47:15.52	SERVER_INFO	worker-go-start	0	
+E13:47:15.52	SERVER_INFO	worker-go-start	0	
+H13:47:16.51	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:47:17.51	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:47:18.51	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:47:18.89	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:55133&laddr=127.0.0.1:3333
+A13:48:15.45	API	mux-go	0		
+E13:48:15.45	MUX	new_worker_child_0	0	
+E13:48:15.45	MSG	STATELOG	0	Created.
+E13:48:15.45	MUX	new_worker_child_0	0	
+E13:48:15.46	MUX	new_worker_child_0	0	
+A13:48:15.46	API	mux-go-start	0		
+E13:48:15.46	MSG	STATE	mux_start_time	tv_sec=1566938895&tv_usec=463361
+E13:48:15.47	SERVER_INFO	worker-go-start	0	
+E13:48:15.47	SERVER_INFO	worker-go-start	0	
+E13:48:15.47	SERVER_INFO	worker-go-start	0	
+H13:48:16.46	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:48:17.46	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:48:18.47	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:48:19.47	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:48:19.54	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:55147&laddr=127.0.0.1:3333
+A13:50:28.50	API	mux-go	0		
+E13:50:28.50	MUX	new_worker_child_0	0	
+E13:50:28.50	MSG	STATELOG	0	Created.
+E13:50:28.50	MUX	new_worker_child_0	0	
+E13:50:28.51	MUX	new_worker_child_0	0	
+A13:50:28.51	API	mux-go-start	0		
+E13:50:28.51	MSG	STATE	mux_start_time	tv_sec=1566939028&tv_usec=513263
+E13:50:28.52	SERVER_INFO	worker-go-start	0	
+E13:50:28.52	SERVER_INFO	worker-go-start	0	
+E13:50:28.52	SERVER_INFO	worker-go-start	0	
+H13:50:29.51	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:50:30.51	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:50:31.51	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:50:32.51	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:50:33.52	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:50:34.52	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:50:35.52	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+H13:50:36.53	STATE	hera	0	init=0&acpt=3&wait=0&busy=0&schd=0&fnsh=0&quce=0&asgn=0&idle=0&bklg=0&strd=0&req=0&resp=0
+E13:50:36.61	ACCEPT	127.0.0.1	0	fwk=muxtcp&raddr=127.0.0.1:55171&laddr=127.0.0.1:3333

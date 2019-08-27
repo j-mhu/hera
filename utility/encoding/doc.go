@@ -27,6 +27,11 @@ type Packet struct {
 	IsMySQL bool		// indicates whether or not the packet is MySQL, which affects how it's processed
 }
 
+// Interface for reader
+type Reader interface {
+	ReadNext() (*Packet, error)
+}
+
 type WRONG_PACKET struct {
 }
 

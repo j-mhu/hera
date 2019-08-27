@@ -19,6 +19,7 @@
 package netstring
 
 import (
+	"bufio"
 	"bytes"
 	"errors"
 	"fmt"
@@ -103,28 +104,34 @@ func NewInitNetstring(_reader io.Reader) (*encoding.Packet, error) {
 }
 
 // NewNetstring creates a Netstring from the reader, reading exactly as many bytes as necessary
-func NewNetstring(_reader io.Reader) (*encoding.Packet, error) {
+func NewNetstring(reader io.Reader) (*encoding.Packet, error) {
 	ns := &encoding.Packet{}
 
+	_reader := bufio.NewReader(reader)
+
 	var buff bytes.Buffer
-	var tp = make([]byte, 1)
+	// var tp = make([]byte, 1)
 	var tmp = make([]byte, 1)
 	var digit int
 	var err error
+
+
 	// read length
 	length := 0
 	// Read in type byte
-	_, err = _reader.Read(tp)
+	ttp, err := _reader.ReadByte()
 	if err == io.EOF {
 		return nil, err
 	}
-	if len(tp) != 0 && int(tp[0]) != 1 {
-		// fmt.Println("Expected netstring ", 1, " , instead got", tp[0])
-		if int(tp[0]) == 0 {
+
+	if int(ttp) != 1 {
+		if int(ttp) == 0 {
 			return nil, encoding.WRONGPACKET
 		}
 		return nil, encoding.UNKNOWNPACKET
 	}
+
+
 	for {
 		_, err = _reader.Read(tmp)
 		b := tmp[0]
