@@ -36,7 +36,7 @@ number set as the mock server, if you're running on localhost.
 
 ## Major modifications to Hera source code
 
-1. **Handshake**
+#### 1. **Handshake** ####
 
 In `lib/connectionhandler.go`, two functions were added. These are
 `sendHandshake()` and `readHandshakeResponse()`.
@@ -52,7 +52,7 @@ Coordinator code should just deal with the command phase for MySQL,
 and authentication and connection should happen in the connection handler.
 
 
-2. **Changes to netstring encoding and adding mysqlpacket encoding.**
+#### 2. **Changes to netstring encoding and adding mysqlpacket encoding.** ####
 
 All packets now have the general form:
 ```go
@@ -76,7 +76,7 @@ Netstring general format Serialized: 		LENGTH:PAYLOAD
 MySQL packet general format Serialized: 	HEADER PAYLOAD
 ```
 
-Now, they are modified to look like this:
+Now, for Hera internal-specific encoding, they are modified to look like this:
 
 ENCODING | INDICATOR | PREPENDED | PAYLOAD
 --- | --- | --- | ---
@@ -84,6 +84,9 @@ netstring | **0x01** | LENGTH | ...
 mysqlpacket | **0x00** | HEADER | ...
 
 where INDICATOR is a byte that differentiates between netstring and mysqlpacket.
+After a mysqlpacket/netstring enters Hera through the client's conn,
+it is wrapped in this encoding and packaged into a Packet. All
+Packets are expected to have an indicator byte.
 
 For nested netstrings, the 0x01 byte is deep-nested as well. This means that each netstring, at every nesting depth, inside the nested netstring has an indicator byte. An example with netstring depth=2 with 3 strings would look like this.
 ```
@@ -93,19 +96,24 @@ All tests for netstring and MySQLPackets were modified to reflect this change. T
 
 A consequence is that we cannot know what the packet type is until after we’ve tried reading the first byte. This motivates a new error called `WRONG_PACKET` that implements the error interface. I initialized one single instance of it. This gets sent any time a MySQL packet is read using netstring functions, or vice versa.
 
-Similarly, if the indicator byte is not present, or it is not 0x00 or 0x01, then we should raise an `UNKNOWN_PACKET` error. This is also defined in `utility/encoding`, under `WRONG_PACKET`.
+Similarly, if the indicator byte is not present, or it is not 0x00 or 0x01, then we should raise an `UNKNOWN_PACKET` error.
+Both are defined in [`utility/encoding`](https://github.com/paypal/hera/tree/master/utility/encoding), under `WRONGPACKET` and `UNKNOWNPACKET`.
 
 An example of its use is this:
 
-If the err returned from NewNetstring(…) is encoding.WRONGPACKET, then we should try to read the bytes again using NewMySQLPacket(…). See workerclient.go: function doREAD() for an example.
+If the err returned from NewNetstring(…) is encoding.WRONGPACKET, then we should try to read the bytes again using NewMySQLPacket(…).
+NewNetstring and NewMySQLPacket were modified to read from a buffer, so that we
+do not consume input on a packet misread. See [workerclient.go: doRead()](https://github.com/paypal/hera/tree/master/lib/workerclient.go) for an example.
 
 
-3. Adding a MySQL case for all worker request handling code.
+#### 3. Adding a MySQL case for all worker request handling code.####
 
-4. Places with important TODOS
-    * cmdprocessor.go.       
+(editing)
 
-## Currently supported commands:
+As a result, there are a few places with very important TODOs.
+    * cmdprocessor.go
+
+## Currently supported commands: ##
      - [ ] COM_SLEEP
 	- [x] COM_QUIT
 	- [ ] COM_INIT_DB
