@@ -107,11 +107,12 @@ NewNetstring and NewMySQLPacket were modified to read from a buffer, so that we
 do not consume input on a packet misread. See [workerclient.go: doRead()](https://github.com/j-mhu/hera/tree/master/lib/workerclient.go) for an example.
 
 
-#### 3. Adding a MySQL case for all worker request handling code.####
+#### 3. Adding a MySQL case for all worker request handling code. ####
 
 (editing)
 
 As a result, there are a few places with very important TODOs.
+
     * cmdprocessor.go
 
 ## Currently supported commands: ##
