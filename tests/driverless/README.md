@@ -1,8 +1,13 @@
-# Removing the driver in Hera
+# Removing the JDBC-HERA Driver
 
- MAJOR MODIFICATIONS TO HERA SOURCE CODE:
+## 0. Implications
 
-1. HANDSHAKE PACKET AND HANDSHAKE RESPONSE
+## 1. How to run MySQL queries against a driverless Hera
+
+
+## 2. MAJOR MODIFICATIONS TO HERA SOURCE CODE:
+
+1. **HANDSHAKE PACKET AND HANDSHAKE RESPONSE**
 
 In connectionhandler.go, two functions were added. These are `sendHandshake()` and `readHandshakeResponse()`.
 
@@ -12,7 +17,7 @@ In connectionhandler.go, two functions were added. These are `sendHandshake()` a
 Placing these two functions outside of `lib/coordinator.go` is due to this reason. Coordinator code should just deal with the command phase for MySQL. Authentication and connection should happen in the connection handler.
 
 
-2. Distinguishing between netstrings and MySQLPackets.
+2. **REVISIONS TO NETSTRING ENCODING, MYSQLPACKET ADDITION.**
 
 All packets have the general form:
 ```go
@@ -56,3 +61,36 @@ If the err returned from NewNetstring(…) is encoding.WRONGPACKET, then we shou
 3. Adding a MySQL case for all worker request handling code.
 4. Places with important TODOS
     * cmdprocessor.go.       all of processCmd for any command aside from `COM_QUERY`
+
+    Currently supported commands:
+     [] COM_SLEEP
+	[x] COM_QUIT
+	[] COM_INIT_DB
+	[x] COM_QUERY
+	[] COM_FIELD_LIST
+	[] COM_CREATE_DB 		
+	[] COM_DROP_DB
+	[] COM_REFRESH
+	[] COM_SHUTDOWN
+	[] COM_STATISTICS
+	[] COM_PROCESS_INFO 		
+	[] COM_CONNECT
+	[] COM_PROCESS_KILL
+	[] COM_DEBUG
+	[] COM_PING
+	[] COM_TIME 				
+	[] COM_DELAYED_INSERT
+	[] COM_CHANGE_USER
+	[] COM_BINLOG_DUMP
+	[] COM_TABLE_DUMP
+	[] COM_CONNECT_OUT  		
+	[] COM_REGISTER_SLAVE
+	[] COM_STMT_PREPARE
+	[] COM_STMT_EXECUTE
+	[] COM_STMT_SEND_LONG_DATA
+	[] COM_STMT_CLOSE 		
+	[] COM_STMT_RESET
+	[] COM_SET_OPTION
+	[] COM_STMT_FETCH
+	[] COM_RESET_CONNECTION
+	[] COM_DAEMON 			
