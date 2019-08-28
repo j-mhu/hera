@@ -204,6 +204,7 @@ outerloop:
 		//
 		// process one netstring command at a time.
 		//
+		logger.GetLogger().Log(logger.Info, "Processing", ns.Serialized, " with IsMySQL=", ns.IsMySQL)
 		err = cmdprocessor.ProcessCmd(ns)
 		logger.GetLogger().Log(logger.Info, "Finished processing command")
 		if err != nil {
@@ -217,11 +218,9 @@ outerloop:
 
 			break outerloop
 		}
-		logger.GetLogger().Log(logger.Info, "Is this error actually breaking??")
 		if cmdprocessor.WorkerScope.Child_shutdown_flag {
 			break
 		}
-		logger.GetLogger().Log(logger.Info, "We're still in the outerloop")
 	}
 
 
@@ -248,9 +247,9 @@ func readNextNetstring(sockMux *os.File) <-chan *encoding.Packet {
 	mspreader := mysqlpackets.NewPackager(sockMux, nil)
 	var reader encoding.Reader
 
-	reader = nsreader
+	reader = mspreader
 
-	logger.GetLogger().Log(logger.Info, "Using netstring packager reader/writer")
+	logger.GetLogger().Log(logger.Info, "Using mysql packager reader/writer")
 	go func() {
 		for {
 			// Assuming that we're starting out with netstring.
@@ -258,8 +257,8 @@ func readNextNetstring(sockMux *os.File) <-chan *encoding.Packet {
 
 			// If it's the wrong packet, then
 			if err != nil && err == encoding.WRONGPACKET {
-				logger.GetLogger().Log(logger.Info, "Using mysql packager reader/writer")
-				reader = mspreader
+				logger.GetLogger().Log(logger.Info, "Using netstring packager reader/writer")
+				reader = nsreader
 				ns, err = reader.ReadNext()
 
 				logger.GetLogger().Log(logger.Info, "Finished using mysql packager reader/writer")

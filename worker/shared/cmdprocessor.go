@@ -124,6 +124,13 @@ type CmdProcessor struct {
 	//
 	bindPos []string
 	//
+	// indexed by stmt_id, stores all prepared statements sent by MySQL client
+	//
+	stmts map[int]string
+	currsid int 			// current available stmt.id
+	numColumns int				// number of columns specified in query
+	packager *mysqlpackets.Packager // in charge of writing packets
+	//
 	// hera protocol let client sends bindname in one ns command and bindvalue for the
 	// bindname in the very next ns command. this parameter is used to track which
 	// name is for the current value.
@@ -177,8 +184,9 @@ func NewCmdProcessor(adapter CmdProcessorAdapter, sockMux *os.File) *CmdProcesso
 	if cs == "" {
 		cs = "CLIENT_SESSION"
 	}
+	stmts := make(map[int]string)
 
-	return &CmdProcessor{adapter: adapter, SocketOut: sockMux, calSessionTxnName: cs, heartbeat: true}
+	return &CmdProcessor{adapter: adapter, SocketOut: sockMux, calSessionTxnName: cs, stmts:stmts, heartbeat: true}
 }
 
 // TODO: Needs MySQL integration
@@ -194,11 +202,11 @@ func (cp *CmdProcessor) ProcessCmd(ns *encoding.Packet) error {
 
 	cp.queryScope.NsCmd = fmt.Sprintf("%d", ns.Cmd)
 	if ns.IsMySQL {
-			logger.GetLogger().Log(logger.Info, "Out here in cmdprocessor for MySQL with cmd ", ns.Cmd)
+			logger.GetLogger().Log(logger.Info, "IsMySQL=", ns.IsMySQL, ", received packet with command:", common.SQLcmds[ns.Cmd])
 			// otherloop:
 			switch ns.Cmd {
 			case common.COM_QUERY:
-				logger.GetLogger().Log(logger.Info, "Going for gold in common.COM_QUERY")
+				logger.GetLogger().Log(logger.Info, "common.COM_QUERY")
 				/* Right now this is only good for simple queries that don't ask for anything aside from an OK packet.
 				* Reason being that COM_QUERY_RESPONSE packets fall into several categories. OK, ERR, or a series of packets
 				* that include ColumnDefinition packets. We currently have no good way of honest replication of
@@ -206,17 +214,17 @@ func (cp *CmdProcessor) ProcessCmd(ns *encoding.Packet) error {
 				 */
 				if logger.GetLogger().V(logger.Debug) {
 					logger.GetLogger().Log(logger.Debug, "Executing ", cp.inTrans)
-					logger.GetLogger().Log(logger.Debug, "No bindings")
 				}
 
 				// Get the query from the payload
-				sqlQuery := cp.preprocess(string(ns.Payload[1:]))
+				sqlQuery := cp.preprocess(ns)
 
 				// If the sqlQuery contains a select, use Query -- otherwise use Exec
 				if cp.hasResult {
 					cp.rows, err = cp.db.Query(sqlQuery)
 				} else {
 					cp.result, err = cp.db.Exec(sqlQuery)
+					logger.GetLogger().Log(logger.Debug, "cp.result", cp.result != nil)
 				}
 
 				if err != nil {
@@ -239,12 +247,11 @@ func (cp *CmdProcessor) ProcessCmd(ns *encoding.Packet) error {
 					cp.inTrans = true
 				}
 
-				cp.calExecTxn.Completed()
-				cp.calExecTxn = nil
-
 				if cp.result != nil {
+					logger.GetLogger().Log(logger.Debug, "cp.result != nil case")
 					var rowcnt int64
 					rowcnt, err = cp.result.RowsAffected()
+					logger.GetLogger().Log(logger.Debug, "Got RowsAffected")
 					if err != nil {
 						if logger.GetLogger().V(logger.Debug) {
 							logger.GetLogger().Log(logger.Debug, "RowsAffected():", err.Error())
@@ -259,6 +266,7 @@ func (cp *CmdProcessor) ProcessCmd(ns *encoding.Packet) error {
 					// Get the last insert id from the sql.Result
 					var liid int64
 					liid, err = cp.result.LastInsertId()
+					logger.GetLogger().Log(logger.Debug, "Got LastInsertID")
 					if err != nil {
 						if logger.GetLogger().V(logger.Debug) {
 							logger.GetLogger().Log(logger.Debug, "LastInsertId():", err.Error())
@@ -269,14 +277,22 @@ func (cp *CmdProcessor) ProcessCmd(ns *encoding.Packet) error {
 					if logger.GetLogger().V(logger.Debug) {
 						logger.GetLogger().Log(logger.Debug, "exe LastInsertId", rowcnt)
 					}
+					logger.GetLogger().Log(logger.Debug, "Making new SQL packet, prev sqid", ns.Sqid)
 					// Set an OK packet reporting the number of rows affected and last insert id. I don't know what to put for the message though...
-					ns := mysqlpackets.NewMySQLPacketFrom(ns.Sqid + 1, mysqlpackets.OKPacket(int(rowcnt), int(liid), "This packet has to be over 7 bytes."))
-
+					np := mysqlpackets.NewMySQLPacketFrom(ns.Sqid + 1, mysqlpackets.OKPacket(int(rowcnt), int(liid), uint32(mysqlpackets.CLIENT_PROTOCOL_41),"This packet has to be over 7 bytes."))
+					logger.GetLogger().Log(logger.Debug, "Wrote with serialized, sqid", np.Serialized, np.Sqid)
 					// Send OK packet.
-					err = cp.eor(common.EORFree, ns)
+					err = cp.eor(common.EORFree, np)
+
 
 				}
-
+			case common.COM_CREATE_DB:
+			case common.COM_DROP_DB:
+			case common.COM_STMT_PREPARE:
+			case common.COM_STMT_EXECUTE:
+			case common.COM_STMT_FETCH:
+			case common.COM_STMT_CLOSE:
+			case common.COM_STMT_SEND_LONG_DATA:
 			}
 	} else {
 outloop:
@@ -301,7 +317,7 @@ outloop:
 		// stmt.Exec("val_:a", "val_:b"). val_:a and val_:b are extracted using
 		// BindName and BindValue
 		//
-		sqlQuery := cp.preprocess(string(ns.Payload))
+		sqlQuery := cp.preprocess(ns)
 		if logger.GetLogger().V(logger.Verbose) {
 			logger.GetLogger().Log(logger.Verbose, "Preparing:", sqlQuery)
 		}
@@ -877,30 +893,72 @@ func (cp *CmdProcessor) calExecErr(field string, err string) {
  * extract bindnames and save them in bindVars with their position index.
  * replace bindnames in query with "?"
  */
-func (cp *CmdProcessor) preprocess(query string) string {
+func (cp *CmdProcessor) preprocess(packet *encoding.Packet) string {
 	//
 	// @TODO strip comment sections which could have ":".
 	//
 
-	//
-	// SELECT account_number,flags,return_url,time_created,identity_token FROM wseller
-	// WHERE account_number=:account_number
-	// and flags=:flags and return_url=:return_url,
-	//
-	binds := cp.regexBindName.FindAllString(query, -1)
-	//
-	// just create a new map for each query. the old map if any will be gc out later.
-	//
-	cp.bindVars = make(map[string]*BindValue)
-	cp.bindPos = make([]string, len(binds))
-	for i, val := range binds {
-		cp.bindVars[val] = &(BindValue{index: i, name: val, valid: false, btype: btUnknown})
-		cp.bindPos[i] = val
+	var query string
+
+	if !packet.IsMySQL {
+		query = string(packet.Payload)
+		//
+		// SELECT account_number,flags,return_url,time_created,identity_token FROM wseller
+		// WHERE account_number=:account_number
+		// and flags=:flags and return_url=:return_url,
+		//
+		binds := cp.regexBindName.FindAllString(query, -1)
+		//
+		// just create a new map for each query. the old map if any will be gc out later.
+		//
+		cp.bindVars = make(map[string]*BindValue)
+		cp.bindPos = make([]string, len(binds))
+		for i, val := range binds {
+			cp.bindVars[val] = &(BindValue{index: i, name: val, valid: false, btype: btUnknown})
+			cp.bindPos[i] = val
+		}
+		if !(cp.adapter.UseBindNames()) {
+			query = cp.regexBindName.ReplaceAllString(query, "?")
+		}
+		return query
+	} else {
+		logger.GetLogger().Log(logger.Debug, "Out here in the preprocessing")
+		if len(packet.Payload) == 0 {
+			return ""
+		}
+
+		query = string(packet.Payload[1:])
+		logger.GetLogger().Log(logger.Debug, "Acquired the query: ", query)
+		//
+		// SELECT account_number,flags,return_url,time_created,identity_token FROM wseller
+		// WHERE account_number=:account_number
+		// and flags=:flags and return_url=:return_url,
+		//
+		binds := cp.regexBindName.FindAllString(query, -1)
+		logger.GetLogger().Log(logger.Debug, "Did some binding")
+		//
+		// just create a new map for each query. the old map if any will be gc out later.
+		//
+		cp.bindVars = make(map[string]*BindValue)
+		cp.bindPos = make([]string, len(binds))
+		for i, val := range binds {
+			cp.bindVars[val] = &(BindValue{index: i, name: val, valid: false, btype: btUnknown})
+			cp.bindPos[i] = val
+		}
+
+		// Get the number of columns in the query
+		logger.GetLogger().Log(logger.Debug, "pls")
+		splits := strings.Split(strings.ToLower(query), " as ")
+		logger.GetLogger().Log(logger.Debug, "really?", splits)
+		if len(splits) > 1 {
+			cp.bindOuts = strings.SplitN(splits[1], ",", -1)
+			cp.numColumns = len(cp.bindOuts)
+			cp.numBindOuts = cp.numColumns
+		}
+		cp.stmts[cp.currsid] = query
+		logger.GetLogger().Log(logger.Debug, "WHICH PART FAILED")
+		return query
 	}
-	if !(cp.adapter.UseBindNames()) {
-		query = cp.regexBindName.ReplaceAllString(query, "?")
-	}
-	return query
 }
 
 func (cp *CmdProcessor) isIdle() bool {

@@ -755,11 +755,13 @@ func (worker *WorkerClient) doRead() {
 		// side to unblock this call.
 		//
 
+
+		logger.GetLogger().Log(logger.Info, "Using netstring packet reader")
 		ns, err := netstring.NewNetstring(worker.workerConn)
 		// If the packet is actually MySQLPacket, then try with MySQL functions.
 		if err == encoding.WRONGPACKET {
-			logger.GetLogger().Log(logger.Info, "Using mysql packet reader")
 			ns, err = mysqlpackets.NewMySQLPacket(worker.workerConn)
+			logger.GetLogger().Log(logger.Info, "Got another MySQLPacket", ns.Serialized)
 		}
 		if err != nil {
 			if logger.GetLogger().V(logger.Warning) {
@@ -863,6 +865,7 @@ func (worker *WorkerClient) Write(ns *encoding.Packet, nsCount uint16) error {
 		}
 		worker.Terminate()
 	}
+	logger.GetLogger().Log(logger.Info, "No write err")
 	return err
 }
 

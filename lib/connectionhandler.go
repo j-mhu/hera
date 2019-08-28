@@ -21,6 +21,7 @@ import (
 	"bufio"
 	"context"
 	"fmt"
+	"github.com/paypal/hera/common"
 	"github.com/paypal/hera/utility/encoding"
 	"github.com/paypal/hera/utility/encoding/mysqlpackets"
 	"io"
@@ -238,7 +239,7 @@ func readHandshakeResponse(conn net.Conn) {
 		}
 	}
 
-	OK := mysqlpackets.NewMySQLPacketFrom(int(sqid), mysqlpackets.OKPacket(0, 0, "Welcome to Hera!"))
+	OK := mysqlpackets.NewMySQLPacketFrom(int(sqid), mysqlpackets.OKPacket(0, 0, uint32(0), "Welcome to Hera!"))
 
 	// Write OK packet to signify handshake response has been processed.
 	conn.Write(OK.Serialized[1:])
@@ -321,6 +322,7 @@ func HandleConnection(conn net.Conn) {
 		if logger.GetLogger().V(logger.Verbose) {
 			logger.GetLogger().Log(logger.Verbose, addr, ": Connection handler read <<<", DebugString(ns.Serialized))
 		}
+
 		//
 		// coordinator is ready to go, send over the new netstring.
 		// this could block when client close the connection abruptly. e.g. when coordinator write
@@ -329,6 +331,9 @@ func HandleConnection(conn net.Conn) {
 		// listening to clientchannel anymore. to avoid blocking, give clientchannel a buffer.
 		//
 		clientchannel <- ns
+		if ns.IsMySQL && ns.Cmd == common.COM_QUIT {
+			break
+		}
 	}
 	if logger.GetLogger().V(logger.Info) {
 		logger.GetLogger().Log(logger.Info, "======== Connection handler exits", addr)

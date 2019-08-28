@@ -24,6 +24,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/paypal/hera/utility/encoding"
+	"github.com/paypal/hera/utility/logger"
 	"io"
 	"log"
 )
@@ -165,6 +166,7 @@ func NewInitSQLPacket(_reader io.Reader) (*encoding.Packet, error) {
 // bytes as necessary. Assumes that the encoding.Packet being read is a COMMAND PACKET
 // only. Used for internal Hera communication only.
 func NewMySQLPacket(_reader io.Reader) (*encoding.Packet, error) {
+	logger.GetLogger().Log(logger.Info, "Inside NewMySQLPacket")
 	ns := &encoding.Packet{}
 
 	var ptype = make([]byte, INT1)
@@ -184,6 +186,7 @@ func NewMySQLPacket(_reader io.Reader) (*encoding.Packet, error) {
 
 	// Read the header into tmp
 	_, err = _reader.Read(tmp)
+	logger.GetLogger().Log(logger.Info, "Read it in")
 
 	idx := 0
 	// Encode payload_length
@@ -224,6 +227,8 @@ func NewMySQLPacket(_reader io.Reader) (*encoding.Packet, error) {
 	ns.Cmd = int(ns.Serialized[HEADER_SIZE + 1])
 	// Set the payload of the packet.
 	ns.Payload = ns.Serialized[HEADER_SIZE + 1:]
+	ns.IsMySQL = true
+	logger.GetLogger().Log(logger.Info, "Ready to return")
 
 	return ns, nil
 }
@@ -321,6 +326,7 @@ func NewPackager(_reader io.Reader, _writer io.Writer) *Packager {
 // just for grabbing one packet from the stream. encoding.Packets are not embedded.
 func (p *Packager) ReadNext() (ns *encoding.Packet, err error) {
 	// Read in a packet from the packager's reader.
+	logger.GetLogger().Log(logger.Info, "Inside readnext")
 	pkt, err := NewMySQLPacket(p.reader)
 	if err != nil {
 		return nil, err
@@ -354,8 +360,12 @@ func (p *Packager) ReadNext() (ns *encoding.Packet, err error) {
  */
 
 // https://dev.mysql.com/doc/internals/en/packet-OK_Packet.html
-func OKPacket(affectedRows int, lastInsertId int, msg string) []byte {
-	payload := make([]byte, 1 + calculateLenEnc(uint64(affectedRows)) + calculateLenEnc(uint64(lastInsertId)))
+func OKPacket(affectedRows int, lastInsertId int, capabilities uint32, msg string) []byte {
+	pLen := 1 + calculateLenEnc(uint64(affectedRows)) + calculateLenEnc(uint64(lastInsertId))
+	if Supports(capabilities, CLIENT_PROTOCOL_41) {
+		pLen += 4
+	}
+	payload := make([]byte, pLen)
 	pos := 0
 	// Write OK packet header
 	WriteFixedLenInt(payload, INT1, 0x00, &pos)
@@ -364,6 +374,11 @@ func OKPacket(affectedRows int, lastInsertId int, msg string) []byte {
 	WriteLenEncInt(payload, uint64(affectedRows), &pos)
 	// Write last_insert_id
 	WriteLenEncInt(payload, uint64(lastInsertId), &pos)
+
+	if Supports(capabilities, CLIENT_PROTOCOL_41) {
+		WriteFixedLenInt(payload, INT2, /* status_flags */ 0x00, &pos)
+		WriteFixedLenInt(payload, INT2, /* warnings */ 0x00, &pos)
+	}
 
 	/* There's several things to do with client capabilities....that are all ignored
 	*
@@ -374,7 +389,9 @@ func OKPacket(affectedRows int, lastInsertId int, msg string) []byte {
 	*  }
 	*  else { do what is written below }
 	 */
+
 	WriteString(payload, msg, EOFSTR, &pos, 0)
+	logger.GetLogger().Log(logger.Info, "Writing OK packet payload:", payload)
 	return payload
 }
 

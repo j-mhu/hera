@@ -24,6 +24,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/paypal/hera/utility/encoding"
+	"github.com/paypal/hera/utility/logger"
 	"io"
 )
 
@@ -105,6 +106,7 @@ func NewInitNetstring(_reader io.Reader) (*encoding.Packet, error) {
 
 // NewNetstring creates a Netstring from the reader, reading exactly as many bytes as necessary
 func NewNetstring(reader io.Reader) (*encoding.Packet, error) {
+	logger.GetLogger().Log(logger.Info, "Inside Netstring")
 	ns := &encoding.Packet{}
 
 	_reader := bufio.NewReader(reader)
@@ -180,6 +182,7 @@ func NewNetstring(reader io.Reader) (*encoding.Packet, error) {
 	}
 	ns.IsMySQL = false
 	ns.Payload = ns.Serialized[next : totalLen]
+	logger.GetLogger().Log(logger.Info, "Finished Netstring")
 	return ns, nil
 }
 
@@ -273,6 +276,7 @@ func NewNetstringReader(_reader io.Reader) *Reader {
 // ReadNext returns the next Netstring from the stream. Note: in case of embedded netstrings,
 // the Reader will buffer some Netstrings
 func (reader *Reader) ReadNext() (ns *encoding.Packet, err error) {
+	logger.GetLogger().Log(logger.Info, "Inside netstring's ReadNext")
 	for {
 		if reader.ns != nil {
 			ns = reader.ns

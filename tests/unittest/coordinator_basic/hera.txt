@@ -1,8 +1,8 @@
+child.executable=mysqlworker
+opscfg.hera.server.max_connections=3
+opscfg.hera.server.log_level=5
 bind_port=31002
 log_level=5
 log_file=hera.log
 sharding_cfg_reload_interval=0
 rac_sql_interval=0
-child.executable=mysqlworker
-opscfg.hera.server.max_connections=3
-opscfg.hera.server.log_level=5

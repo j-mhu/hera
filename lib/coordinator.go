@@ -390,6 +390,11 @@ func (crd *Coordinator) handleMux(request *encoding.Packet) (bool, error) {
 			crd.isRead = crd.sqlParser.IsRead(string(request.Payload[1:]))
 			return false, nil
 		}
+
+		if request.Cmd == common.COM_QUIT {
+			crd.conn.Close()
+			return true, nil
+		}
 	}
 	return crd.processMuxCommand(request)
 }
@@ -764,6 +769,7 @@ func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, req
 		} else {
 			// TODO: MySQL Packet case for sending session starter request to worker.
 			// It's written down below, but not too sure whether or not it's as simple as this.
+			logger.GetLogger().Log(logger.Info, "Wrote request to worker")
 			err := worker.Write(request, uint16(1))
 			if err != nil {
 				if logger.GetLogger().V(logger.Debug) {
@@ -903,7 +909,8 @@ func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, req
 				// disable timeout once response was sent to the client
 				timeout = nil
 
-				_, err := clientWriter.Write(msg.data)
+				_, err := clientWriter.Write(msg.data[1:])
+				logger.GetLogger().Log(logger.Verbose, "Wrote to client!", msg.data[1:])
 				if err != nil {
 					if logger.GetLogger().V(logger.Debug) {
 						logger.GetLogger().Log(logger.Debug, "Fail to reply to client")

@@ -29,6 +29,7 @@ func TestInsert(t *testing.T) {
      if err != nil {
           t.Log(err.Error())
      }
+     t.Log("Successful execution!")
 
      liid, err := res.LastInsertId()
      if err != nil {
