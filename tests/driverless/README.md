@@ -66,12 +66,15 @@ type Packet struct {
 ```
 
 An incoming netstring or mysqlpacket will be packaged into a packet, which
-is passed around in channels and conns in Hera.
+is passed around in channels and conns in Hera. Both of them are similar because
+they prepend information about the payload to the actual payload.
 
 A change was made to netstring encoding. Here are the original encodings:
 
+```
 Netstring general format Serialized: 		LENGTH:PAYLOAD
 MySQL packet general format Serialized: 	HEADER PAYLOAD
+```
 
 Now, they are modified to look like this:
 
@@ -80,12 +83,12 @@ ENCODING | INDICATOR | PREPENDED | PAYLOAD
 netstring | **0x01** | LENGTH | ...
 mysqlpacket | **0x00** | HEADER | ...
 
-where INDICATOR is the byte 0x00 for MySQL and 0x01 for Netstring.
+where INDICATOR is a byte that differentiates between netstring and mysqlpacket.
 
 For nested netstrings, the 0x01 byte is deep-nested as well. This means that each netstring, at every nesting depth, inside the nested netstring has an indicator byte. An example with netstring depth=2 with 3 strings would look like this.
-
-	0x01 LENGTH NESTED( 0x01 LENGTH PAYLOAD, 0x01 LENGTH PAYLOAD, 0x01 LENGTH PAYLOAD )
-
+```
+	**0x01** LENGTH NESTED( **0x01** LENGTH PAYLOAD, **x01** LENGTH PAYLOAD, **0x01** LENGTH PAYLOAD )
+```
 All tests for netstring and MySQLPackets were modified to reflect this change. The modifications were made to the input test strings, and nowhere else. All of them pass.
 
 A consequence is that we cannot know what the packet type is until after we’ve tried reading the first byte. This motivates a new error called `WRONG_PACKET` that implements the error interface. I initialized one single instance of it. This gets sent any time a MySQL packet is read using netstring functions, or vice versa.
