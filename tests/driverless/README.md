@@ -90,9 +90,10 @@ Packets are expected to have an indicator byte.
 
 For nested netstrings, the 0x01 byte is deep-nested as well. This means that each netstring, at every nesting depth, inside the nested netstring has an indicator byte. An example with netstring depth=2 with 3 strings would look like this.
 ```
-	**0x01** LENGTH NESTED( **0x01** LENGTH PAYLOAD, **x01** LENGTH PAYLOAD, **0x01** LENGTH PAYLOAD )
+0x01 LENGTH:NESTED( 0x01 LENGTH:PAYLOAD, 0x01 LENGTH:PAYLOAD, 0x01 LENGTH:PAYLOAD )
 ```
-All tests for netstring and MySQLPackets were modified to reflect this change. The modifications were made to the input test strings, and nowhere else. All of them pass.
+All tests for netstring and MySQLPackets were modified to reflect this change. The modifications were made to the input test strings, and nowhere else.
+The only functions that had to be changed were netstring and mysqlpacket functions.
 
 A consequence is that we cannot know what the packet type is until after we’ve tried reading the first byte. This motivates a new error called `WRONG_PACKET` that implements the error interface. I initialized one single instance of it. This gets sent any time a MySQL packet is read using netstring functions, or vice versa.
 
