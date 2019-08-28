@@ -1,11 +1,11 @@
 # Removing the JDBC-HERA Driver
 
-## 0. Implications
+## Implications
 
-## 1. How to run MySQL queries against a driverless Hera
+## How to run MySQL queries against a driverless Hera
 
 
-## 2. MAJOR MODIFICATIONS TO HERA SOURCE CODE:
+## Major modifications to Hera source code
 
 1. **HANDSHAKE PACKET AND HANDSHAKE RESPONSE**
 
@@ -63,34 +63,34 @@ If the err returned from NewNetstring(…) is encoding.WRONGPACKET, then we shou
     * cmdprocessor.go.       all of processCmd for any command aside from `COM_QUERY`
 
     Currently supported commands:
-     [] COM_SLEEP
-	[x] COM_QUIT
-	[] COM_INIT_DB
-	[x] COM_QUERY
-	[] COM_FIELD_LIST
-	[] COM_CREATE_DB 		
-	[] COM_DROP_DB
-	[] COM_REFRESH
-	[] COM_SHUTDOWN
-	[] COM_STATISTICS
-	[] COM_PROCESS_INFO 		
-	[] COM_CONNECT
-	[] COM_PROCESS_KILL
-	[] COM_DEBUG
-	[] COM_PING
-	[] COM_TIME 				
-	[] COM_DELAYED_INSERT
-	[] COM_CHANGE_USER
-	[] COM_BINLOG_DUMP
-	[] COM_TABLE_DUMP
-	[] COM_CONNECT_OUT  		
-	[] COM_REGISTER_SLAVE
-	[] COM_STMT_PREPARE
-	[] COM_STMT_EXECUTE
-	[] COM_STMT_SEND_LONG_DATA
-	[] COM_STMT_CLOSE 		
-	[] COM_STMT_RESET
-	[] COM_SET_OPTION
-	[] COM_STMT_FETCH
-	[] COM_RESET_CONNECTION
-	[] COM_DAEMON 			
+     - [] COM_SLEEP
+	- [x] COM_QUIT
+	- [] COM_INIT_DB
+	- [x] COM_QUERY
+	- [] COM_FIELD_LIST
+	- [] COM_CREATE_DB 		
+	- [] COM_DROP_DB
+	- [] COM_REFRESH
+	- [] COM_SHUTDOWN
+	- [] COM_STATISTICS
+	- [] COM_PROCESS_INFO 		
+	- [] COM_CONNECT
+	- [] COM_PROCESS_KILL
+	- [] COM_DEBUG
+	- [] COM_PING
+	- [] COM_TIME 				
+	- [] COM_DELAYED_INSERT
+	- [] COM_CHANGE_USER
+	- [] COM_BINLOG_DUMP
+	- [] COM_TABLE_DUMP
+	- [] COM_CONNECT_OUT  		
+	- [] COM_REGISTER_SLAVE
+	- [] COM_STMT_PREPARE
+	- [] COM_STMT_EXECUTE
+	- [] COM_STMT_SEND_LONG_DATA
+	- [] COM_STMT_CLOSE 		
+	- [] COM_STMT_RESET
+	- [] COM_SET_OPTION
+	- [] COM_STMT_FETCH
+	- [] COM_RESET_CONNECTION
+	- [] COM_DAEMON 			
