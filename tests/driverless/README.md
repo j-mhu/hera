@@ -88,7 +88,7 @@ After a mysqlpacket/netstring enters Hera through the client's conn,
 it is wrapped in this encoding and packaged into a Packet. All
 Packets are expected to have an indicator byte.
 
-For nested netstrings, the 0x01 byte is deep-nested as well. This means that each netstring, at every nesting depth, inside the nested netstring has an indicator byte. An example with netstring depth=2 with 3 strings would look like this.
+For nested netstrings, the 0x01 byte is deep-nested as well. This means that each netstring, at every nesting depth, inside the nested netstring has an indicator byte. An example with netstring depth 2 and 3 strings would look like this.
 ```
 0x01 LENGTH:NESTED( 0x01 LENGTH:PAYLOAD, 0x01 LENGTH:PAYLOAD, 0x01 LENGTH:PAYLOAD )
 ```
@@ -98,13 +98,13 @@ The only functions that had to be changed were netstring and mysqlpacket functio
 A consequence is that we cannot know what the packet type is until after we’ve tried reading the first byte. This motivates a new error called `WRONG_PACKET` that implements the error interface. I initialized one single instance of it. This gets sent any time a MySQL packet is read using netstring functions, or vice versa.
 
 Similarly, if the indicator byte is not present, or it is not 0x00 or 0x01, then we should raise an `UNKNOWN_PACKET` error.
-Both are defined in [`utility/encoding`](https://github.com/paypal/hera/tree/master/utility/encoding), under `WRONGPACKET` and `UNKNOWNPACKET`.
+Both are defined in [`utility/encoding`](https://github.com/j-mhu/hera/tree/master/utility/encoding), under `WRONGPACKET` and `UNKNOWNPACKET`.
 
 An example of its use is this:
 
 If the err returned from NewNetstring(…) is encoding.WRONGPACKET, then we should try to read the bytes again using NewMySQLPacket(…).
 NewNetstring and NewMySQLPacket were modified to read from a buffer, so that we
-do not consume input on a packet misread. See [workerclient.go: doRead()](https://github.com/paypal/hera/tree/master/lib/workerclient.go) for an example.
+do not consume input on a packet misread. See [workerclient.go: doRead()](https://github.com/j-mhu/hera/tree/master/lib/workerclient.go) for an example.
 
 
 #### 3. Adding a MySQL case for all worker request handling code.####
