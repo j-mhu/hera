@@ -3340,3 +3340,1299 @@
 16:19:51.170279 debug: [WORKER 2 adapter.go:130] writable: true
 16:19:51.172603 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
 16:19:51.173027 debug: [WORKER 1 adapter.go:130] writable: true
+16:20:21.969314 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:20:21.969788 debug: [WORKER 1 adapter.go:130] writable: true
+16:20:21.980456 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:20:21.981199 debug: [WORKER 2 adapter.go:130] writable: true
+16:20:34.668535 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:20:34.668535 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:20:34.669641 debug: [WORKER 1 adapter.go:130] writable: true
+16:20:34.669656 debug: [WORKER 2 adapter.go:130] writable: true
+16:20:37.295817 info: [WORKER 0 workerservice.go:156] sending heartbeat to DB
+16:20:37.296238 debug: [WORKER 0 adapter.go:130] writable: true
+16:20:37.988653 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:20:37.989138 debug: [WORKER 1 adapter.go:130] writable: true
+16:20:37.996299 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:20:37.997032 debug: [WORKER 2 adapter.go:130] writable: true
+16:20:50.952613 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:20:50.952668 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:20:50.953357 debug: [WORKER 2 adapter.go:130] writable: true
+16:20:50.953389 debug: [WORKER 1 adapter.go:130] writable: true
+16:20:53.502441 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:20:53.502441 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:20:53.503135 debug: [WORKER 1 adapter.go:130] writable: true
+16:20:53.503209 debug: [WORKER 2 adapter.go:130] writable: true
+16:20:55.393162 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:20:55.393233 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:20:55.393775 debug: [WORKER 2 adapter.go:130] writable: true
+16:20:55.393785 debug: [WORKER 1 adapter.go:130] writable: true
+16:21:08.655767 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:21:08.655771 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:21:08.656290 debug: [WORKER 1 adapter.go:130] writable: true
+16:21:08.656309 debug: [WORKER 2 adapter.go:130] writable: true
+16:21:24.645525 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:21:24.645915 debug: [WORKER 1 adapter.go:130] writable: true
+16:21:24.656272 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:21:24.656604 debug: [WORKER 2 adapter.go:130] writable: true
+16:21:31.191003 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:21:31.191003 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:21:31.191400 debug: [WORKER 1 adapter.go:130] writable: true
+16:21:31.191440 debug: [WORKER 2 adapter.go:130] writable: true
+16:21:38.763233 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:21:38.763253 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:21:38.764185 debug: [WORKER 1 adapter.go:130] writable: true
+16:21:38.764232 debug: [WORKER 2 adapter.go:130] writable: true
+16:21:39.935094 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:21:39.936181 debug: [WORKER 1 adapter.go:130] writable: true
+16:21:39.952560 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:21:39.953104 debug: [WORKER 2 adapter.go:130] writable: true
+16:21:51.173691 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:21:51.173841 warn: [WORKER 2 adapter.go:102] query ro check err  driver: bad connection
+16:21:51.173863 warn: [WORKER 2 workerservice.go:162] master db is unavailable, worker exiting
+16:21:51.173878 info: [WORKER 2 workerservice.go:226] ======== worker exits
+16:21:51.176530 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:21:51.176640 warn: [WORKER 1 adapter.go:102] query ro check err  driver: bad connection
+16:21:51.176659 warn: [WORKER 1 workerservice.go:162] master db is unavailable, worker exiting
+16:21:51.176670 info: [WORKER 1 workerservice.go:226] ======== worker exits
+16:22:21.972989 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:22:21.973293 warn: [WORKER 1 adapter.go:102] query ro check err  driver: bad connection
+16:22:21.973349 warn: [WORKER 1 workerservice.go:162] master db is unavailable, worker exiting
+16:22:21.973385 info: [WORKER 1 workerservice.go:226] ======== worker exits
+16:22:21.986263 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:22:21.986634 warn: [WORKER 2 adapter.go:102] query ro check err  driver: bad connection
+16:22:21.986727 warn: [WORKER 2 workerservice.go:162] master db is unavailable, worker exiting
+16:22:21.986770 info: [WORKER 2 workerservice.go:226] ======== worker exits
+16:22:34.672765 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:22:34.672791 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:22:34.673138 warn: [WORKER 2 adapter.go:102] query ro check err  driver: bad connection
+16:22:34.673215 warn: [WORKER 2 workerservice.go:162] master db is unavailable, worker exiting
+16:22:34.673239 warn: [WORKER 1 adapter.go:102] query ro check err  driver: bad connection
+16:22:34.673253 info: [WORKER 2 workerservice.go:226] ======== worker exits
+16:22:34.673326 warn: [WORKER 1 workerservice.go:162] master db is unavailable, worker exiting
+16:22:34.673364 info: [WORKER 1 workerservice.go:226] ======== worker exits
+16:22:37.296308 info: [WORKER 0 workerservice.go:156] sending heartbeat to DB
+16:22:37.296465 warn: [WORKER 0 adapter.go:102] query ro check err  driver: bad connection
+16:22:37.296489 warn: [WORKER 0 workerservice.go:162] master db is unavailable, worker exiting
+16:22:37.296504 info: [WORKER 0 workerservice.go:226] ======== worker exits
+16:22:37.989349 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:22:37.990816 warn: [WORKER 1 adapter.go:102] query ro check err  driver: bad connection
+16:22:37.990854 warn: [WORKER 1 workerservice.go:162] master db is unavailable, worker exiting
+16:22:37.990868 info: [WORKER 1 workerservice.go:226] ======== worker exits
+16:22:37.997264 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:22:37.998280 warn: [WORKER 2 adapter.go:102] query ro check err  driver: bad connection
+16:22:37.998301 warn: [WORKER 2 workerservice.go:162] master db is unavailable, worker exiting
+16:22:37.998312 info: [WORKER 2 workerservice.go:226] ======== worker exits
+16:22:50.957719 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:22:50.957768 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:22:50.958130 warn: [WORKER 2 adapter.go:102] query ro check err  driver: bad connection
+16:22:50.958141 warn: [WORKER 1 adapter.go:102] query ro check err  driver: bad connection
+16:22:50.958224 warn: [WORKER 2 workerservice.go:162] master db is unavailable, worker exiting
+16:22:50.958292 info: [WORKER 2 workerservice.go:226] ======== worker exits
+16:22:50.958292 warn: [WORKER 1 workerservice.go:162] master db is unavailable, worker exiting
+16:22:50.958383 info: [WORKER 1 workerservice.go:226] ======== worker exits
+16:22:53.508101 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:22:53.508128 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:22:53.508474 warn: [WORKER 1 adapter.go:102] query ro check err  driver: bad connection
+16:22:53.508511 warn: [WORKER 2 adapter.go:102] query ro check err  driver: bad connection
+16:22:53.508556 warn: [WORKER 1 workerservice.go:162] master db is unavailable, worker exiting
+16:22:53.508573 warn: [WORKER 2 workerservice.go:162] master db is unavailable, worker exiting
+16:22:53.508602 info: [WORKER 1 workerservice.go:226] ======== worker exits
+16:22:53.508634 info: [WORKER 2 workerservice.go:226] ======== worker exits
+16:22:55.393907 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:22:55.394035 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:22:55.394278 warn: [WORKER 2 adapter.go:102] query ro check err  driver: bad connection
+16:22:55.394383 warn: [WORKER 2 workerservice.go:162] master db is unavailable, worker exiting
+16:22:55.394412 warn: [WORKER 1 adapter.go:102] query ro check err  driver: bad connection
+16:22:55.394448 info: [WORKER 2 workerservice.go:226] ======== worker exits
+16:22:55.394532 warn: [WORKER 1 workerservice.go:162] master db is unavailable, worker exiting
+16:22:55.394619 info: [WORKER 1 workerservice.go:226] ======== worker exits
+16:23:08.660111 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:23:08.660153 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:23:08.660489 warn: [WORKER 1 adapter.go:102] query ro check err  driver: bad connection
+16:23:08.660526 warn: [WORKER 2 adapter.go:102] query ro check err  driver: bad connection
+16:23:08.660551 warn: [WORKER 1 workerservice.go:162] master db is unavailable, worker exiting
+16:23:08.660608 warn: [WORKER 2 workerservice.go:162] master db is unavailable, worker exiting
+16:23:08.660675 info: [WORKER 1 workerservice.go:226] ======== worker exits
+16:23:08.660700 info: [WORKER 2 workerservice.go:226] ======== worker exits
+16:23:24.650758 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:23:24.651091 warn: [WORKER 1 adapter.go:102] query ro check err  driver: bad connection
+16:23:24.651156 warn: [WORKER 1 workerservice.go:162] master db is unavailable, worker exiting
+16:23:24.651189 info: [WORKER 1 workerservice.go:226] ======== worker exits
+16:23:24.660204 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:23:24.660509 warn: [WORKER 2 adapter.go:102] query ro check err  driver: bad connection
+16:23:24.660574 warn: [WORKER 2 workerservice.go:162] master db is unavailable, worker exiting
+16:23:24.660609 info: [WORKER 2 workerservice.go:226] ======== worker exits
+16:23:31.194679 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:23:31.194678 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:23:31.195090 warn: [WORKER 2 adapter.go:102] query ro check err  driver: bad connection
+16:23:31.195135 warn: [WORKER 1 adapter.go:102] query ro check err  driver: bad connection
+16:23:31.195189 warn: [WORKER 2 workerservice.go:162] master db is unavailable, worker exiting
+16:23:31.195268 info: [WORKER 2 workerservice.go:226] ======== worker exits
+16:23:31.195268 warn: [WORKER 1 workerservice.go:162] master db is unavailable, worker exiting
+16:23:31.195364 info: [WORKER 1 workerservice.go:226] ======== worker exits
+16:23:38.767844 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:23:38.767857 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:23:38.768047 warn: [WORKER 1 adapter.go:102] query ro check err  driver: bad connection
+16:23:38.768091 warn: [WORKER 2 adapter.go:102] query ro check err  driver: bad connection
+16:23:38.768094 warn: [WORKER 1 workerservice.go:162] master db is unavailable, worker exiting
+16:23:38.768127 warn: [WORKER 2 workerservice.go:162] master db is unavailable, worker exiting
+16:23:38.768185 info: [WORKER 2 workerservice.go:226] ======== worker exits
+16:23:38.768186 info: [WORKER 1 workerservice.go:226] ======== worker exits
+16:23:39.940843 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:23:39.941112 warn: [WORKER 1 adapter.go:102] query ro check err  driver: bad connection
+16:23:39.941163 warn: [WORKER 1 workerservice.go:162] master db is unavailable, worker exiting
+16:23:39.941191 info: [WORKER 1 workerservice.go:226] ======== worker exits
+16:23:39.957542 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:23:39.957816 warn: [WORKER 2 adapter.go:102] query ro check err  driver: bad connection
+16:23:39.957874 warn: [WORKER 2 workerservice.go:162] master db is unavailable, worker exiting
+16:23:39.957904 info: [WORKER 2 workerservice.go:226] ======== worker exits
+16:29:40.300335 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+16:29:40.300936 info: [PROXY logger.go:149] Change log level to verbose:
+16:29:40.301513 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+16:29:40.301760 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+16:29:40.301825 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:29:40.301838 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:29:40.301848 debug: [PROXY workerbroker.go:166] workercnt  3
+16:29:40.301959 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:29:40.303585 verbose: [PROXY workerbroker.go:239] Added 44831 , pwmap: map[44831:0xc0000f10e0]
+16:29:40.303621 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 44831
+16:29:40.303679 debug: [PROXY workerclient.go:874] worker pid= 44831  changing status from -1 to 0
+16:29:40.303780 verbose: [PROXY statelog.go:387] init statelog
+16:29:40.303851 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+16:29:40.303866 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+16:29:40.303879 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+16:29:40.304068 verbose: [PROXY statelog.go:181] publish state event 0
+16:29:40.304111 info: [PROXY workerpool.go:128] worker started type  0  id 0  instid 0  shardid 0
+16:29:40.304162 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:29:40.304277 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 0
+16:29:40.304649 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 0 ,  44831 )
+16:29:40.305510 verbose: [PROXY workerbroker.go:239] Added 44832 , pwmap: map[44831:0xc0000f10e0 44832:0xc00020c000]
+16:29:40.305539 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 44832
+16:29:40.305555 debug: [PROXY workerclient.go:874] worker pid= 44832  changing status from -1 to 0
+16:29:40.305571 verbose: [PROXY statelog.go:181] publish state event 0
+16:29:40.305621 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 0
+16:29:40.305636 info: [PROXY workerpool.go:128] worker started type  0  id 1  instid 0  shardid 0
+16:29:40.305690 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:29:40.305746 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 1 ,  44832 )
+16:29:40.307137 verbose: [PROXY workerbroker.go:239] Added 44833 , pwmap: map[44831:0xc0000f10e0 44832:0xc00020c000 44833:0xc0000f1180]
+16:29:40.307182 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 44833
+16:29:40.307207 debug: [PROXY workerclient.go:874] worker pid= 44833  changing status from -1 to 0
+16:29:40.307228 verbose: [PROXY statelog.go:181] publish state event 0
+16:29:40.307303 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 0
+16:29:40.307320 info: [PROXY workerpool.go:128] worker started type  0  id 2  instid 0  shardid 0
+16:29:40.307391 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 2 ,  44833 )
+16:29:40.307535 verbose: [PROXY adaptivequemgr.go:120] saturation recover enter (ms) 9223372036854775807
+16:29:40.307560 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+16:29:40.307683 verbose: [PROXY stats.go:66] GoStats every 10
+16:29:40.315499 info: [WORKER 0 workerservice.go:105] DB heartbeat interval: 2m0s
+16:29:40.315758 info: [WORKER 0 cmdprocessor.go:812] setup db connection.
+16:29:40.317150 info: [WORKER 1 workerservice.go:105] DB heartbeat interval: 2m0s
+16:29:40.317428 info: [WORKER 1 cmdprocessor.go:812] setup db connection.
+16:29:40.317447 warn: [WORKER 0 adapter.go:91] could not get connection dial tcp 127.0.0.1:3306: connect: connection refused
+16:29:40.317476 warn: [WORKER 0 adapter.go:75] recycling, got read-only conn 
+16:29:40.317500 warn: [WORKER 0 cmdprocessor.go:818] driver error cannot use read-only conn tcp(localhost:3306)/
+16:29:40.317544 warn: [WORKER 0 workerservice.go:119] Can't connect to DB: cannot use read-only conn tcp(localhost:3306)/
+16:29:40.318384 info: [WORKER 2 workerservice.go:105] DB heartbeat interval: 2m0s
+16:29:40.318647 info: [WORKER 2 cmdprocessor.go:812] setup db connection.
+16:29:40.318665 debug: [PROXY workerclient.go:636] workerclient pid= 44831  to be terminated, sending SIGTERM first for gracefull termination
+16:29:40.318756 verbose: [PROXY workerbroker.go:266] worker exit signal: child exited
+16:29:40.318927 verbose: [PROXY workerbroker.go:276] Wait SIGCHLD len= 6 , pwmap: map[44831:0xc0000f10e0 44832:0xc00020c000 44833:0xc0000f1180]
+16:29:40.318976 info: [PROXY workerbroker.go:282] exited worker [0 0 0 0 0 0 0]
+16:29:40.319087 warn: [WORKER 1 adapter.go:91] could not get connection dial tcp 127.0.0.1:3306: connect: connection refused
+16:29:40.319111 warn: [WORKER 1 adapter.go:75] recycling, got read-only conn 
+16:29:40.319136 warn: [WORKER 1 cmdprocessor.go:818] driver error cannot use read-only conn tcp(localhost:3306)/
+16:29:40.319151 warn: [WORKER 1 workerservice.go:119] Can't connect to DB: cannot use read-only conn tcp(localhost:3306)/
+16:29:40.320144 debug: [PROXY workerclient.go:636] workerclient pid= 44832  to be terminated, sending SIGTERM first for gracefull termination
+16:29:40.320219 verbose: [PROXY workerbroker.go:266] worker exit signal: child exited
+16:29:40.320251 verbose: [PROXY workerbroker.go:276] Wait SIGCHLD len= 6 , pwmap: map[44831:0xc0000f10e0 44832:0xc00020c000 44833:0xc0000f1180]
+16:29:40.320274 info: [PROXY workerbroker.go:282] exited worker [0 0 0 0 0 0 0]
+16:29:40.320431 warn: [WORKER 2 adapter.go:91] could not get connection dial tcp 127.0.0.1:3306: connect: connection refused
+16:29:40.320453 warn: [WORKER 2 adapter.go:75] recycling, got read-only conn 
+16:29:40.320469 warn: [WORKER 2 cmdprocessor.go:818] driver error cannot use read-only conn tcp(localhost:3306)/
+16:29:40.320493 warn: [WORKER 2 workerservice.go:119] Can't connect to DB: cannot use read-only conn tcp(localhost:3306)/
+16:29:40.321397 debug: [PROXY workerclient.go:636] workerclient pid= 44833  to be terminated, sending SIGTERM first for gracefull termination
+16:29:40.321484 verbose: [PROXY workerbroker.go:266] worker exit signal: child exited
+16:29:40.321524 verbose: [PROXY workerbroker.go:276] Wait SIGCHLD len= 6 , pwmap: map[44831:0xc0000f10e0 44832:0xc00020c000 44833:0xc0000f1180]
+16:29:40.321550 info: [PROXY workerbroker.go:282] exited worker [0 0 0 0 0 0 0]
+16:29:42.354419 info: [PROXY workerclient.go:669] workerclient pid= 44831  sending SIGKILL
+16:29:42.354448 info: [PROXY workerclient.go:669] workerclient pid= 44832  sending SIGKILL
+16:29:42.354594 verbose: [PROXY workerclient.go:700] Drain the response channel from worker ( 0 ,  44831 )
+16:29:42.354620 verbose: [PROXY workerclient.go:700] Drain the response channel from worker ( 1 ,  44832 )
+16:29:42.354657 verbose: [PROXY workerclient.go:731] draining: outCh empty
+16:29:42.354629 verbose: [PROXY workerclient.go:731] draining: outCh empty
+16:29:42.354759 info: [PROXY workerclient.go:415] Fail to attach to worker pid = 44831 , id = 0 : EOF
+16:29:42.354892 info: [PROXY workerclient.go:415] Fail to attach to worker pid = 44832 , id = 1 : EOF
+16:29:42.356049 info: [PROXY workerclient.go:669] workerclient pid= 44833  sending SIGKILL
+16:29:42.356091 verbose: [PROXY workerclient.go:700] Drain the response channel from worker ( 2 ,  44833 )
+16:29:42.356117 verbose: [PROXY workerclient.go:731] draining: outCh empty
+16:29:42.356313 info: [PROXY workerclient.go:415] Fail to attach to worker pid = 44833 , id = 2 : EOF
+16:30:33.009813 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+16:30:33.010517 info: [PROXY logger.go:149] Change log level to verbose:
+16:30:33.011032 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+16:30:33.011164 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+16:30:33.011194 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:30:33.011204 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:30:33.011216 debug: [PROXY workerbroker.go:166] workercnt  3
+16:30:33.011327 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:30:33.012927 verbose: [PROXY workerbroker.go:239] Added 45000 , pwmap: map[45000:0xc0000d30e0]
+16:30:33.012969 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45000
+16:30:33.013031 debug: [PROXY workerclient.go:874] worker pid= 45000  changing status from -1 to 0
+16:30:33.013123 verbose: [PROXY statelog.go:387] init statelog
+16:30:33.013202 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+16:30:33.013214 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+16:30:33.013224 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+16:30:33.013316 verbose: [PROXY statelog.go:181] publish state event 0
+16:30:33.013364 info: [PROXY workerpool.go:128] worker started type  0  id 0  instid 0  shardid 0
+16:30:33.013412 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:30:33.013893 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 0
+16:30:33.014015 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 0 ,  45000 )
+16:30:33.014768 verbose: [PROXY workerbroker.go:239] Added 45001 , pwmap: map[45000:0xc0000d30e0 45001:0xc0000d3180]
+16:30:33.014799 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45001
+16:30:33.014821 debug: [PROXY workerclient.go:874] worker pid= 45001  changing status from -1 to 0
+16:30:33.014843 verbose: [PROXY statelog.go:181] publish state event 0
+16:30:33.014903 info: [PROXY workerpool.go:128] worker started type  0  id 1  instid 0  shardid 0
+16:30:33.014923 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 0
+16:30:33.014975 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:30:33.015009 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 1 ,  45001 )
+16:30:33.016657 verbose: [PROXY workerbroker.go:239] Added 45002 , pwmap: map[45000:0xc0000d30e0 45001:0xc0000d3180 45002:0xc000244000]
+16:30:33.016697 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45002
+16:30:33.016714 debug: [PROXY workerclient.go:874] worker pid= 45002  changing status from -1 to 0
+16:30:33.016727 verbose: [PROXY statelog.go:181] publish state event 0
+16:30:33.016773 info: [PROXY workerpool.go:128] worker started type  0  id 2  instid 0  shardid 0
+16:30:33.016776 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 0
+16:30:33.016890 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 2 ,  45002 )
+16:30:33.016988 verbose: [PROXY adaptivequemgr.go:120] saturation recover enter (ms) 9223372036854775807
+16:30:33.017010 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+16:30:33.017099 verbose: [PROXY stats.go:66] GoStats every 10
+16:30:33.025029 info: [WORKER 0 workerservice.go:105] DB heartbeat interval: 2m0s
+16:30:33.025351 info: [WORKER 0 cmdprocessor.go:812] setup db connection.
+16:30:33.026809 info: [WORKER 1 workerservice.go:105] DB heartbeat interval: 2m0s
+16:30:33.027135 info: [WORKER 1 cmdprocessor.go:812] setup db connection.
+16:30:33.028250 info: [WORKER 2 workerservice.go:105] DB heartbeat interval: 2m0s
+16:30:33.028497 info: [WORKER 2 cmdprocessor.go:812] setup db connection.
+16:30:33.028586 debug: [WORKER 0 adapter.go:130] writable: true
+16:30:33.028638 warn: [WORKER 0 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+16:30:33.028788 verbose: [WORKER 0 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+16:30:33.028818 info: [WORKER 0 workerservice.go:142] About to use readNextNetstring
+16:30:33.028837 info: [WORKER 0 workerservice.go:242] Will pick between mysqlpackets and netstring packager.
+16:30:33.028858 info: [WORKER 0 workerservice.go:250] Using netstring packager reader/writer
+16:30:33.028961 info: [PROXY workerclient.go:468] Got control message from worker ( 0 , 45000 , 0 ,  MyDB )
+16:30:33.028993 debug: [PROXY workerclient.go:874] worker pid= 45000  changing status from 0 to 1
+16:30:33.029016 verbose: [PROXY statelog.go:181] publish state event 0
+16:30:33.029086 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 1
+16:30:33.029089 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45000 0 0
+16:30:33.029154 debug: [PROXY workerpool.go:207] poolsize(ready) 1  type  0  instance  0
+16:30:33.029200 debug: [PROXY workerpool.go:217] poolsize (after signal) 1  type  0
+16:30:33.030618 debug: [WORKER 1 adapter.go:130] writable: true
+16:30:33.030663 warn: [WORKER 1 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+16:30:33.030799 verbose: [WORKER 1 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+16:30:33.030821 info: [WORKER 1 workerservice.go:142] About to use readNextNetstring
+16:30:33.030843 info: [WORKER 1 workerservice.go:242] Will pick between mysqlpackets and netstring packager.
+16:30:33.030865 info: [WORKER 1 workerservice.go:250] Using netstring packager reader/writer
+16:30:33.030866 info: [PROXY workerclient.go:468] Got control message from worker ( 1 , 45001 , 0 ,  MyDB )
+16:30:33.030909 debug: [PROXY workerclient.go:874] worker pid= 45001  changing status from 0 to 1
+16:30:33.030928 verbose: [PROXY statelog.go:181] publish state event 0
+16:30:33.030955 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45001 0 0
+16:30:33.030981 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 1
+16:30:33.030987 debug: [PROXY workerpool.go:207] poolsize(ready) 2  type  0  instance  0
+16:30:33.031024 debug: [PROXY workerpool.go:217] poolsize (after signal) 2  type  0
+16:30:33.031149 debug: [WORKER 2 adapter.go:130] writable: true
+16:30:33.031185 warn: [WORKER 2 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+16:30:33.031329 verbose: [WORKER 2 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+16:30:33.031352 info: [WORKER 2 workerservice.go:142] About to use readNextNetstring
+16:30:33.031365 info: [WORKER 2 workerservice.go:242] Will pick between mysqlpackets and netstring packager.
+16:30:33.031372 info: [PROXY workerclient.go:468] Got control message from worker ( 2 , 45002 , 0 ,  MyDB )
+16:30:33.031383 info: [WORKER 2 workerservice.go:250] Using netstring packager reader/writer
+16:30:33.031397 debug: [PROXY workerclient.go:874] worker pid= 45002  changing status from 0 to 1
+16:30:33.031410 verbose: [PROXY statelog.go:181] publish state event 0
+16:30:33.031430 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45002 0 0
+16:30:33.031447 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 1
+16:30:33.031451 debug: [PROXY workerpool.go:207] poolsize(ready) 3  type  0  instance  0
+16:30:33.031476 debug: [PROXY workerpool.go:217] poolsize (after signal) 3  type  0
+16:30:33.123346 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+16:30:38.719069 info: [PROXY server.go:177] server: accepted from  127.0.0.1:56532
+16:30:38.719272 debug: [PROXY tcp_listener.go:77] Authenticated OK
+16:30:38.719305 verbose: [PROXY statelog.go:181] publish state event 1
+16:30:38.719333 info: [PROXY connectionhandler.go:277] Sending handshake
+16:30:38.719360 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+16:30:38.721030 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+16:30:38.721058 info: [PROXY connectionhandler.go:279] Reading handshake response
+16:30:38.721091 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+16:30:38.721311 verbose: [PROXY coordinator.go:78] Created coordinator
+16:30:38.721357 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:56532 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+16:30:38.721455 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+16:30:38.721478 verbose: [PROXY coordinator.go:121] Running coordinator
+16:30:38.721516 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:30:38.721534 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+16:30:38.721549 debug: [PROXY coordinator.go:141] coordinator run got client request.
+16:30:38.721560 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+16:30:38.721597 debug: [PROXY coordinator.go:401] Mux handle command: 3
+16:30:38.721611 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:30:38.721628 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+16:30:38.721642 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:30:38.721683 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+16:30:38.721709 info: [PROXY coordinator.go:560] worker is nil
+16:30:38.721721 info: [PROXY coordinator.go:581] This case!
+16:30:38.721732 info: [PROXY coordinator.go:586] shard ID problems...?
+16:30:38.721748 info: [PROXY coordinator.go:591] isNotInternal
+16:30:38.722010 info: [PROXY coordinator.go:592] &{0xc0000da600 0xc0000da5c0 0 0 0 10 3 3 hera-test 3 0 map[] 0xc000260090 [0xc0000d30e0 0xc0000d3180 0xc000244000]}
+16:30:38.722043 debug: [PROXY workerpool.go:230] Pool::GetWorker(start) type: 0 , instance: 0 , active:  3 healthy: 3
+16:30:38.722070 debug: [PROXY workerpool.go:575] poolsize (before get) 3  type  0 , instance: 0
+16:30:38.722082 debug: [PROXY workerpool.go:580] Pool::SelectWorker 45000 0 0
+16:30:38.722133 verbose: [PROXY statelog.go:181] publish state event 1
+16:30:38.722162 debug: [PROXY workerpool.go:234] Pool::GetWorker(end) type: 0 , instance: 0 , active:  2 healthy: 3
+16:30:38.722178 info: [PROXY coordinator.go:595] Got a worker!
+16:30:38.722167 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 1 0
+16:30:38.722205 info: [PROXY coordinator.go:644] Reached doRequest
+16:30:38.722286 verbose: [PROXY coordinator.go:716] coordinator dorequeset: starting
+16:30:38.722300 debug: [PROXY workerclient.go:874] worker pid= 45000  changing status from 1 to 3
+16:30:38.722310 verbose: [PROXY statelog.go:181] publish state event 0
+16:30:38.722334 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 3
+16:30:38.722341 debug: [PROXY workerclient.go:857] workerclient (>>>worker pid = 45000 , rqID = 1  ):  18:2006 CorrId=NotSet,
+16:30:38.722374 debug: [PROXY workerclient.go:857] workerclient (>>>worker pid = 45000 , rqID = 2  ):      DROP TABLE IF EXISTS test;
+16:30:38.722391 debug: [PROXY coordinator.go:787] crd sqlhash = 0 sqltime= 5705
+16:30:38.722393 info: [WORKER 0 workerservice.go:258] Using mysql packager reader/writer
+16:30:38.722398 verbose: [WORKER 0 workerservice.go:202] worker_sp0 : worker read <<< 18:2006 CorrId=NotSet, false
+16:30:38.722457 debug: [WORKER 0 cmdprocessor.go:191] process command 18:2006 CorrId=NotSet,
+16:30:38.722487 verbose: [WORKER 0 cmdprocessor.go:200] Got to CmdClientCalCorrelationID
+16:30:38.722497 verbose: [WORKER 0 cmdprocessor.go:799] Finished outerloop
+16:52:36.825489 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+16:52:36.826199 info: [PROXY logger.go:149] Change log level to verbose:
+16:52:36.826750 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+16:52:36.826883 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+16:52:36.826908 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:52:36.826920 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:52:36.826930 debug: [PROXY workerbroker.go:166] workercnt  3
+16:52:36.827041 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:52:36.828526 verbose: [PROXY workerbroker.go:239] Added 45423 , pwmap: map[45423:0xc0000d3040]
+16:52:36.828557 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45423
+16:52:36.828614 debug: [PROXY workerclient.go:874] worker pid= 45423  changing status from -1 to 0
+16:52:36.828716 verbose: [PROXY statelog.go:387] init statelog
+16:52:36.828787 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+16:52:36.828800 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+16:52:36.828809 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+16:52:36.828942 verbose: [PROXY statelog.go:181] publish state event 0
+16:52:36.828986 info: [PROXY workerpool.go:128] worker started type  0  id 0  instid 0  shardid 0
+16:52:36.829033 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:52:36.829495 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 0
+16:52:36.829509 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 0 ,  45423 )
+16:52:36.830549 verbose: [PROXY workerbroker.go:239] Added 45424 , pwmap: map[45423:0xc0000d3040 45424:0xc0001e0000]
+16:52:36.830580 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45424
+16:52:36.830597 debug: [PROXY workerclient.go:874] worker pid= 45424  changing status from -1 to 0
+16:52:36.830610 verbose: [PROXY statelog.go:181] publish state event 0
+16:52:36.830661 info: [PROXY workerpool.go:128] worker started type  0  id 1  instid 0  shardid 0
+16:52:36.830667 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 0
+16:52:36.830721 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:52:36.830731 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 1 ,  45424 )
+16:52:36.832399 verbose: [PROXY workerbroker.go:239] Added 45425 , pwmap: map[45423:0xc0000d3040 45424:0xc0001e0000 45425:0xc000240000]
+16:52:36.832429 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45425
+16:52:36.832446 debug: [PROXY workerclient.go:874] worker pid= 45425  changing status from -1 to 0
+16:52:36.832462 verbose: [PROXY statelog.go:181] publish state event 0
+16:52:36.832505 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 0
+16:52:36.832506 info: [PROXY workerpool.go:128] worker started type  0  id 2  instid 0  shardid 0
+16:52:36.832614 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 2 ,  45425 )
+16:52:36.832752 verbose: [PROXY adaptivequemgr.go:120] saturation recover enter (ms) 9223372036854775807
+16:52:36.832773 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+16:52:36.832959 verbose: [PROXY stats.go:66] GoStats every 10
+16:52:36.840692 info: [WORKER 0 workerservice.go:105] DB heartbeat interval: 2m0s
+16:52:36.840928 info: [WORKER 0 cmdprocessor.go:812] setup db connection.
+16:52:36.842096 info: [WORKER 1 workerservice.go:105] DB heartbeat interval: 2m0s
+16:52:36.842336 info: [WORKER 1 cmdprocessor.go:812] setup db connection.
+16:52:36.843783 info: [WORKER 2 workerservice.go:105] DB heartbeat interval: 2m0s
+16:52:36.844082 info: [WORKER 2 cmdprocessor.go:812] setup db connection.
+16:52:36.861706 debug: [WORKER 0 adapter.go:130] writable: true
+16:52:36.861768 warn: [WORKER 0 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+16:52:36.861881 verbose: [WORKER 0 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+16:52:36.861905 info: [WORKER 0 workerservice.go:142] About to use readNextNetstring
+16:52:36.861939 info: [WORKER 0 workerservice.go:242] Will pick between mysqlpackets and netstring packager.
+16:52:36.861971 info: [WORKER 0 workerservice.go:250] Using netstring packager reader/writer
+16:52:36.861983 info: [PROXY workerclient.go:468] Got control message from worker ( 0 , 45423 , 0 ,  MyDB )
+16:52:36.862018 debug: [PROXY workerclient.go:874] worker pid= 45423  changing status from 0 to 1
+16:52:36.862033 verbose: [PROXY statelog.go:181] publish state event 0
+16:52:36.862079 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 1
+16:52:36.862084 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45423 0 0
+16:52:36.862132 debug: [PROXY workerpool.go:207] poolsize(ready) 1  type  0  instance  0
+16:52:36.862155 debug: [PROXY workerpool.go:217] poolsize (after signal) 1  type  0
+16:52:36.874135 debug: [WORKER 1 adapter.go:130] writable: true
+16:52:36.874202 warn: [WORKER 1 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+16:52:36.874317 verbose: [WORKER 1 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+16:52:36.874341 info: [WORKER 1 workerservice.go:142] About to use readNextNetstring
+16:52:36.874358 info: [WORKER 1 workerservice.go:242] Will pick between mysqlpackets and netstring packager.
+16:52:36.874376 info: [WORKER 1 workerservice.go:250] Using netstring packager reader/writer
+16:52:36.874391 info: [PROXY workerclient.go:468] Got control message from worker ( 1 , 45424 , 0 ,  MyDB )
+16:52:36.874424 debug: [PROXY workerclient.go:874] worker pid= 45424  changing status from 0 to 1
+16:52:36.874445 verbose: [PROXY statelog.go:181] publish state event 0
+16:52:36.874468 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45424 0 0
+16:52:36.874487 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 1
+16:52:36.874488 debug: [PROXY workerpool.go:207] poolsize(ready) 2  type  0  instance  0
+16:52:36.874551 debug: [PROXY workerpool.go:217] poolsize (after signal) 2  type  0
+16:52:36.880839 debug: [WORKER 2 adapter.go:130] writable: true
+16:52:36.880897 warn: [WORKER 2 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+16:52:36.881038 verbose: [WORKER 2 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+16:52:36.881071 info: [WORKER 2 workerservice.go:142] About to use readNextNetstring
+16:52:36.881086 info: [WORKER 2 workerservice.go:242] Will pick between mysqlpackets and netstring packager.
+16:52:36.881100 info: [WORKER 2 workerservice.go:250] Using netstring packager reader/writer
+16:52:36.881171 info: [PROXY workerclient.go:468] Got control message from worker ( 2 , 45425 , 0 ,  MyDB )
+16:52:36.881202 debug: [PROXY workerclient.go:874] worker pid= 45425  changing status from 0 to 1
+16:52:36.881217 verbose: [PROXY statelog.go:181] publish state event 0
+16:52:36.881235 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45425 0 0
+16:52:36.881250 debug: [PROXY workerpool.go:207] poolsize(ready) 3  type  0  instance  0
+16:52:36.881260 debug: [PROXY workerpool.go:217] poolsize (after signal) 3  type  0
+16:52:36.881255 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 1
+16:52:36.936675 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+16:52:40.057422 info: [PROXY server.go:177] server: accepted from  127.0.0.1:56784
+16:52:40.057554 debug: [PROXY tcp_listener.go:77] Authenticated OK
+16:52:40.057586 verbose: [PROXY statelog.go:181] publish state event 1
+16:52:40.057615 info: [PROXY connectionhandler.go:277] Sending handshake
+16:52:40.057646 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+16:52:40.058883 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+16:52:40.059007 info: [PROXY connectionhandler.go:279] Reading handshake response
+16:52:40.059053 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+16:52:40.059275 verbose: [PROXY coordinator.go:78] Created coordinator
+16:52:40.059321 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:56784 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+16:52:40.059395 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+16:52:40.059414 verbose: [PROXY coordinator.go:121] Running coordinator
+16:52:40.059467 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:52:40.059481 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+16:52:40.059497 debug: [PROXY coordinator.go:141] coordinator run got client request.
+16:52:40.059508 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+16:52:40.059544 debug: [PROXY coordinator.go:401] Mux handle command: 3
+16:52:40.059559 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:52:40.059571 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+16:52:40.059584 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:52:40.059625 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+16:52:40.059650 info: [PROXY coordinator.go:560] worker is nil
+16:52:40.059662 info: [PROXY coordinator.go:581] This case!
+16:52:40.059675 info: [PROXY coordinator.go:586] shard ID problems...?
+16:52:40.059687 info: [PROXY coordinator.go:591] isNotInternal
+16:52:40.059856 info: [PROXY coordinator.go:592] &{0xc0000765c0 0xc000076580 0 0 0 10 3 3 hera-test 3 0 map[] 0xc00026a030 [0xc0000d3040 0xc0001e0000 0xc000240000]}
+16:52:40.059888 debug: [PROXY workerpool.go:230] Pool::GetWorker(start) type: 0 , instance: 0 , active:  3 healthy: 3
+16:52:40.059917 debug: [PROXY workerpool.go:575] poolsize (before get) 3  type  0 , instance: 0
+16:52:40.059928 debug: [PROXY workerpool.go:580] Pool::SelectWorker 45423 0 0
+16:52:40.059968 verbose: [PROXY statelog.go:181] publish state event 1
+16:52:40.059995 debug: [PROXY workerpool.go:234] Pool::GetWorker(end) type: 0 , instance: 0 , active:  2 healthy: 3
+16:52:40.060010 info: [PROXY coordinator.go:595] Got a worker!
+16:52:40.060000 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 1 0
+16:52:40.060040 info: [PROXY coordinator.go:644] Reached doRequest
+16:52:40.060089 verbose: [PROXY coordinator.go:716] coordinator dorequeset: starting
+16:52:40.060105 debug: [PROXY workerclient.go:874] worker pid= 45423  changing status from 1 to 3
+16:52:40.060116 verbose: [PROXY statelog.go:181] publish state event 0
+16:52:40.060143 debug: [PROXY workerclient.go:857] workerclient (>>>worker pid = 45423 , rqID = 1  ):  18:2006 CorrId=NotSet,
+16:52:40.060146 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 3
+16:52:40.060182 debug: [PROXY workerclient.go:857] workerclient (>>>worker pid = 45423 , rqID = 2  ):      DROP TABLE IF EXISTS test;
+16:52:40.060191 info: [WORKER 0 workerservice.go:258] Using mysql packager reader/writer
+16:52:40.060202 debug: [PROXY coordinator.go:787] crd sqlhash = 0 sqltime= 3227
+16:52:40.060211 verbose: [WORKER 0 workerservice.go:202] worker_sp0 : worker read <<< 18:2006 CorrId=NotSet, false
+16:52:40.060258 debug: [WORKER 0 cmdprocessor.go:191] process command 18:2006 CorrId=NotSet,
+16:52:40.060291 verbose: [WORKER 0 cmdprocessor.go:285] Got to CmdClientCalCorrelationID
+16:52:40.060301 verbose: [WORKER 0 cmdprocessor.go:799] Finished outerloop
+16:53:06.833115 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+16:53:06.833279 info: [PROXY config.go:399] Loading ops config
+16:53:06.833303 verbose: [PROXY config.go:448] max_connections unchanged in opsconfig
+16:53:36.834885 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+16:53:42.513322 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+16:53:42.514083 info: [PROXY logger.go:149] Change log level to verbose:
+16:53:42.514650 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+16:53:42.514794 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+16:53:42.514823 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:53:42.514835 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:53:42.514848 debug: [PROXY workerbroker.go:166] workercnt  3
+16:53:42.514963 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:53:42.516594 verbose: [PROXY workerbroker.go:239] Added 45523 , pwmap: map[45523:0xc0000e3040]
+16:53:42.516628 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45523
+16:53:42.516707 debug: [PROXY workerclient.go:874] worker pid= 45523  changing status from -1 to 0
+16:53:42.516810 verbose: [PROXY statelog.go:387] init statelog
+16:53:42.516888 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+16:53:42.516903 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+16:53:42.516916 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+16:53:42.517057 verbose: [PROXY statelog.go:181] publish state event 0
+16:53:42.517250 info: [PROXY workerpool.go:128] worker started type  0  id 0  instid 0  shardid 0
+16:53:42.517341 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:53:42.518089 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 0
+16:53:42.518098 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 0 ,  45523 )
+16:53:42.518774 verbose: [PROXY workerbroker.go:239] Added 45524 , pwmap: map[45523:0xc0000e3040 45524:0xc0000e30e0]
+16:53:42.518800 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45524
+16:53:42.518816 debug: [PROXY workerclient.go:874] worker pid= 45524  changing status from -1 to 0
+16:53:42.518831 verbose: [PROXY statelog.go:181] publish state event 0
+16:53:42.518873 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 0
+16:53:42.518873 info: [PROXY workerpool.go:128] worker started type  0  id 1  instid 0  shardid 0
+16:53:42.518948 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:53:42.518956 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 1 ,  45524 )
+16:53:42.520572 verbose: [PROXY workerbroker.go:239] Added 45525 , pwmap: map[45523:0xc0000e3040 45524:0xc0000e30e0 45525:0xc000230000]
+16:53:42.520610 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45525
+16:53:42.520627 debug: [PROXY workerclient.go:874] worker pid= 45525  changing status from -1 to 0
+16:53:42.520643 verbose: [PROXY statelog.go:181] publish state event 0
+16:53:42.520684 info: [PROXY workerpool.go:128] worker started type  0  id 2  instid 0  shardid 0
+16:53:42.520695 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 0
+16:53:42.520748 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 2 ,  45525 )
+16:53:42.520863 verbose: [PROXY adaptivequemgr.go:120] saturation recover enter (ms) 9223372036854775807
+16:53:42.520885 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+16:53:42.521050 verbose: [PROXY stats.go:66] GoStats every 10
+16:53:42.529149 info: [WORKER 0 workerservice.go:105] DB heartbeat interval: 2m0s
+16:53:42.529347 info: [WORKER 0 cmdprocessor.go:812] setup db connection.
+16:53:42.531428 info: [WORKER 1 workerservice.go:105] DB heartbeat interval: 2m0s
+16:53:42.531713 info: [WORKER 1 cmdprocessor.go:812] setup db connection.
+16:53:42.532584 info: [WORKER 2 workerservice.go:105] DB heartbeat interval: 2m0s
+16:53:42.532824 info: [WORKER 2 cmdprocessor.go:812] setup db connection.
+16:53:42.538838 debug: [WORKER 0 adapter.go:130] writable: true
+16:53:42.538898 warn: [WORKER 0 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+16:53:42.539050 verbose: [WORKER 0 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+16:53:42.539086 info: [WORKER 0 workerservice.go:142] About to use readNextNetstring
+16:53:42.539102 info: [WORKER 0 workerservice.go:243] Will pick between mysqlpackets and netstring packager.
+16:53:42.539119 info: [WORKER 0 workerservice.go:251] Using netstring packager reader/writer
+16:53:42.539233 info: [PROXY workerclient.go:468] Got control message from worker ( 0 , 45523 , 0 ,  MyDB )
+16:53:42.539262 debug: [WORKER 1 adapter.go:130] writable: true
+16:53:42.539271 debug: [PROXY workerclient.go:874] worker pid= 45523  changing status from 0 to 1
+16:53:42.539312 warn: [WORKER 1 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+16:53:42.539336 verbose: [PROXY statelog.go:181] publish state event 0
+16:53:42.539402 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 1
+16:53:42.539416 verbose: [WORKER 1 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+16:53:42.539410 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45523 0 0
+16:53:42.539441 info: [WORKER 1 workerservice.go:142] About to use readNextNetstring
+16:53:42.539463 info: [WORKER 1 workerservice.go:243] Will pick between mysqlpackets and netstring packager.
+16:53:42.539471 info: [PROXY workerclient.go:468] Got control message from worker ( 1 , 45524 , 0 ,  MyDB )
+16:53:42.539478 info: [WORKER 1 workerservice.go:251] Using netstring packager reader/writer
+16:53:42.539494 debug: [PROXY workerclient.go:874] worker pid= 45524  changing status from 0 to 1
+16:53:42.539512 verbose: [PROXY statelog.go:181] publish state event 0
+16:53:42.539482 debug: [PROXY workerpool.go:207] poolsize(ready) 1  type  0  instance  0
+16:53:42.539532 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 1
+16:53:42.539570 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45524 0 0
+16:53:42.539589 debug: [PROXY workerpool.go:207] poolsize(ready) 2  type  0  instance  0
+16:53:42.539609 debug: [PROXY workerpool.go:217] poolsize (after signal) 2  type  0
+16:53:42.539570 debug: [PROXY workerpool.go:217] poolsize (after signal) 1  type  0
+16:53:42.542082 debug: [WORKER 2 adapter.go:130] writable: true
+16:53:42.542121 warn: [WORKER 2 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+16:53:42.542213 verbose: [WORKER 2 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+16:53:42.542234 info: [WORKER 2 workerservice.go:142] About to use readNextNetstring
+16:53:42.542246 info: [WORKER 2 workerservice.go:243] Will pick between mysqlpackets and netstring packager.
+16:53:42.542260 info: [WORKER 2 workerservice.go:251] Using netstring packager reader/writer
+16:53:42.542264 info: [PROXY workerclient.go:468] Got control message from worker ( 2 , 45525 , 0 ,  MyDB )
+16:53:42.542286 debug: [PROXY workerclient.go:874] worker pid= 45525  changing status from 0 to 1
+16:53:42.542307 verbose: [PROXY statelog.go:181] publish state event 0
+16:53:42.542323 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45525 0 0
+16:53:42.542341 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 1
+16:53:42.542343 debug: [PROXY workerpool.go:207] poolsize(ready) 3  type  0  instance  0
+16:53:42.542377 debug: [PROXY workerpool.go:217] poolsize (after signal) 3  type  0
+16:53:42.622552 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+16:53:45.501216 info: [PROXY server.go:177] server: accepted from  127.0.0.1:56798
+16:53:45.501383 debug: [PROXY tcp_listener.go:77] Authenticated OK
+16:53:45.501438 verbose: [PROXY statelog.go:181] publish state event 1
+16:53:45.501474 info: [PROXY connectionhandler.go:277] Sending handshake
+16:53:45.501501 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+16:53:45.502958 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+16:53:45.502991 info: [PROXY connectionhandler.go:279] Reading handshake response
+16:53:45.503028 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+16:53:45.503270 verbose: [PROXY coordinator.go:78] Created coordinator
+16:53:45.503327 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:56798 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+16:53:45.503401 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+16:53:45.503419 verbose: [PROXY coordinator.go:121] Running coordinator
+16:53:45.503454 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:53:45.503468 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+16:53:45.503481 debug: [PROXY coordinator.go:141] coordinator run got client request.
+16:53:45.503493 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+16:53:45.503530 debug: [PROXY coordinator.go:401] Mux handle command: 3
+16:53:45.503544 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:53:45.503558 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+16:53:45.503571 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:53:45.503614 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+16:53:45.503639 info: [PROXY coordinator.go:560] worker is nil
+16:53:45.503651 info: [PROXY coordinator.go:581] This case!
+16:53:45.503666 info: [PROXY coordinator.go:586] shard ID problems...?
+16:53:45.503678 info: [PROXY coordinator.go:591] isNotInternal
+16:53:45.503947 info: [PROXY coordinator.go:592] &{0xc0000e8640 0xc0000e8600 0 0 0 10 3 3 hera-test 3 0 map[] 0xc0002260f0 [0xc0000e3040 0xc0000e30e0 0xc000230000]}
+16:53:45.503981 debug: [PROXY workerpool.go:230] Pool::GetWorker(start) type: 0 , instance: 0 , active:  3 healthy: 3
+16:53:45.504008 debug: [PROXY workerpool.go:575] poolsize (before get) 3  type  0 , instance: 0
+16:53:45.504020 debug: [PROXY workerpool.go:580] Pool::SelectWorker 45523 0 0
+16:53:45.504060 verbose: [PROXY statelog.go:181] publish state event 1
+16:53:45.504088 debug: [PROXY workerpool.go:234] Pool::GetWorker(end) type: 0 , instance: 0 , active:  2 healthy: 3
+16:53:45.504104 info: [PROXY coordinator.go:595] Got a worker!
+16:53:45.504089 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 1 0
+16:53:45.504139 info: [PROXY coordinator.go:644] Reached doRequest
+16:53:45.504223 verbose: [PROXY coordinator.go:716] coordinator dorequeset: starting
+16:53:45.504242 debug: [PROXY workerclient.go:874] worker pid= 45523  changing status from 1 to 3
+16:53:45.504253 verbose: [PROXY statelog.go:181] publish state event 0
+16:53:45.504275 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 3
+16:53:45.504278 debug: [PROXY workerclient.go:857] workerclient (>>>worker pid = 45523 , rqID = 1  ):  18:2006 CorrId=NotSet,
+16:53:45.504305 debug: [PROXY workerclient.go:857] workerclient (>>>worker pid = 45523 , rqID = 2  ):      DROP TABLE IF EXISTS test;
+16:53:45.504323 debug: [PROXY coordinator.go:787] crd sqlhash = 0 sqltime= 2983
+16:53:45.504346 verbose: [WORKER 0 workerservice.go:202] worker_sp0 : worker read <<< 18:2006 CorrId=NotSet, false
+16:53:45.504379 debug: [WORKER 0 cmdprocessor.go:191] process command 18:2006 CorrId=NotSet,
+16:53:45.504356 info: [WORKER 0 workerservice.go:259] Using mysql packager reader/writer
+16:53:45.504413 verbose: [WORKER 0 cmdprocessor.go:285] Got to CmdClientCalCorrelationID
+16:53:45.504426 verbose: [WORKER 0 cmdprocessor.go:799] Finished outerloop
+16:53:45.504439 info: [WORKER 0 workerservice.go:208] Finished processing command
+16:54:12.525506 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+16:54:12.525879 info: [PROXY config.go:399] Loading ops config
+16:54:12.527821 verbose: [PROXY config.go:448] max_connections unchanged in opsconfig
+16:54:42.532594 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+16:55:12.534857 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+16:55:42.540010 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+16:55:42.540050 info: [WORKER 1 workerservice.go:156] sending heartbeat to DB
+16:55:42.542517 debug: [WORKER 1 adapter.go:130] writable: true
+16:55:42.542546 info: [WORKER 2 workerservice.go:156] sending heartbeat to DB
+16:55:42.543386 debug: [WORKER 2 adapter.go:130] writable: true
+16:55:45.505814 info: [WORKER 0 workerservice.go:156] sending heartbeat to DB
+16:55:45.506463 debug: [WORKER 0 adapter.go:130] writable: true
+16:56:12.544954 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+16:56:16.781267 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+16:56:16.781846 info: [PROXY logger.go:149] Change log level to verbose:
+16:56:16.782375 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+16:56:16.782507 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+16:56:16.782533 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:56:16.782545 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:56:16.782555 debug: [PROXY workerbroker.go:166] workercnt  3
+16:56:16.782665 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:56:16.784113 verbose: [PROXY workerbroker.go:239] Added 45608 , pwmap: map[45608:0xc0001921e0]
+16:56:16.784146 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45608
+16:56:16.784213 debug: [PROXY workerclient.go:874] worker pid= 45608  changing status from -1 to 0
+16:56:16.784305 verbose: [PROXY statelog.go:387] init statelog
+16:56:16.784376 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+16:56:16.784388 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+16:56:16.784399 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+16:56:16.784505 verbose: [PROXY statelog.go:181] publish state event 0
+16:56:16.784565 info: [PROXY workerpool.go:128] worker started type  0  id 0  instid 0  shardid 0
+16:56:16.784624 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:56:16.785198 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 0 ,  45608 )
+16:56:16.785296 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 0
+16:56:16.785989 verbose: [PROXY workerbroker.go:239] Added 45609 , pwmap: map[45608:0xc0001921e0 45609:0xc0000daf00]
+16:56:16.786008 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45609
+16:56:16.786022 debug: [PROXY workerclient.go:874] worker pid= 45609  changing status from -1 to 0
+16:56:16.786034 verbose: [PROXY statelog.go:181] publish state event 0
+16:56:16.786070 info: [PROXY workerpool.go:128] worker started type  0  id 1  instid 0  shardid 0
+16:56:16.786100 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 0
+16:56:16.786120 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 1 ,  45609 )
+16:56:16.786106 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:56:16.787394 verbose: [PROXY workerbroker.go:239] Added 45610 , pwmap: map[45608:0xc0001921e0 45609:0xc0000daf00 45610:0xc0000dafa0]
+16:56:16.787453 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45610
+16:56:16.787473 debug: [PROXY workerclient.go:874] worker pid= 45610  changing status from -1 to 0
+16:56:16.787488 verbose: [PROXY statelog.go:181] publish state event 0
+16:56:16.787541 info: [PROXY workerpool.go:128] worker started type  0  id 2  instid 0  shardid 0
+16:56:16.787556 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 0
+16:56:16.787600 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 2 ,  45610 )
+16:56:16.787677 verbose: [PROXY adaptivequemgr.go:120] saturation recover enter (ms) 9223372036854775807
+16:56:16.787693 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+16:56:16.787907 verbose: [PROXY stats.go:66] GoStats every 10
+16:56:16.795039 info: [WORKER 0 workerservice.go:105] DB heartbeat interval: 2m0s
+16:56:16.795228 info: [WORKER 0 cmdprocessor.go:812] setup db connection.
+16:56:16.797103 info: [WORKER 1 workerservice.go:105] DB heartbeat interval: 2m0s
+16:56:16.797330 info: [WORKER 1 cmdprocessor.go:812] setup db connection.
+16:56:16.798215 info: [WORKER 2 workerservice.go:105] DB heartbeat interval: 2m0s
+16:56:16.798461 info: [WORKER 2 cmdprocessor.go:812] setup db connection.
+16:56:16.799007 debug: [WORKER 0 adapter.go:130] writable: true
+16:56:16.799062 warn: [WORKER 0 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+16:56:16.799176 verbose: [WORKER 0 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+16:56:16.799197 info: [WORKER 0 workerservice.go:142] About to use readNextNetstring
+16:56:16.799213 info: [WORKER 0 workerservice.go:244] Will pick between mysqlpackets and netstring packager.
+16:56:16.799227 info: [WORKER 0 workerservice.go:252] Using netstring packager reader/writer
+16:56:16.799332 info: [PROXY workerclient.go:468] Got control message from worker ( 0 , 45608 , 0 ,  MyDB )
+16:56:16.799371 debug: [PROXY workerclient.go:874] worker pid= 45608  changing status from 0 to 1
+16:56:16.799393 verbose: [PROXY statelog.go:181] publish state event 0
+16:56:16.799433 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 1
+16:56:16.799441 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45608 0 0
+16:56:16.799494 debug: [PROXY workerpool.go:207] poolsize(ready) 1  type  0  instance  0
+16:56:16.799521 debug: [PROXY workerpool.go:217] poolsize (after signal) 1  type  0
+16:56:16.804331 debug: [WORKER 1 adapter.go:130] writable: true
+16:56:16.804387 warn: [WORKER 1 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+16:56:16.804503 verbose: [WORKER 1 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+16:56:16.804530 info: [WORKER 1 workerservice.go:142] About to use readNextNetstring
+16:56:16.804542 info: [WORKER 1 workerservice.go:244] Will pick between mysqlpackets and netstring packager.
+16:56:16.804566 info: [PROXY workerclient.go:468] Got control message from worker ( 1 , 45609 , 0 ,  MyDB )
+16:56:16.804577 info: [WORKER 1 workerservice.go:252] Using netstring packager reader/writer
+16:56:16.804600 debug: [PROXY workerclient.go:874] worker pid= 45609  changing status from 0 to 1
+16:56:16.804616 verbose: [PROXY statelog.go:181] publish state event 0
+16:56:16.804633 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45609 0 0
+16:56:16.804656 debug: [PROXY workerpool.go:207] poolsize(ready) 2  type  0  instance  0
+16:56:16.804664 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 1
+16:56:16.804668 debug: [PROXY workerpool.go:217] poolsize (after signal) 2  type  0
+16:56:16.805628 debug: [WORKER 2 adapter.go:130] writable: true
+16:56:16.805671 warn: [WORKER 2 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+16:56:16.805785 verbose: [WORKER 2 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+16:56:16.805805 info: [WORKER 2 workerservice.go:142] About to use readNextNetstring
+16:56:16.805817 info: [WORKER 2 workerservice.go:244] Will pick between mysqlpackets and netstring packager.
+16:56:16.805830 info: [WORKER 2 workerservice.go:252] Using netstring packager reader/writer
+16:56:16.805831 info: [PROXY workerclient.go:468] Got control message from worker ( 2 , 45610 , 0 ,  MyDB )
+16:56:16.805855 debug: [PROXY workerclient.go:874] worker pid= 45610  changing status from 0 to 1
+16:56:16.805869 verbose: [PROXY statelog.go:181] publish state event 0
+16:56:16.805887 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45610 0 0
+16:56:16.805902 debug: [PROXY workerpool.go:207] poolsize(ready) 3  type  0  instance  0
+16:56:16.805916 debug: [PROXY workerpool.go:217] poolsize (after signal) 3  type  0
+16:56:16.805902 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 1
+16:56:16.890582 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+16:56:20.646168 info: [PROXY server.go:177] server: accepted from  127.0.0.1:56814
+16:56:20.646407 debug: [PROXY tcp_listener.go:77] Authenticated OK
+16:56:20.646447 verbose: [PROXY statelog.go:181] publish state event 1
+16:56:20.646486 info: [PROXY connectionhandler.go:277] Sending handshake
+16:56:20.646505 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+16:56:20.648073 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+16:56:20.648100 info: [PROXY connectionhandler.go:279] Reading handshake response
+16:56:20.648134 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+16:56:20.648363 verbose: [PROXY coordinator.go:78] Created coordinator
+16:56:20.648411 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:56814 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+16:56:20.648499 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+16:56:20.648520 verbose: [PROXY coordinator.go:121] Running coordinator
+16:56:20.648556 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:56:20.648571 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+16:56:20.648587 debug: [PROXY coordinator.go:141] coordinator run got client request.
+16:56:20.648599 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+16:56:20.648637 debug: [PROXY coordinator.go:401] Mux handle command: 3
+16:56:20.648655 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:56:20.648669 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+16:56:20.648683 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:56:20.648727 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+16:56:20.648753 info: [PROXY coordinator.go:560] worker is nil
+16:56:20.648766 info: [PROXY coordinator.go:581] This case!
+16:56:20.648778 info: [PROXY coordinator.go:586] shard ID problems...?
+16:56:20.648790 info: [PROXY coordinator.go:591] isNotInternal
+16:56:20.649074 info: [PROXY coordinator.go:592] &{0xc0001642c0 0xc000164280 0 0 0 10 3 3 hera-test 3 0 map[] 0xc000148780 [0xc0001921e0 0xc0000daf00 0xc0000dafa0]}
+16:56:20.649107 debug: [PROXY workerpool.go:230] Pool::GetWorker(start) type: 0 , instance: 0 , active:  3 healthy: 3
+16:56:20.649141 debug: [PROXY workerpool.go:575] poolsize (before get) 3  type  0 , instance: 0
+16:56:20.649154 debug: [PROXY workerpool.go:580] Pool::SelectWorker 45608 0 0
+16:56:20.649196 verbose: [PROXY statelog.go:181] publish state event 1
+16:56:20.649224 debug: [PROXY workerpool.go:234] Pool::GetWorker(end) type: 0 , instance: 0 , active:  2 healthy: 3
+16:56:20.649239 info: [PROXY coordinator.go:595] Got a worker!
+16:56:20.649242 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 1 0
+16:56:20.649265 info: [PROXY coordinator.go:644] Reached doRequest
+16:56:20.649337 verbose: [PROXY coordinator.go:716] coordinator dorequeset: starting
+16:56:20.649355 debug: [PROXY workerclient.go:874] worker pid= 45608  changing status from 1 to 3
+16:56:20.649365 verbose: [PROXY statelog.go:181] publish state event 0
+16:56:20.649385 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 3
+16:56:20.649386 debug: [PROXY workerclient.go:857] workerclient (>>>worker pid = 45608 , rqID = 1  ):  18:2006 CorrId=NotSet,
+16:56:20.649418 debug: [PROXY workerclient.go:857] workerclient (>>>worker pid = 45608 , rqID = 2  ):      DROP TABLE IF EXISTS test;
+16:56:20.649438 debug: [PROXY coordinator.go:787] crd sqlhash = 0 sqltime= 3861
+16:56:20.649445 info: [WORKER 0 workerservice.go:260] Using mysql packager reader/writer
+16:56:20.649463 verbose: [WORKER 0 workerservice.go:202] worker_sp0 : worker read <<< 18:2006 CorrId=NotSet, false
+16:56:20.649501 debug: [WORKER 0 cmdprocessor.go:191] process command 18:2006 CorrId=NotSet,
+16:56:20.649533 verbose: [WORKER 0 cmdprocessor.go:285] Got to CmdClientCalCorrelationID
+16:56:20.649543 verbose: [WORKER 0 cmdprocessor.go:799] Finished outerloop
+16:56:20.649554 info: [WORKER 0 workerservice.go:208] Finished processing command
+16:56:20.649566 info: [WORKER 0 workerservice.go:220] Is this error actually breaking??
+16:56:39.949413 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+16:56:39.950005 info: [PROXY logger.go:149] Change log level to verbose:
+16:56:39.950556 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+16:56:39.950703 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+16:56:39.950729 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:56:39.950740 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+16:56:39.950750 debug: [PROXY workerbroker.go:166] workercnt  3
+16:56:39.950860 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:56:39.952397 verbose: [PROXY workerbroker.go:239] Added 45693 , pwmap: map[45693:0xc000192140]
+16:56:39.952439 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45693
+16:56:39.952503 debug: [PROXY workerclient.go:874] worker pid= 45693  changing status from -1 to 0
+16:56:39.952603 verbose: [PROXY statelog.go:387] init statelog
+16:56:39.952700 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+16:56:39.952715 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+16:56:39.952726 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+16:56:39.952827 verbose: [PROXY statelog.go:181] publish state event 0
+16:56:39.952937 info: [PROXY workerpool.go:128] worker started type  0  id 0  instid 0  shardid 0
+16:56:39.953072 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:56:39.953834 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 0
+16:56:39.953956 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 0 ,  45693 )
+16:56:39.954364 verbose: [PROXY workerbroker.go:239] Added 45694 , pwmap: map[45693:0xc000192140 45694:0xc0001b00a0]
+16:56:39.954390 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45694
+16:56:39.954408 debug: [PROXY workerclient.go:874] worker pid= 45694  changing status from -1 to 0
+16:56:39.954421 verbose: [PROXY statelog.go:181] publish state event 0
+16:56:39.954457 info: [PROXY workerpool.go:128] worker started type  0  id 1  instid 0  shardid 0
+16:56:39.954465 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 0
+16:56:39.954505 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+16:56:39.954526 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 1 ,  45694 )
+16:56:39.955923 verbose: [PROXY workerbroker.go:239] Added 45695 , pwmap: map[45693:0xc000192140 45694:0xc0001b00a0 45695:0xc0001b0140]
+16:56:39.955959 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45695
+16:56:39.955975 debug: [PROXY workerclient.go:874] worker pid= 45695  changing status from -1 to 0
+16:56:39.955989 verbose: [PROXY statelog.go:181] publish state event 0
+16:56:39.956053 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 0
+16:56:39.956056 info: [PROXY workerpool.go:128] worker started type  0  id 2  instid 0  shardid 0
+16:56:39.956159 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 2 ,  45695 )
+16:56:39.956215 verbose: [PROXY adaptivequemgr.go:120] saturation recover enter (ms) 9223372036854775807
+16:56:39.956269 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+16:56:39.956505 verbose: [PROXY stats.go:66] GoStats every 10
+16:56:39.964532 info: [WORKER 0 workerservice.go:105] DB heartbeat interval: 2m0s
+16:56:39.964717 info: [WORKER 0 cmdprocessor.go:812] setup db connection.
+16:56:39.966261 info: [WORKER 1 workerservice.go:105] DB heartbeat interval: 2m0s
+16:56:39.966554 info: [WORKER 1 cmdprocessor.go:812] setup db connection.
+16:56:39.967216 info: [WORKER 2 workerservice.go:105] DB heartbeat interval: 2m0s
+16:56:39.967467 info: [WORKER 2 cmdprocessor.go:812] setup db connection.
+16:56:39.970065 debug: [WORKER 0 adapter.go:130] writable: true
+16:56:39.970115 warn: [WORKER 0 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+16:56:39.970213 verbose: [WORKER 0 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+16:56:39.970236 info: [WORKER 0 workerservice.go:142] About to use readNextNetstring
+16:56:39.970250 info: [WORKER 0 workerservice.go:245] Will pick between mysqlpackets and netstring packager.
+16:56:39.970266 info: [WORKER 0 workerservice.go:253] Using netstring packager reader/writer
+16:56:39.970360 info: [PROXY workerclient.go:468] Got control message from worker ( 0 , 45693 , 0 ,  MyDB )
+16:56:39.970390 debug: [PROXY workerclient.go:874] worker pid= 45693  changing status from 0 to 1
+16:56:39.970405 verbose: [PROXY statelog.go:181] publish state event 0
+16:56:39.970448 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45693 0 0
+16:56:39.970464 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 1
+16:56:39.970550 debug: [PROXY workerpool.go:207] poolsize(ready) 1  type  0  instance  0
+16:56:39.970576 debug: [PROXY workerpool.go:217] poolsize (after signal) 1  type  0
+16:56:39.981973 debug: [WORKER 1 adapter.go:130] writable: true
+16:56:39.982018 warn: [WORKER 1 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+16:56:39.982128 verbose: [WORKER 1 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+16:56:39.982148 info: [WORKER 1 workerservice.go:142] About to use readNextNetstring
+16:56:39.982163 info: [WORKER 1 workerservice.go:245] Will pick between mysqlpackets and netstring packager.
+16:56:39.982176 info: [WORKER 1 workerservice.go:253] Using netstring packager reader/writer
+16:56:39.982202 info: [PROXY workerclient.go:468] Got control message from worker ( 1 , 45694 , 0 ,  MyDB )
+16:56:39.982228 debug: [PROXY workerclient.go:874] worker pid= 45694  changing status from 0 to 1
+16:56:39.982240 verbose: [PROXY statelog.go:181] publish state event 0
+16:56:39.982259 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45694 0 0
+16:56:39.982275 debug: [PROXY workerpool.go:207] poolsize(ready) 2  type  0  instance  0
+16:56:39.982289 debug: [PROXY workerpool.go:217] poolsize (after signal) 2  type  0
+16:56:39.982280 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 1
+16:56:39.989316 debug: [WORKER 2 adapter.go:130] writable: true
+16:56:39.989373 warn: [WORKER 2 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+16:56:39.989493 verbose: [WORKER 2 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+16:56:39.989515 info: [WORKER 2 workerservice.go:142] About to use readNextNetstring
+16:56:39.989530 info: [WORKER 2 workerservice.go:245] Will pick between mysqlpackets and netstring packager.
+16:56:39.989549 info: [WORKER 2 workerservice.go:253] Using netstring packager reader/writer
+16:56:39.989581 info: [PROXY workerclient.go:468] Got control message from worker ( 2 , 45695 , 0 ,  MyDB )
+16:56:39.989611 debug: [PROXY workerclient.go:874] worker pid= 45695  changing status from 0 to 1
+16:56:39.989624 verbose: [PROXY statelog.go:181] publish state event 0
+16:56:39.989641 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45695 0 0
+16:56:39.989659 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 1
+16:56:39.989663 debug: [PROXY workerpool.go:207] poolsize(ready) 3  type  0  instance  0
+16:56:39.989706 debug: [PROXY workerpool.go:217] poolsize (after signal) 3  type  0
+16:56:40.059844 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+16:56:42.938135 info: [PROXY server.go:177] server: accepted from  127.0.0.1:56828
+16:56:42.938280 debug: [PROXY tcp_listener.go:77] Authenticated OK
+16:56:42.938312 verbose: [PROXY statelog.go:181] publish state event 1
+16:56:42.938342 info: [PROXY connectionhandler.go:277] Sending handshake
+16:56:42.938378 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+16:56:42.939854 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+16:56:42.939884 info: [PROXY connectionhandler.go:279] Reading handshake response
+16:56:42.939916 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+16:56:42.940143 verbose: [PROXY coordinator.go:78] Created coordinator
+16:56:42.940186 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:56828 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+16:56:42.940269 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+16:56:42.940300 verbose: [PROXY coordinator.go:121] Running coordinator
+16:56:42.940338 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:56:42.940353 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+16:56:42.940366 debug: [PROXY coordinator.go:141] coordinator run got client request.
+16:56:42.940378 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+16:56:42.940418 debug: [PROXY coordinator.go:401] Mux handle command: 3
+16:56:42.940433 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:56:42.940447 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+16:56:42.940461 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+16:56:42.940505 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+16:56:42.940530 info: [PROXY coordinator.go:560] worker is nil
+16:56:42.940543 info: [PROXY coordinator.go:581] This case!
+16:56:42.940556 info: [PROXY coordinator.go:586] shard ID problems...?
+16:56:42.940568 info: [PROXY coordinator.go:591] isNotInternal
+16:56:42.940750 info: [PROXY coordinator.go:592] &{0xc000160240 0xc000160200 0 0 0 10 3 3 hera-test 3 0 map[] 0xc0000aa360 [0xc000192140 0xc0001b00a0 0xc0001b0140]}
+16:56:42.940783 debug: [PROXY workerpool.go:230] Pool::GetWorker(start) type: 0 , instance: 0 , active:  3 healthy: 3
+16:56:42.940816 debug: [PROXY workerpool.go:575] poolsize (before get) 3  type  0 , instance: 0
+16:56:42.940827 debug: [PROXY workerpool.go:580] Pool::SelectWorker 45693 0 0
+16:56:42.940874 verbose: [PROXY statelog.go:181] publish state event 1
+16:56:42.940902 debug: [PROXY workerpool.go:234] Pool::GetWorker(end) type: 0 , instance: 0 , active:  2 healthy: 3
+16:56:42.940915 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 1 0
+16:56:42.940932 info: [PROXY coordinator.go:595] Got a worker!
+16:56:42.940964 info: [PROXY coordinator.go:644] Reached doRequest
+16:56:42.941016 verbose: [PROXY coordinator.go:716] coordinator dorequeset: starting
+16:56:42.941033 debug: [PROXY workerclient.go:874] worker pid= 45693  changing status from 1 to 3
+16:56:42.941044 verbose: [PROXY statelog.go:181] publish state event 0
+16:56:42.941068 debug: [PROXY workerclient.go:857] workerclient (>>>worker pid = 45693 , rqID = 1  ):  18:2006 CorrId=NotSet,
+16:56:42.941086 debug: [PROXY workerclient.go:857] workerclient (>>>worker pid = 45693 , rqID = 2  ):      DROP TABLE IF EXISTS test;
+16:56:42.941113 debug: [PROXY coordinator.go:787] crd sqlhash = 0 sqltime= 2984
+16:56:42.941075 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 3
+16:56:42.941142 verbose: [WORKER 0 workerservice.go:202] worker_sp0 : worker read <<< 18:2006 CorrId=NotSet, false
+16:56:42.941185 debug: [WORKER 0 cmdprocessor.go:191] process command 18:2006 CorrId=NotSet,
+16:56:42.941159 info: [WORKER 0 workerservice.go:261] Using mysql packager reader/writer
+16:56:42.941220 verbose: [WORKER 0 cmdprocessor.go:285] Got to CmdClientCalCorrelationID
+16:56:42.941264 verbose: [WORKER 0 cmdprocessor.go:799] Finished outerloop
+16:56:42.941279 info: [WORKER 0 workerservice.go:208] Finished processing command
+16:56:42.941292 info: [WORKER 0 workerservice.go:220] Is this error actually breaking??
+16:56:42.941302 info: [WORKER 0 workerservice.go:224] We're still in the outerloop
+17:03:13.218566 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+17:03:13.218873 info: [PROXY logger.go:149] Change log level to verbose:
+17:03:13.219161 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+17:03:13.219203 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+17:03:13.219223 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+17:03:13.219235 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+17:03:13.219246 debug: [PROXY workerbroker.go:166] workercnt  3
+17:03:13.219285 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+17:03:13.220651 verbose: [PROXY workerbroker.go:239] Added 45795 , pwmap: map[45795:0xc0001a4000]
+17:03:13.220705 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45795
+17:03:13.220753 debug: [PROXY workerclient.go:875] worker pid= 45795  changing status from -1 to 0
+17:03:13.220781 verbose: [PROXY statelog.go:387] init statelog
+17:03:13.220852 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+17:03:13.220868 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+17:03:13.220880 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+17:03:13.220932 verbose: [PROXY statelog.go:181] publish state event 0
+17:03:13.221058 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 0
+17:03:13.221060 info: [PROXY workerpool.go:128] worker started type  0  id 0  instid 0  shardid 0
+17:03:13.221125 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+17:03:13.221163 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 0 ,  45795 )
+17:03:13.222248 verbose: [PROXY workerbroker.go:239] Added 45796 , pwmap: map[45795:0xc0001a4000 45796:0xc0000def00]
+17:03:13.222283 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45796
+17:03:13.222302 debug: [PROXY workerclient.go:875] worker pid= 45796  changing status from -1 to 0
+17:03:13.222318 verbose: [PROXY statelog.go:181] publish state event 0
+17:03:13.222366 info: [PROXY workerpool.go:128] worker started type  0  id 1  instid 0  shardid 0
+17:03:13.222405 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+17:03:13.222445 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 0
+17:03:13.222477 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 1 ,  45796 )
+17:03:13.223845 verbose: [PROXY workerbroker.go:239] Added 45797 , pwmap: map[45795:0xc0001a4000 45796:0xc0000def00 45797:0xc0000defa0]
+17:03:13.223887 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 45797
+17:03:13.223908 debug: [PROXY workerclient.go:875] worker pid= 45797  changing status from -1 to 0
+17:03:13.223926 verbose: [PROXY statelog.go:181] publish state event 0
+17:03:13.223977 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 0
+17:03:13.223995 info: [PROXY workerpool.go:128] worker started type  0  id 2  instid 0  shardid 0
+17:03:13.224063 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 2 ,  45797 )
+17:03:13.224096 verbose: [PROXY adaptivequemgr.go:120] saturation recover enter (ms) 9223372036854775807
+17:03:13.224118 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+17:03:13.224166 verbose: [PROXY stats.go:66] GoStats every 10
+17:03:13.232245 info: [WORKER 0 workerservice.go:105] DB heartbeat interval: 2m0s
+17:03:13.232472 info: [WORKER 0 cmdprocessor.go:812] setup db connection.
+17:03:13.233335 info: [WORKER 1 workerservice.go:105] DB heartbeat interval: 2m0s
+17:03:13.233587 info: [WORKER 1 cmdprocessor.go:812] setup db connection.
+17:03:13.234510 info: [WORKER 2 workerservice.go:105] DB heartbeat interval: 2m0s
+17:03:13.234735 info: [WORKER 2 cmdprocessor.go:812] setup db connection.
+17:03:13.238254 debug: [WORKER 0 adapter.go:130] writable: true
+17:03:13.238301 warn: [WORKER 0 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+17:03:13.238421 verbose: [WORKER 0 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+17:03:13.238442 info: [WORKER 0 workerservice.go:142] About to use readNextNetstring
+17:03:13.238454 info: [WORKER 0 workerservice.go:245] Will pick between mysqlpackets and netstring packager.
+17:03:13.238472 info: [WORKER 0 workerservice.go:253] Using netstring packager reader/writer
+17:03:13.238512 info: [PROXY workerclient.go:468] Got control message from worker ( 0 , 45795 , 0 ,  MyDB )
+17:03:13.238546 debug: [PROXY workerclient.go:875] worker pid= 45795  changing status from 0 to 1
+17:03:13.238564 verbose: [PROXY statelog.go:181] publish state event 0
+17:03:13.238591 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45795 0 0
+17:03:13.238622 debug: [PROXY workerpool.go:207] poolsize(ready) 1  type  0  instance  0
+17:03:13.238634 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 1
+17:03:13.238642 debug: [PROXY workerpool.go:217] poolsize (after signal) 1  type  0
+17:03:13.241498 debug: [WORKER 1 adapter.go:130] writable: true
+17:03:13.241541 warn: [WORKER 1 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+17:03:13.241673 verbose: [WORKER 1 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+17:03:13.241694 info: [WORKER 1 workerservice.go:142] About to use readNextNetstring
+17:03:13.241710 info: [WORKER 1 workerservice.go:245] Will pick between mysqlpackets and netstring packager.
+17:03:13.241724 info: [WORKER 1 workerservice.go:253] Using netstring packager reader/writer
+17:03:13.241724 info: [PROXY workerclient.go:468] Got control message from worker ( 1 , 45796 , 0 ,  MyDB )
+17:03:13.241756 debug: [PROXY workerclient.go:875] worker pid= 45796  changing status from 0 to 1
+17:03:13.241773 verbose: [PROXY statelog.go:181] publish state event 0
+17:03:13.241788 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45796 0 0
+17:03:13.241802 debug: [PROXY workerpool.go:207] poolsize(ready) 2  type  0  instance  0
+17:03:13.241812 debug: [PROXY workerpool.go:217] poolsize (after signal) 2  type  0
+17:03:13.241866 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 1
+17:03:13.243482 debug: [WORKER 2 adapter.go:130] writable: true
+17:03:13.243523 warn: [WORKER 2 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+17:03:13.243627 verbose: [WORKER 2 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+17:03:13.243645 info: [WORKER 2 workerservice.go:142] About to use readNextNetstring
+17:03:13.243660 info: [WORKER 2 workerservice.go:245] Will pick between mysqlpackets and netstring packager.
+17:03:13.243674 info: [WORKER 2 workerservice.go:253] Using netstring packager reader/writer
+17:03:13.243675 info: [PROXY workerclient.go:468] Got control message from worker ( 2 , 45797 , 0 ,  MyDB )
+17:03:13.243705 debug: [PROXY workerclient.go:875] worker pid= 45797  changing status from 0 to 1
+17:03:13.243718 verbose: [PROXY statelog.go:181] publish state event 0
+17:03:13.243732 debug: [PROXY workerpool.go:202] Pool::WorkerReady 45797 0 0
+17:03:13.243750 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 1
+17:03:13.243757 debug: [PROXY workerpool.go:207] poolsize(ready) 3  type  0  instance  0
+17:03:13.243789 debug: [PROXY workerpool.go:217] poolsize (after signal) 3  type  0
+17:03:13.327416 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+17:03:16.008145 info: [PROXY server.go:177] server: accepted from  127.0.0.1:56864
+17:03:16.008240 debug: [PROXY tcp_listener.go:77] Authenticated OK
+17:03:16.008262 verbose: [PROXY statelog.go:181] publish state event 1
+17:03:16.008285 info: [PROXY connectionhandler.go:277] Sending handshake
+17:03:16.008302 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+17:03:16.009207 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+17:03:16.009235 info: [PROXY connectionhandler.go:279] Reading handshake response
+17:03:16.009275 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+17:03:16.009378 verbose: [PROXY coordinator.go:78] Created coordinator
+17:03:16.009413 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:56864 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+17:03:16.009440 debug: [PROXY coordinator.go:114] idle timeout 600000 900000
+17:03:16.009461 verbose: [PROXY coordinator.go:121] Running coordinator
+17:03:16.009490 verbose: [PROXY coordinator.go:124] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+17:03:16.009507 verbose: [PROXY coordinator.go:139] coordinator run got client request.
+17:03:16.009522 debug: [PROXY coordinator.go:141] coordinator run got client request.
+17:03:16.009536 verbose: [PROXY coordinator.go:145] About to enter handleMux.
+17:03:16.009551 debug: [PROXY coordinator.go:401] Mux handle command: 3
+17:03:16.009566 info: [PROXY coordinator.go:407] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+17:03:16.009581 verbose: [PROXY coordinator.go:148] Not handled by handleMux
+17:03:16.009595 verbose: [PROXY coordinator.go:168] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+17:03:16.009615 verbose: [PROXY coordinator.go:545] coordinator dispatchrequest: starting
+17:03:16.009629 info: [PROXY coordinator.go:560] worker is nil
+17:03:16.009642 info: [PROXY coordinator.go:581] This case!
+17:03:16.009654 info: [PROXY coordinator.go:586] shard ID problems...?
+17:03:16.009667 info: [PROXY coordinator.go:591] isNotInternal
+17:03:16.009731 info: [PROXY coordinator.go:592] &{0xc0000ca140 0xc0000ca100 0 0 0 10 3 3 hera-test 3 0 map[] 0xc000270030 [0xc0001a4000 0xc0000def00 0xc0000defa0]}
+17:03:16.009754 debug: [PROXY workerpool.go:230] Pool::GetWorker(start) type: 0 , instance: 0 , active:  3 healthy: 3
+17:03:16.009774 debug: [PROXY workerpool.go:575] poolsize (before get) 3  type  0 , instance: 0
+17:03:16.009788 debug: [PROXY workerpool.go:580] Pool::SelectWorker 45795 0 0
+17:03:16.009809 verbose: [PROXY statelog.go:181] publish state event 1
+17:03:16.009824 debug: [PROXY workerpool.go:234] Pool::GetWorker(end) type: 0 , instance: 0 , active:  2 healthy: 3
+17:03:16.009842 info: [PROXY coordinator.go:595] Got a worker!
+17:03:16.009864 info: [PROXY coordinator.go:644] Reached doRequest
+17:03:16.009842 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 1 0
+17:03:16.009887 verbose: [PROXY coordinator.go:716] coordinator dorequeset: starting
+17:03:16.009938 debug: [PROXY workerclient.go:875] worker pid= 45795  changing status from 1 to 3
+17:03:16.009951 verbose: [PROXY statelog.go:181] publish state event 0
+17:03:16.009973 debug: [PROXY workerclient.go:858] workerclient (>>>worker pid = 45795 , rqID = 1  ):  18:2006 CorrId=NotSet,
+17:03:16.009984 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 3
+17:03:16.009991 debug: [PROXY workerclient.go:858] workerclient (>>>worker pid = 45795 , rqID = 2  ):      DROP TABLE IF EXISTS test;
+17:03:16.010023 debug: [PROXY coordinator.go:787] crd sqlhash = 0 sqltime= 2785
+17:03:16.010103 verbose: [WORKER 0 workerservice.go:202] worker_sp0 : worker read <<< 18:2006 CorrId=NotSet, false
+17:03:16.010133 debug: [WORKER 0 cmdprocessor.go:191] process command 18:2006 CorrId=NotSet,
+17:03:16.010168 verbose: [WORKER 0 cmdprocessor.go:285] Got to CmdClientCalCorrelationID
+17:03:16.010179 verbose: [WORKER 0 cmdprocessor.go:799] Finished outerloop
+17:03:16.010193 info: [WORKER 0 workerservice.go:208] Finished processing command
+17:03:16.010204 info: [WORKER 0 workerservice.go:220] Is this error actually breaking??
+17:03:16.010214 info: [WORKER 0 workerservice.go:224] We're still in the outerloop
+17:03:43.229299 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+17:03:43.229644 info: [PROXY config.go:399] Loading ops config
+17:03:43.233085 verbose: [PROXY config.go:448] max_connections unchanged in opsconfig
+17:04:13.234772 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+17:04:43.238578 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+17:10:26.838815 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+17:10:26.839163 info: [PROXY logger.go:149] Change log level to verbose:
+17:10:26.839491 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+17:10:26.839530 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+17:10:26.839549 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+17:10:26.839561 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+17:10:26.839573 debug: [PROXY workerbroker.go:166] workercnt  3
+17:10:26.839609 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+17:10:26.841063 verbose: [PROXY workerbroker.go:239] Added 46016 , pwmap: map[46016:0xc0000c6fa0]
+17:10:26.841108 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 46016
+17:10:26.841140 debug: [PROXY workerclient.go:875] worker pid= 46016  changing status from -1 to 0
+17:10:26.841173 verbose: [PROXY statelog.go:387] init statelog
+17:10:26.841238 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+17:10:26.841256 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+17:10:26.841267 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+17:10:26.841327 verbose: [PROXY statelog.go:181] publish state event 0
+17:10:26.841438 info: [PROXY workerpool.go:128] worker started type  0  id 0  instid 0  shardid 0
+17:10:26.841480 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+17:10:26.841524 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 0 ,  46016 )
+17:10:26.841532 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 0
+17:10:26.842679 verbose: [PROXY workerbroker.go:239] Added 46017 , pwmap: map[46016:0xc0000c6fa0 46017:0xc000204000]
+17:10:26.842711 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 46017
+17:10:26.842732 debug: [PROXY workerclient.go:875] worker pid= 46017  changing status from -1 to 0
+17:10:26.842750 verbose: [PROXY statelog.go:181] publish state event 0
+17:10:26.842822 info: [PROXY workerpool.go:128] worker started type  0  id 1  instid 0  shardid 0
+17:10:26.842830 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 0
+17:10:26.842870 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+17:10:26.842921 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 1 ,  46017 )
+17:10:26.844313 verbose: [PROXY workerbroker.go:239] Added 46018 , pwmap: map[46016:0xc0000c6fa0 46017:0xc000204000 46018:0xc0002040a0]
+17:10:26.844353 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 46018
+17:10:26.844373 debug: [PROXY workerclient.go:875] worker pid= 46018  changing status from -1 to 0
+17:10:26.844393 verbose: [PROXY statelog.go:181] publish state event 0
+17:10:26.844451 info: [PROXY workerpool.go:128] worker started type  0  id 2  instid 0  shardid 0
+17:10:26.844463 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 0
+17:10:26.844518 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 2 ,  46018 )
+17:10:26.844520 verbose: [PROXY adaptivequemgr.go:120] saturation recover enter (ms) 9223372036854775807
+17:10:26.844627 verbose: [PROXY stats.go:66] GoStats every 10
+17:10:26.844638 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+17:10:26.853862 info: [WORKER 0 workerservice.go:105] DB heartbeat interval: 2m0s
+17:10:26.854144 info: [WORKER 0 cmdprocessor.go:812] setup db connection.
+17:10:26.854500 info: [WORKER 1 workerservice.go:105] DB heartbeat interval: 2m0s
+17:10:26.854722 info: [WORKER 1 cmdprocessor.go:812] setup db connection.
+17:10:26.856442 info: [WORKER 2 workerservice.go:105] DB heartbeat interval: 2m0s
+17:10:26.856682 info: [WORKER 2 cmdprocessor.go:812] setup db connection.
+17:10:26.866133 debug: [WORKER 0 adapter.go:130] writable: true
+17:10:26.866189 warn: [WORKER 0 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+17:10:26.866303 verbose: [WORKER 0 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+17:10:26.866329 info: [WORKER 0 workerservice.go:142] About to use readNextNetstring
+17:10:26.866343 info: [WORKER 0 workerservice.go:245] Will pick between mysqlpackets and netstring packager.
+17:10:26.866357 info: [WORKER 0 workerservice.go:253] Using netstring packager reader/writer
+17:10:26.866476 info: [PROXY workerclient.go:468] Got control message from worker ( 0 , 46016 , 0 ,  MyDB )
+17:10:26.866514 debug: [PROXY workerclient.go:875] worker pid= 46016  changing status from 0 to 1
+17:10:26.866535 verbose: [PROXY statelog.go:181] publish state event 0
+17:10:26.866568 debug: [PROXY workerpool.go:202] Pool::WorkerReady 46016 0 0
+17:10:26.866604 debug: [PROXY workerpool.go:207] poolsize(ready) 1  type  0  instance  0
+17:10:26.866619 debug: [PROXY workerpool.go:217] poolsize (after signal) 1  type  0
+17:10:26.866629 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 1
+17:10:26.868741 debug: [WORKER 1 adapter.go:130] writable: true
+17:10:26.868782 warn: [WORKER 1 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+17:10:26.868893 verbose: [WORKER 1 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+17:10:26.868914 info: [WORKER 1 workerservice.go:142] About to use readNextNetstring
+17:10:26.868927 info: [WORKER 1 workerservice.go:245] Will pick between mysqlpackets and netstring packager.
+17:10:26.868941 info: [WORKER 1 workerservice.go:253] Using netstring packager reader/writer
+17:10:26.868961 info: [PROXY workerclient.go:468] Got control message from worker ( 1 , 46017 , 0 ,  MyDB )
+17:10:26.868987 debug: [PROXY workerclient.go:875] worker pid= 46017  changing status from 0 to 1
+17:10:26.869007 verbose: [PROXY statelog.go:181] publish state event 0
+17:10:26.869025 debug: [PROXY workerpool.go:202] Pool::WorkerReady 46017 0 0
+17:10:26.869041 debug: [PROXY workerpool.go:207] poolsize(ready) 2  type  0  instance  0
+17:10:26.869054 debug: [PROXY workerpool.go:217] poolsize (after signal) 2  type  0
+17:10:26.869043 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 1
+17:10:26.870078 debug: [WORKER 2 adapter.go:130] writable: true
+17:10:26.870117 warn: [WORKER 2 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+17:10:26.870241 verbose: [WORKER 2 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+17:10:26.870271 info: [WORKER 2 workerservice.go:142] About to use readNextNetstring
+17:10:26.870289 info: [WORKER 2 workerservice.go:245] Will pick between mysqlpackets and netstring packager.
+17:10:26.870304 info: [WORKER 2 workerservice.go:253] Using netstring packager reader/writer
+17:10:26.870310 info: [PROXY workerclient.go:468] Got control message from worker ( 2 , 46018 , 0 ,  MyDB )
+17:10:26.870345 debug: [PROXY workerclient.go:875] worker pid= 46018  changing status from 0 to 1
+17:10:26.870363 verbose: [PROXY statelog.go:181] publish state event 0
+17:10:26.870379 debug: [PROXY workerpool.go:202] Pool::WorkerReady 46018 0 0
+17:10:26.870393 debug: [PROXY workerpool.go:207] poolsize(ready) 3  type  0  instance  0
+17:10:26.870405 debug: [PROXY workerpool.go:217] poolsize (after signal) 3  type  0
+17:10:26.870398 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 1
+17:10:26.948225 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+17:10:30.287976 info: [PROXY server.go:177] server: accepted from  127.0.0.1:56926
+17:10:30.288070 debug: [PROXY tcp_listener.go:77] Authenticated OK
+17:10:30.288093 verbose: [PROXY statelog.go:181] publish state event 1
+17:10:30.288110 info: [PROXY connectionhandler.go:277] Sending handshake
+17:10:30.288133 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+17:10:30.289074 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+17:10:30.289108 info: [PROXY connectionhandler.go:279] Reading handshake response
+17:10:30.289144 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+17:10:30.289255 verbose: [PROXY coordinator.go:78] Created coordinator
+17:10:30.289294 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:56926 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+17:10:30.289317 debug: [PROXY coordinator.go:115] idle timeout 600000 900000
+17:10:30.289341 verbose: [PROXY coordinator.go:122] Running coordinator
+17:10:30.289364 verbose: [PROXY coordinator.go:125] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+17:10:30.289382 verbose: [PROXY coordinator.go:140] coordinator run got client request.
+17:10:30.289397 debug: [PROXY coordinator.go:142] coordinator run got client request.
+17:10:30.289412 verbose: [PROXY coordinator.go:146] About to enter handleMux.
+17:10:30.289427 debug: [PROXY coordinator.go:402] Mux handle command: 3
+17:10:30.289441 info: [PROXY coordinator.go:408] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+17:10:30.289458 verbose: [PROXY coordinator.go:149] Not handled by handleMux
+17:10:30.289473 verbose: [PROXY coordinator.go:169] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+17:10:30.289494 verbose: [PROXY coordinator.go:546] coordinator dispatchrequest: starting
+17:10:30.289509 info: [PROXY coordinator.go:561] worker is nil
+17:10:30.289525 info: [PROXY coordinator.go:582] This case!
+17:10:30.289538 info: [PROXY coordinator.go:587] shard ID problems...?
+17:10:30.289552 info: [PROXY coordinator.go:592] isNotInternal
+17:10:30.289621 info: [PROXY coordinator.go:593] &{0xc0000cc500 0xc0000cc4c0 0 0 0 10 3 3 hera-test 3 0 map[] 0xc0000985d0 [0xc0000c6fa0 0xc000204000 0xc0002040a0]}
+17:10:30.289642 debug: [PROXY workerpool.go:230] Pool::GetWorker(start) type: 0 , instance: 0 , active:  3 healthy: 3
+17:10:30.289662 debug: [PROXY workerpool.go:575] poolsize (before get) 3  type  0 , instance: 0
+17:10:30.289675 debug: [PROXY workerpool.go:580] Pool::SelectWorker 46016 0 0
+17:10:30.289692 verbose: [PROXY statelog.go:181] publish state event 1
+17:10:30.289708 debug: [PROXY workerpool.go:234] Pool::GetWorker(end) type: 0 , instance: 0 , active:  2 healthy: 3
+17:10:30.289728 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 1 0
+17:10:30.289733 info: [PROXY coordinator.go:596] Got a worker!
+17:10:30.289770 info: [PROXY coordinator.go:645] Reached doRequest
+17:10:30.289797 verbose: [PROXY coordinator.go:717] coordinator dorequeset: starting
+17:10:30.289816 debug: [PROXY workerclient.go:875] worker pid= 46016  changing status from 1 to 3
+17:10:30.289829 verbose: [PROXY statelog.go:181] publish state event 0
+17:10:30.289854 debug: [PROXY workerclient.go:858] workerclient (>>>worker pid = 46016 , rqID = 1  ):  18:2006 CorrId=NotSet,
+17:10:30.289870 debug: [PROXY workerclient.go:858] workerclient (>>>worker pid = 46016 , rqID = 2  ):      DROP TABLE IF EXISTS test;
+17:10:30.289888 debug: [PROXY coordinator.go:788] crd sqlhash = 0 sqltime= 3445
+17:10:30.289894 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 3
+17:10:30.289942 verbose: [WORKER 0 workerservice.go:202] worker_sp0 : worker read <<< 18:2006 CorrId=NotSet, false
+17:10:30.289975 debug: [WORKER 0 cmdprocessor.go:191] process command 18:2006 CorrId=NotSet,
+17:10:30.290010 verbose: [WORKER 0 cmdprocessor.go:285] Got to CmdClientCalCorrelationID
+17:10:30.290024 verbose: [WORKER 0 cmdprocessor.go:799] Finished outerloop
+17:10:30.290035 info: [WORKER 0 workerservice.go:208] Finished processing command
+17:10:30.290045 info: [WORKER 0 workerservice.go:220] Is this error actually breaking??
+17:10:30.290060 info: [WORKER 0 workerservice.go:224] We're still in the outerloop
+17:10:56.845385 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+17:10:56.845741 info: [PROXY config.go:399] Loading ops config
+17:10:56.845826 verbose: [PROXY config.go:448] max_connections unchanged in opsconfig
+17:11:03.787022 info: [PROXY config.go:218] failed to get num_standby_dbs from hera.txt, defaulting to 0
+17:11:03.787333 info: [PROXY logger.go:149] Change log level to verbose:
+17:11:03.787653 info: [PROXY workerbroker.go:115] num_standby_dbs 0 max_worker 3
+17:11:03.787692 verbose: [PROXY workerbroker.go:156] init pool  &{3 1}
+17:11:03.787711 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+17:11:03.787723 verbose: [PROXY workerbroker.go:156] init pool  &{0 0}
+17:11:03.787735 debug: [PROXY workerbroker.go:166] workercnt  3
+17:11:03.787791 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+17:11:03.789247 verbose: [PROXY workerbroker.go:239] Added 46100 , pwmap: map[46100:0xc0000ccf00]
+17:11:03.789280 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 46100
+17:11:03.789305 debug: [PROXY workerclient.go:875] worker pid= 46100  changing status from -1 to 0
+17:11:03.789334 verbose: [PROXY statelog.go:387] init statelog
+17:11:03.789417 verbose: [PROXY statelog.go:462] init statelog 0 0 0 0
+17:11:03.789434 verbose: [PROXY statelog.go:462] init statelog 0 0 0 1
+17:11:03.789445 verbose: [PROXY statelog.go:462] init statelog 0 0 0 2
+17:11:03.789527 verbose: [PROXY statelog.go:181] publish state event 0
+17:11:03.789594 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 0
+17:11:03.789628 info: [PROXY workerpool.go:128] worker started type  0  id 0  instid 0  shardid 0
+17:11:03.789690 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 0 ,  46100 )
+17:11:03.789697 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+17:11:03.790888 verbose: [PROXY workerbroker.go:239] Added 46101 , pwmap: map[46100:0xc0000ccf00 46101:0xc000214000]
+17:11:03.790921 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 46101
+17:11:03.790939 debug: [PROXY workerclient.go:875] worker pid= 46101  changing status from -1 to 0
+17:11:03.790954 verbose: [PROXY statelog.go:181] publish state event 0
+17:11:03.791016 info: [PROXY workerpool.go:128] worker started type  0  id 1  instid 0  shardid 0
+17:11:03.791027 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 0
+17:11:03.791090 info: [PROXY workerclient.go:317] TWO_TASK_0 is not defined, fallback
+17:11:03.791099 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 1 ,  46101 )
+17:11:03.792670 verbose: [PROXY workerbroker.go:239] Added 46102 , pwmap: map[46100:0xc0000ccf00 46101:0xc000214000 46102:0xc0000ccfa0]
+17:11:03.792732 info: [PROXY workerclient.go:401] Started  /Users/jmhu/go/src/github.com/paypal/hera/tests/driverless/herasql/mysqlworker , pid= 46102
+17:11:03.792770 debug: [PROXY workerclient.go:875] worker pid= 46102  changing status from -1 to 0
+17:11:03.792783 verbose: [PROXY statelog.go:181] publish state event 0
+17:11:03.792823 info: [PROXY workerpool.go:128] worker started type  0  id 2  instid 0  shardid 0
+17:11:03.792826 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 0
+17:11:03.792894 verbose: [PROXY workerclient.go:434] Waiting for control message from worker ( 2 ,  46102 )
+17:11:03.792987 verbose: [PROXY adaptivequemgr.go:120] saturation recover enter (ms) 9223372036854775807
+17:11:03.793001 verbose: [PROXY adaptivequemgr.go:128] saturation_recover check (ms) 9223372036854775807
+17:11:03.793021 verbose: [PROXY stats.go:66] GoStats every 10
+17:11:03.802639 info: [WORKER 0 workerservice.go:105] DB heartbeat interval: 2m0s
+17:11:03.802911 info: [WORKER 0 cmdprocessor.go:812] setup db connection.
+17:11:03.804243 info: [WORKER 1 workerservice.go:105] DB heartbeat interval: 2m0s
+17:11:03.804570 info: [WORKER 1 cmdprocessor.go:812] setup db connection.
+17:11:03.805544 info: [WORKER 2 workerservice.go:105] DB heartbeat interval: 2m0s
+17:11:03.805824 info: [WORKER 2 cmdprocessor.go:812] setup db connection.
+17:11:03.811183 debug: [WORKER 0 adapter.go:130] writable: true
+17:11:03.811245 warn: [WORKER 0 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+17:11:03.811352 verbose: [WORKER 0 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+17:11:03.811371 info: [WORKER 0 workerservice.go:142] About to use readNextNetstring
+17:11:03.811383 info: [WORKER 0 workerservice.go:245] Will pick between mysqlpackets and netstring packager.
+17:11:03.811395 info: [WORKER 0 workerservice.go:253] Using netstring packager reader/writer
+17:11:03.811453 info: [PROXY workerclient.go:468] Got control message from worker ( 0 , 46100 , 0 ,  MyDB )
+17:11:03.811485 debug: [PROXY workerclient.go:875] worker pid= 46100  changing status from 0 to 1
+17:11:03.811503 verbose: [PROXY statelog.go:181] publish state event 0
+17:11:03.811524 debug: [PROXY workerpool.go:202] Pool::WorkerReady 46100 0 0
+17:11:03.811546 debug: [PROXY workerpool.go:207] poolsize(ready) 1  type  0  instance  0
+17:11:03.811554 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 1
+17:11:03.811557 debug: [PROXY workerpool.go:217] poolsize (after signal) 1  type  0
+17:11:03.813521 debug: [WORKER 1 adapter.go:130] writable: true
+17:11:03.813564 warn: [WORKER 1 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+17:11:03.813756 verbose: [WORKER 1 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+17:11:03.813776 info: [WORKER 1 workerservice.go:142] About to use readNextNetstring
+17:11:03.813787 info: [WORKER 1 workerservice.go:245] Will pick between mysqlpackets and netstring packager.
+17:11:03.813799 info: [WORKER 1 workerservice.go:253] Using netstring packager reader/writer
+17:11:03.813809 info: [PROXY workerclient.go:468] Got control message from worker ( 1 , 46101 , 0 ,  MyDB )
+17:11:03.813829 debug: [PROXY workerclient.go:875] worker pid= 46101  changing status from 0 to 1
+17:11:03.813838 verbose: [PROXY statelog.go:181] publish state event 0
+17:11:03.813855 debug: [PROXY workerpool.go:202] Pool::WorkerReady 46101 0 0
+17:11:03.813875 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 1 1
+17:11:03.813876 debug: [PROXY workerpool.go:207] poolsize(ready) 2  type  0  instance  0
+17:11:03.813909 debug: [PROXY workerpool.go:217] poolsize (after signal) 2  type  0
+17:11:03.816102 debug: [WORKER 2 adapter.go:130] writable: true
+17:11:03.816137 warn: [WORKER 2 adapter.go:68] realU connect success tcp(localhost:3306)/ 0
+17:11:03.816295 verbose: [WORKER 2 common.go:33] worker writing to mux >>>  10:501 0 MyDB,
+17:11:03.816321 info: [WORKER 2 workerservice.go:142] About to use readNextNetstring
+17:11:03.816338 info: [WORKER 2 workerservice.go:245] Will pick between mysqlpackets and netstring packager.
+17:11:03.816340 info: [PROXY workerclient.go:468] Got control message from worker ( 2 , 46102 , 0 ,  MyDB )
+17:11:03.816355 info: [WORKER 2 workerservice.go:253] Using netstring packager reader/writer
+17:11:03.816382 debug: [PROXY workerclient.go:875] worker pid= 46102  changing status from 0 to 1
+17:11:03.816411 verbose: [PROXY statelog.go:181] publish state event 0
+17:11:03.816447 debug: [PROXY workerpool.go:202] Pool::WorkerReady 46102 0 0
+17:11:03.816462 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 2 1
+17:11:03.816465 debug: [PROXY workerpool.go:207] poolsize(ready) 3  type  0  instance  0
+17:11:03.816491 debug: [PROXY workerpool.go:217] poolsize (after signal) 3  type  0
+17:11:03.897248 info: [PROXY tcp_listener.go:47] server: listening on 0.0.0.0:3333  for https, connects to worker through socket
+17:11:06.476744 info: [PROXY server.go:177] server: accepted from  127.0.0.1:56940
+17:11:06.476829 debug: [PROXY tcp_listener.go:77] Authenticated OK
+17:11:06.476848 verbose: [PROXY statelog.go:181] publish state event 1
+17:11:06.476861 info: [PROXY connectionhandler.go:277] Sending handshake
+17:11:06.476896 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 4 1
+17:11:06.477598 info: [PROXY connectionhandler.go:138] : Writing handshake to MySQL client >>> [58 0 0 0 10 104 101 114 97 95 115 101 114 118 101 114 0 0 0 0 0 104 97 109 38 101 103 103 115 0 0 2 255 0 0 0 0 0 48 48 48 48 48 48 48 48 48 48 8 104 97 109 38 101 103 103 115 0 0 0 0 0]
+17:11:06.477632 info: [PROXY connectionhandler.go:279] Reading handshake response
+17:11:06.477769 info: [PROXY connectionhandler.go:290] Created coordinator in connection handler
+17:11:06.477888 verbose: [PROXY coordinator.go:78] Created coordinator
+17:11:06.477928 verbose: [PROXY connectionhandler.go:322] 127.0.0.1:56940 : Connection handler read <<<     DROP TABLE IF EXISTS test;
+17:11:06.477947 debug: [PROXY coordinator.go:115] idle timeout 600000 900000
+17:11:06.477965 verbose: [PROXY coordinator.go:122] Running coordinator
+17:11:06.477988 verbose: [PROXY coordinator.go:125] Got msg from client channel [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+17:11:06.478004 verbose: [PROXY coordinator.go:140] coordinator run got client request.
+17:11:06.478017 debug: [PROXY coordinator.go:142] coordinator run got client request.
+17:11:06.478027 verbose: [PROXY coordinator.go:146] About to enter handleMux.
+17:11:06.478041 debug: [PROXY coordinator.go:402] Mux handle command: 3
+17:11:06.478053 info: [PROXY coordinator.go:408] Request is MySQL packet [27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+17:11:06.478064 verbose: [PROXY coordinator.go:149] Not handled by handleMux
+17:11:06.478075 verbose: [PROXY coordinator.go:169] about to enter crd.dispatch with [0 27 0 0 0 3 68 82 79 80 32 84 65 66 76 69 32 73 70 32 69 88 73 83 84 83 32 116 101 115 116 59]
+17:11:06.478092 verbose: [PROXY coordinator.go:546] coordinator dispatchrequest: starting
+17:11:06.478104 info: [PROXY coordinator.go:561] worker is nil
+17:11:06.478113 info: [PROXY coordinator.go:582] This case!
+17:11:06.478123 info: [PROXY coordinator.go:587] shard ID problems...?
+17:11:06.478133 info: [PROXY coordinator.go:592] isNotInternal
+17:11:06.478192 info: [PROXY coordinator.go:593] &{0xc0000d2440 0xc0000d2400 0 0 0 10 3 3 hera-test 3 0 map[] 0xc0000b7470 [0xc0000ccf00 0xc000214000 0xc0000ccfa0]}
+17:11:06.478209 debug: [PROXY workerpool.go:230] Pool::GetWorker(start) type: 0 , instance: 0 , active:  3 healthy: 3
+17:11:06.478220 debug: [PROXY workerpool.go:575] poolsize (before get) 3  type  0 , instance: 0
+17:11:06.478231 debug: [PROXY workerpool.go:580] Pool::SelectWorker 46100 0 0
+17:11:06.478249 verbose: [PROXY statelog.go:181] publish state event 1
+17:11:06.478261 debug: [PROXY workerpool.go:234] Pool::GetWorker(end) type: 0 , instance: 0 , active:  2 healthy: 3
+17:11:06.478274 info: [PROXY coordinator.go:596] Got a worker!
+17:11:06.478283 info: [PROXY coordinator.go:645] Reached doRequest
+17:11:06.478278 verbose: [PROXY statelog.go:598] statelog updateconnectionstate 0 0 0 1 0
+17:11:06.478315 verbose: [PROXY coordinator.go:717] coordinator dorequeset: starting
+17:11:06.478328 debug: [PROXY workerclient.go:875] worker pid= 46100  changing status from 1 to 3
+17:11:06.478337 verbose: [PROXY statelog.go:181] publish state event 0
+17:11:06.478357 debug: [PROXY workerclient.go:858] workerclient (>>>worker pid = 46100 , rqID = 1  ):      DROP TABLE IF EXISTS test;
+17:11:06.478368 verbose: [PROXY statelog.go:647] statelog setworkerstate 0 0 0 0 3
+17:11:06.478372 debug: [PROXY coordinator.go:788] crd sqlhash = 0 sqltime= 2685
+17:11:06.478403 info: [WORKER 0 workerservice.go:261] Using mysql packager reader/writer

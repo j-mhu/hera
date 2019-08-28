@@ -758,6 +758,7 @@ func (worker *WorkerClient) doRead() {
 		ns, err := netstring.NewNetstring(worker.workerConn)
 		// If the packet is actually MySQLPacket, then try with MySQL functions.
 		if err == encoding.WRONGPACKET {
+			logger.GetLogger().Log(logger.Info, "Using mysql packet reader")
 			ns, err = mysqlpackets.NewMySQLPacket(worker.workerConn)
 		}
 		if err != nil {

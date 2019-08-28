@@ -83,6 +83,7 @@ func NewCoordinator(ctx context.Context, clientchannel <-chan *encoding.Packet, 
 	if conn.RemoteAddr().Network() == "pipe" {
 		coordinator.isInternal = true
 	}
+	coordinator.preppendCorrID = false
 	return coordinator
 }
 
@@ -377,7 +378,7 @@ func (crd *Coordinator) handleMux(request *encoding.Packet) (bool, error) {
 		// Generally speaking, a MySQL request will be one packet. Clients don't usually send over 16 MB.
 		// Multi-statements might be a different story.
 
-		crd.preppendCorrID = crd.worker == nil // i kept this line because i don't know what it does
+		// crd.preppendCorrID = crd.worker == nil // i kept this line because i don't know what it does
 
 		// The equivalent condition for composite netstrings is MAX_PACKET_SIZE length MySQL packets.
 		// But it usually isn't the case that the client will send more than one packet over with commands.

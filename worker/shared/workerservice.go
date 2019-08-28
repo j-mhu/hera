@@ -205,6 +205,7 @@ outerloop:
 		// process one netstring command at a time.
 		//
 		err = cmdprocessor.ProcessCmd(ns)
+		logger.GetLogger().Log(logger.Info, "Finished processing command")
 		if err != nil {
 			if logger.GetLogger().V(logger.Warning) {
 				msg := string(ns.Serialized)
@@ -216,9 +217,11 @@ outerloop:
 
 			break outerloop
 		}
+		logger.GetLogger().Log(logger.Info, "Is this error actually breaking??")
 		if cmdprocessor.WorkerScope.Child_shutdown_flag {
 			break
 		}
+		logger.GetLogger().Log(logger.Info, "We're still in the outerloop")
 	}
 
 
@@ -258,6 +261,7 @@ func readNextNetstring(sockMux *os.File) <-chan *encoding.Packet {
 				logger.GetLogger().Log(logger.Info, "Using mysql packager reader/writer")
 				reader = mspreader
 				ns, err = reader.ReadNext()
+
 				logger.GetLogger().Log(logger.Info, "Finished using mysql packager reader/writer")
 			}
 
