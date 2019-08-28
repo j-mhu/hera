@@ -17,11 +17,11 @@ Placing these two functions outside of `lib/coordinator.go` is due to this reaso
 All packets have the general form:
 ```go
 type Packet struct {
-	Cmd 		   int 		// command byte or opcode
-	Serialized   []byte		// the full packet including header
-	Payload      []byte		// payload only
-	Sqid		   int 		// sequence id
-	Length       int 		// length of the payload
+	Cmd           int 		// command byte or opcode
+	Serialized    []byte		// the full packet including header
+	Payload       []byte		// payload only
+	Sqid          int 		// sequence id
+	Length        int 		// length of the payload
 }
 ```
 
