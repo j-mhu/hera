@@ -114,7 +114,10 @@ do not consume input on a packet misread. See [workerclient.go: doRead()](https:
 
 As a result, there are a few places with very important TODOs.
 
-    * cmdprocessor.go
+* cmdprocessor.go
+     - provide support for unsupported command codes below 
+* mysqlpackets.go
+     - implement ReconstructColumnDefinition
 
 Currently supported commands:
 
