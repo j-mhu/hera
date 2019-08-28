@@ -115,7 +115,7 @@ As a result, there are a few places with very important TODOs.
 
     * cmdprocessor.go
 
-## Currently supported commands: ##
+Currently supported commands:
 
      - [ ] COM_SLEEP
 	- [x] COM_QUIT
