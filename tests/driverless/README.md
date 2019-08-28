@@ -6,8 +6,9 @@ to send messages across channels and conns internally. Any client that connects
 to Hera must connect through the JDBC-HERA driver in order to use Hera, which can
 be inconvenient.
 
-Contents include: (1) how to run MySQL queries against a driverless Hera,
-and (2) how to modify Hera source code to expand capabilities for MySQL clients.
+Contents include:
+1. how to run MySQL queries against a driverless Hera,
+2. how to modify Hera source code to expand capabilities for MySQL clients.
 
 ## How to run MySQL queries against a driverless Hera
 This folder contains a test file `main_test.go` which uses [go-sql-driver](https://godoc.org/github.com/go-sql-driver/mysql)
