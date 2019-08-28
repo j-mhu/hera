@@ -1,25 +1,60 @@
 # Removing the JDBC-HERA Driver
 
-## Implications
+It would be of interest to make Hera compatible with MySQL protocol.
+Hera is already built on netstring encoding, and uses netstring exclusively
+to send messages across channels and conns internally. Any client that connects
+to Hera must connect through the JDBC-HERA driver in order to use Hera, which can
+be inconvenient.
+
+Contents include: (1) how to run MySQL queries against a driverless Hera,
+and (2) how to modify Hera source code to expand capabilities for MySQL clients.
 
 ## How to run MySQL queries against a driverless Hera
+This folder contains a test file `main_test.go` which uses [go-sql-driver](https://godoc.org/github.com/go-sql-driver/mysql)
+to run SQL queries against the mock server in [`tests/mocksqlsrv`](https://github.com/paypal/hera/tree/master/tests/mocksqlsrv).
 
+You will need to have the mock server running. Instructions are in the README
+for that folder.
+
+From this directory,
+
+```
+chmod +x herasql/setup.sh
+./herasql/setup.sh
+```
+
+In a separate terminal, same directory, run `go test`. Bask in the success of
+the `PASS`.
+
+> `setup.sh` sets environmental variables necessary to run Hera. It also installs
+the binaries for mysqlworker and mux, and then runs the `driverless.go` file,
+which sets up a Hera server without the JDBC-driver in front of it. You can modify
+`setup.sh` do any pre-server startup tasks, or to change the port number.
+
+> Please make sure that the `TWO_TASK` and `TWO_TASK_READ` variables have the same port
+number set as the mock server, if you're running on localhost.
 
 ## Major modifications to Hera source code
 
-1. **HANDSHAKE PACKET AND HANDSHAKE RESPONSE**
+1. **Handshake**
 
-In connectionhandler.go, two functions were added. These are `sendHandshake()` and `readHandshakeResponse()`.
+In `lib/connectionhandler.go`, two functions were added. These are
+`sendHandshake()` and `readHandshakeResponse()`.
 
 - `sendHandshake` sends a HandshakeV10 through the client’s connection.
-- `readHandshakeResponse()` therefore reads a HandshakeResponseV41 from the client’s connection. readHandshakeResponse() also sends an OK Packet to the client to indicate that the client can enter the command phase.
+- `readHandshakeResponse()` therefore reads a HandshakeResponseV41 from the
+client’s connection.
+     - `readHandshakeResponse()` also sends an OK Packet to the client to
+     indicate that the client can enter the command phase.
 
-Placing these two functions outside of `lib/coordinator.go` is due to this reason. Coordinator code should just deal with the command phase for MySQL. Authentication and connection should happen in the connection handler.
+This is why these two functions are outside of `lib/coordinator.go`.
+Coordinator code should just deal with the command phase for MySQL,
+and authentication and connection should happen in the connection handler.
 
 
-2. **REVISIONS TO NETSTRING ENCODING, MYSQLPACKET ADDITION.**
+2. **Changes to netstring encoding and adding mysqlpacket encoding.**
 
-All packets have the general form:
+All packets now have the general form:
 ```go
 type Packet struct {
 	Cmd           int 		// command byte or opcode
@@ -30,16 +65,20 @@ type Packet struct {
 }
 ```
 
-This change only applies to packets communicated INTERNALLY in Hera through channels.
+An incoming netstring or mysqlpacket will be packaged into a packet, which
+is passed around in channels and conns in Hera.
 
-Original:
-Netstring general format Serialized: 		LENGTH + PAYLOAD
-MySQL packet general format Serialized: 	HEADER + PAYLOAD
+A change was made to netstring encoding. Here are the original encodings:
 
-Modified:
+Netstring general format Serialized: 		LENGTH:PAYLOAD
+MySQL packet general format Serialized: 	HEADER PAYLOAD
 
-Netstring Serialized:		 INDICATOR + LENGTH + PAYLOAD
-MySQL Serialized:			 INDICATOR + HEADER + PAYLOAD
+Now, they are modified to look like this:
+
+ENCODING | INDICATOR | PREPENDED | PAYLOAD
+--- | --- | --- | ---
+netstring | **0x01** | LENGTH | ...
+mysqlpacket | **0x00** | HEADER | ...
 
 where INDICATOR is the byte 0x00 for MySQL and 0x01 for Netstring.
 
@@ -59,10 +98,11 @@ If the err returned from NewNetstring(…) is encoding.WRONGPACKET, then we shou
 
 
 3. Adding a MySQL case for all worker request handling code.
-4. Places with important TODOS
-    * cmdprocessor.go.       all of processCmd for any command aside from `COM_QUERY`
 
-    Currently supported commands:
+4. Places with important TODOS
+    * cmdprocessor.go.       
+
+## Currently supported commands:
      - [ ] COM_SLEEP
 	- [x] COM_QUIT
 	- [ ] COM_INIT_DB
