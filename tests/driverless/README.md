@@ -36,6 +36,8 @@ which sets up a Hera server without the JDBC-driver in front of it. You can modi
 > Please make sure that the `TWO_TASK` and `TWO_TASK_READ` variables have the same port
 number set as the mock server, if you're running on localhost.
 
+> Otherwise, if you want to change the connected database to a real MySQL server, change the `TWO_TASK` and `TWO_TASK_READ` variables to the appropriate DSN.
+
 ## Major modifications to Hera source code
 
 Wherever I have modified code, I have left explanations and comments to explain
