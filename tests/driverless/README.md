@@ -117,8 +117,9 @@ As a result, there are a few places with very important TODOs.
 
 * cmdprocessor.go
      - Provide support for unsupported command codes below.
-     - There are specific elements that need to be added to the command processor to
-     keep track of statements. This is for prepared statements.  
+     - There are specific fields that need to be added to the command processor struct to
+     keep track of statements. In my code, currently a map with int keys and sql.Stmt values
+     is used. This is for prepared statements.  
      - Not all of these commands are relevant or should be handled exactly
      as if Hera were a MySQL DBMS server.
           - For example, COM_QUIT is unnecessary
@@ -135,7 +136,7 @@ As a result, there are a few places with very important TODOs.
      - Implement ResultsetRow
 
 * connectionhandler.go, server.go, config.go
-     - Set configuration to use MySQL vs OCC wire protocol. This currently needs to be done manually. 
+     - Set configuration to use MySQL vs OCC wire protocol. This currently needs to be done manually.
 
 Currently supported commands:
 
