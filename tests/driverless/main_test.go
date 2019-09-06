@@ -10,11 +10,11 @@ import "database/sql"
 /* This sends very simple queries to Hera server that don't return
 * any result sets.
 */
-func TestInsert(t *testing.T) {
+func TestExec(t *testing.T) {
 
      os.Symlink(os.Getenv("GOPATH")+"/bin/mysqlworker", "mysqlworker")
 
-     t.Log("Start TestInsert+++++++++++++")
+     t.Log("Start TestExec+++++++++++++")
      DSN := "tcp(0.0.0.0:3333)/"
      // Open database connection
      t.Log("Opening up database connection")
@@ -42,5 +42,5 @@ func TestInsert(t *testing.T) {
           t.Log(err.Error())
      }
      t.Log("Rows affected = ", ra)
-     t.Log("End TestInsert+++++++++++++++")
+     t.Log("End TestExec+++++++++++++++")
 }

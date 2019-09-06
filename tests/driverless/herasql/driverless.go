@@ -127,7 +127,7 @@ func main() {
 		}
 		time.Sleep(time.Millisecond * 100)
 	}
-	
+
 	fmt.Println("Creating new tcplistener")
 	lsn := lib.NewTCPListener(fmt.Sprintf("0.0.0.0:%d", 3333))
 
@@ -142,10 +142,10 @@ func main() {
 	}
 
 	lib.InitRacMaint(*namePtr)
-	
+
 	fmt.Println("Creating new mux server")
 	srv := lib.NewServer(lsn, lib.HandleConnection)
-	
+
 	fmt.Println("Running server")
 	srv.Run()
 }
