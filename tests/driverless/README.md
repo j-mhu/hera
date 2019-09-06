@@ -124,9 +124,8 @@ As a result, there are a few places with very important TODOs.
      as if Hera were a MySQL DBMS server.
           - For example, COM_QUIT is unnecessary
      since workers return to the pool after the dispatched request is finished.
-          - Similarly, COM_CLOSE, should not shut down a worker's connection
-     to a database, it should just stop the request and sent the worker by to
-     the idle connection pool.
+          - Similarly, COM_CLOSE should not shut down a worker's connection
+     to a database.
      - Fix segfaulting when client closes the connection...
      - Hera records the state of transactions and always updates the state variables for OCC commands. The same needs to be done for MySQL commands, but there may be subtle differences.
           - Code for `COM_QUERY` is complete and could be used as an example.
