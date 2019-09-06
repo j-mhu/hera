@@ -13,9 +13,10 @@ Contents include:
 ## How to run MySQL queries against a driverless Hera
 This folder contains a test file `main_test.go` which uses [go-sql-driver](https://godoc.org/github.com/go-sql-driver/mysql)
 to run SQL queries against the mock server in [`tests/mocksqlsrv`](https://github.com/paypal/hera/tree/master/tests/mocksqlsrv).
+You can modify `main_test.go` to run whatever queries you want.
 
-You will need to have the mock server running. Instructions are in the README
-for that folder.
+You will need to have the mock server running before running the test.
+Instructions to start up the server are in the README for that folder.
 
 From this directory,
 
@@ -52,8 +53,10 @@ This is why these two functions are outside of `lib/coordinator.go`.
 Coordinator code should just deal with the command phase for MySQL,
 and authentication and connection should happen in the connection handler.
 
-
 #### 2. **Changes to netstring encoding and adding mysqlpacket encoding.** ####
+
+(Side note: Recommendation to keep netstring encoding as original, and
+     create a separate port to receive MySQL connections.)
 
 All packets now have the general form:
 ```go
@@ -110,24 +113,41 @@ do not consume input on a packet misread. See [workerclient.go: doRead()](https:
 
 #### 3. Adding a MySQL case for all worker request handling code. ####
 
-(editing)
+There are some differences in how SQL queries are processed and handled
+between OCC wire protocol and general MySQL packet reading and handling.
 
 As a result, there are a few places with very important TODOs.
 
 * cmdprocessor.go
-     - provide support for unsupported command codes below 
+     - provide support for unsupported command codes below
+     - There are specific elements that need to be added to the command processor,
+     such as fields to keep track of statements, number of parameters, number
+     of columns, and the like. This is specific for the control flow between
+     COM_STMT_PREPARE and COM_STMT_EXECUTE and COM_STMT_FETCH and
+     COM_STMT_SEND_LONG_DATA.
+     - Not all of these commands are relevant or should be handled exactly
+     as if Hera were a MySQL DBMS server. For example, COM_QUIT is unnecessary
+     since workers return to the pool after the dispatched request is finished.
+     Similarly, COM_CLOSE, should not shut down a worker's connection
+     to a database, it should just stop the request and sent the worker by to
+     the idle connection pool.
+     - Fix segfaulting when client closes the connection. Should be similar
+     to how the Hera server handles closed connections on the Hera-JDBC driver's
+     side.
 * mysqlpackets.go
      - implement ReconstructColumnDefinition
+     - implement BinaryProtocolResultSet
+     - implement ResultsetRow
 
 Currently supported commands:
 
 - [ ] COM_SLEEP
 - [x] COM_QUIT
-- [ ] COM_INIT_DB
+- [x] COM_INIT_DB
 - [x] COM_QUERY
 - [ ] COM_FIELD_LIST
-- [ ] COM_CREATE_DB 		
-- [ ] COM_DROP_DB
+- [x] COM_CREATE_DB 		
+- [x] COM_DROP_DB
 - [ ] COM_REFRESH
 - [ ] COM_SHUTDOWN
 - [ ] COM_STATISTICS
@@ -146,7 +166,7 @@ Currently supported commands:
 - [ ] COM_STMT_PREPARE
 - [ ] COM_STMT_EXECUTE
 - [ ] COM_STMT_SEND_LONG_DATA
-- [ ] COM_STMT_CLOSE 		
+- [x] COM_STMT_CLOSE 		
 - [ ] COM_STMT_RESET
 - [ ] COM_SET_OPTION
 - [ ] COM_STMT_FETCH
