@@ -192,6 +192,44 @@ Currently supported commands:
 - [ ] COM_RESET_CONNECTION
 - [ ] COM_DAEMON
 
+
+#### 4. Works in progress. ####
+Our biggest priority is supporting prepared statements, because the majority
+of queries people are interested in will return result rows. For example,
+SELECTs. COM_QUERY works well enough, but a lot of SQL APIs automatically
+use COM_STMT_PREPARE under the hood for optimization and security.
+
+- This is because prepared statements are parsed once and cached so that they
+don't need to be hard parsed a second time by the database.
+- Also, binding the variables into the query can foil SQL injections.
+
+The steps that need to be taken are mostly in `cmdprocessor.go` and `mysqlpackets.go`.
+
+The most relevant pages are on [`COM_STMT_PREPARE`](https://dev.mysql.com/doc/dev/mysql-server/8.0.12/page_protocol_com_stmt_prepare.html),
+[`COM_STMT_EXECUTE`](https://dev.mysql.com/doc/dev/mysql-server/8.0.12/page_protocol_com_stmt_execute.html),
+[`COM_STMT_PREPARE Response`](https://dev.mysql.com/doc/internals/en/com-stmt-prepare-response.html#packet-COM_STMT_PREPARE_OK),
+[`Binary Protocol Result Set`](https://dev.mysql.com/doc/internals/en/binary-protocol-resultset.html),
+and [`Protocol::ColumnDefinition`](https://dev.mysql.com/doc/internals/en/com-query-response.html#packet-Protocol::ColumnDefinition).
+
+`mysqlpackets.go` has some rudimentary `ColumnDefinition` reconstruction code, and
+most of `COM_STMT_PREPARE_OK`. `cmdprocessor.go` has most of the logic written
+or commented for `COM_STMT_PREPARE`.
+
+There was an attempt to write code for result sets and logic for `COM_STMT_EXECUTE`
+in both `cmdprocessor.go` and `mysqlpackets.go`. The comments are there even if
+there is currently no implementation.
+
+Other commands are lower priority.
+
+##### a. Issues with prepared statements. #####
+- We must reconstruct column definition packets to send when the client
+issues a COM_STMT_PREPARE command. We can obtain information about a schema's
+column from ColumnTypes. However, because we use database/sql,
+ColumnTypes are only accessible from sql.Rows. However, Prepare returns a sql.Stmt,
+not sql.Rows. sql.Rows are only returned from Exec or Query.
+     - In other words, the problem is that we need to execute the query
+     when the client requests for it to be prepared.
+
 ## Moving forward for a more intelligent Hera. ##
 Recommendations and suggestions from Hera/OCC team and myself:
 
