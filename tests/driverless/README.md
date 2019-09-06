@@ -85,9 +85,8 @@ netstring | **0x01** | LENGTH | ...
 mysqlpacket | **0x00** | HEADER | ...
 
 where INDICATOR is a byte that differentiates between netstring and mysqlpacket.
-After a mysqlpacket/netstring enters Hera through the client's conn,
-it is wrapped in this encoding and packaged into a Packet. All
-Packets are expected to have an indicator byte.
+After a mysqlpacket or netstring enters Hera through the client's conn,
+it is wrapped in this encoding and packaged into a Packet. All `Packet`s are expected to have an indicator byte.
 
 For nested netstrings, the 0x01 byte is deep-nested as well. This means that each netstring, at every nesting depth, inside the nested netstring has an indicator byte. An example with netstring depth 2 and 3 strings would look like this.
 ```
@@ -103,8 +102,8 @@ Both are defined in [`utility/encoding`](https://github.com/j-mhu/hera/tree/mast
 
 An example of its use is this:
 
-If the err returned from NewNetstring(…) is encoding.WRONGPACKET, then we should try to read the bytes again using NewMySQLPacket(…).
-NewNetstring and NewMySQLPacket were modified to read from a buffer, so that we
+If the err returned from `NewNetstring(…)` is `encoding.WRONGPACKET`, then we should try to read the bytes again using `NewMySQLPacket(…)`.
+`NewNetstring` and `NewMySQLPacket` were modified to read from a buffer, so that we
 do not consume input on a packet misread. See [workerclient.go: doRead()](https://github.com/j-mhu/hera/tree/master/lib/workerclient.go) for an example.
 
 
@@ -122,9 +121,9 @@ As a result, there are a few places with very important TODOs.
      is used. This is for prepared statements.  
      - Not all of these commands are relevant or should be handled exactly
      as if Hera were a MySQL DBMS server.
-          - For example, COM_QUIT is unnecessary
+          - For example, `COM_QUIT` is unnecessary
      since workers return to the pool after the dispatched request is finished.
-          - Similarly, COM_CLOSE should not shut down a worker's connection
+          - Similarly, `COM_CLOSE` should not shut down a worker's connection
      to a database.
      - Fix segfaulting when client closes the connection...
      - Hera records the state of transactions and always updates the state variables for OCC commands. The same needs to be done for MySQL commands, but there may be subtle differences.
