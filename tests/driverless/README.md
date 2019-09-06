@@ -116,25 +116,26 @@ between OCC wire protocol and general MySQL packet reading and handling.
 As a result, there are a few places with very important TODOs.
 
 * cmdprocessor.go
-     - provide support for unsupported command codes below
-     - There are specific elements that need to be added to the command processor,
-     such as fields to keep track of statements, number of parameters, number
-     of columns, and the like. This is specific for the control flow between
-     COM_STMT_PREPARE and COM_STMT_EXECUTE and COM_STMT_FETCH and
-     COM_STMT_SEND_LONG_DATA.
+     - Provide support for unsupported command codes below.
+     - There are specific elements that need to be added to the command processor to
+     keep track of statements. This is for prepared statements.  
      - Not all of these commands are relevant or should be handled exactly
-     as if Hera were a MySQL DBMS server. For example, COM_QUIT is unnecessary
+     as if Hera were a MySQL DBMS server.
+          - For example, COM_QUIT is unnecessary
      since workers return to the pool after the dispatched request is finished.
-     Similarly, COM_CLOSE, should not shut down a worker's connection
+          - Similarly, COM_CLOSE, should not shut down a worker's connection
      to a database, it should just stop the request and sent the worker by to
      the idle connection pool.
-     - Fix segfaulting when client closes the connection. Should be similar
-     to how the Hera server handles closed connections on the Hera-JDBC driver's
-     side.
+     - Fix segfaulting when client closes the connection...
+     - Hera records the state of transactions and always updates the state variables for OCC commands. The same needs to be done for MySQL commands, but there may be subtle differences.
+          - Code for `COM_QUERY` is complete and could be used as an example.
 * mysqlpackets.go
-     - implement ReconstructColumnDefinition
-     - implement BinaryProtocolResultSet
-     - implement ResultsetRow
+     - Implement ReconstructColumnDefinition
+     - Implement BinaryProtocolResultSet
+     - Implement ResultsetRow
+
+* connectionhandler.go, server.go, config.go
+     - Set configuration to use MySQL vs OCC wire protocol. This currently needs to be done manually. 
 
 Currently supported commands:
 
@@ -170,7 +171,7 @@ Currently supported commands:
 - [ ] COM_RESET_CONNECTION
 - [ ] COM_DAEMON
 
-#### 4. Moving forward for a more intelligent Hera. ####
+## Moving forward for a more intelligent Hera. ##
 Recommendations and suggestions from Hera/OCC team and myself:
 
 - Hera should be able to differentiate MySQL clients by packet, port, or some other method.
