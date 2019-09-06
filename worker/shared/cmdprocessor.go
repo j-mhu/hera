@@ -126,8 +126,12 @@ type CmdProcessor struct {
 	//
 	// indexed by stmt_id, stores all prepared statements sent by MySQL client
 	//
-	stmts map[int]string
-	currsid int 			// current available stmt.id
+
+	stmts map[int]*sql.Stmt 				// each stmt is given a stmtid to identify it by. this map contains the mappings
+	currsid int // current available stmt.id
+
+	stmtParams map[*sql.Stmt]int			// each stmt has a numParams required to execute or query the db. this map records the number for each stmt
+
 	numColumns int				// number of columns specified in query
 	packager *mysqlpackets.Packager // in charge of writing packets
 	//
@@ -184,7 +188,7 @@ func NewCmdProcessor(adapter CmdProcessorAdapter, sockMux *os.File) *CmdProcesso
 	if cs == "" {
 		cs = "CLIENT_SESSION"
 	}
-	stmts := make(map[int]string)
+	stmts := make(map[int]*sql.Stmt)
 
 	return &CmdProcessor{adapter: adapter, SocketOut: sockMux, calSessionTxnName: cs, stmts:stmts, heartbeat: true}
 }
@@ -286,13 +290,256 @@ func (cp *CmdProcessor) ProcessCmd(ns *encoding.Packet) error {
 
 
 				}
-			case common.COM_CREATE_DB:
-			case common.COM_DROP_DB:
 			case common.COM_STMT_PREPARE:
+				// TODO: The server always sends back a COM_STMT_PREPARE_RESPONSE to a prepared stmt command.
+				// This requires Protocol::ColumnDefinition packets, which as of right now have not been implemented.
+				//
+
+				// WORK IN PROGRESS.
+				cp.queryScope = QueryScopeType{}
+				cp.lastErr = nil
+				cp.sqlHash = 0
+				cp.heartbeat = false // for hb
+
+				sqlQuery := cp.preprocess(ns)
+
+				if logger.GetLogger().V(logger.Verbose) {
+					logger.GetLogger().Log(logger.Verbose, "Preparing:", sqlQuery)
+				}
+
+				//
+				// start a new transaction for the first dml request.
+				//
+				var startTrans bool
+				cp.hasResult, startTrans = cp.sqlParser.Parse(sqlQuery)
+				if cp.calSessionTxn == nil {
+					cp.calSessionTxn = cal.NewCalTransaction(cal.TransTypeAPI, cp.calSessionTxnName, cal.TransOK, "", cal.DefaultTGName)
+				}
+				cp.sqlHash = utility.GetSQLHash(string(ns.Payload))
+				cp.queryScope.SqlHash = fmt.Sprintf("%d", cp.sqlHash)
+				cp.calExecTxn = cal.NewCalTransaction(cal.TransTypeExec, fmt.Sprintf("%d", cp.sqlHash), cal.TransOK, "", cal.DefaultTGName)
+				if (cp.tx == nil) && (startTrans) {
+					cp.tx, err = cp.db.Begin()
+				}
+
+				if cp.tx != nil {
+					cp.stmt, err = cp.tx.Prepare(sqlQuery)
+				} else {
+					cp.stmt, err = cp.db.Prepare(sqlQuery)
+				}
+				cp.stmts[cp.currsid] = cp.stmt
+				cp.stmtParams[cp.stmt] = len(cp.bindVars)
+
+
+				if err != nil {
+					cp.adapter.ProcessError(err, &cp.WorkerScope, &cp.queryScope)
+					cp.calExecErr("Prepare", err.Error())
+					cp.lastErr = err
+					err = nil
+				}
+
+				// This is the part we need to send out a COM_STMT_PREPARE_OK packet. Which requires
+				// column definition packets, which... means we need to figure out how to reconstruct
+				// this guy.
+
+				// Write the COM_STMT_PREPARE_OK prologue packets.
+				prepareOK := mysqlpackets.NewMySQLPacketFrom(ns.Sqid + 1, mysqlpackets.StmtPrepareOK(cp.currsid, cp.numColumns, len(cp.bindVars)))
+				// write prepareOK to conn
+				cp.eor(common.EORFree, prepareOK)
+
+				// Write column definitions to conn for each parameter and each column.
+				// BIG PROBLEM: ColumnTypes can only be obtained from the go-sql-driver AFTER executing the query.
+				for i := 0; i < len(cp.bindVars); i++ {
+					// TODO: Send column definition for each parameter.
+					// mysqlpackets.ColumnDefinition(...) in utility/encoding/mysqlpackets
+					// cp.eor(...)
+				}
+
+				if len(cp.bindVars) > 0 {
+					// TODO: Send EOF packet.
+					// mysqlpackets.EOFPacket(warnings, status_flags int, capabilities uint32)
+				}
+
+				for i := 0; i < cp.numColumns; i++ {
+					// TODO: Send column definition for each column.
+					// mysqlpackets.ColumnDefinition(...) in utility/encoding/mysqlpackets
+					// cp.eor(...)
+				}
+
+				if cp.numColumns > 0 {
+					// TODO: Send EOF packet.
+					// mysqlpackets.EOFPacket(warnings, status_flags int, capabilities uint32)
+				}
+
+				cp.rows = nil
+				cp.result = nil
+				cp.bindOuts = cp.bindOuts[:0]
+				cp.numBindOuts = 0
+				cp.currsid++
+
 			case common.COM_STMT_EXECUTE:
+				// First read in the stmt-id and obtain it from the map of stmt-id to stmts.
+				pos := 1 // start at 1 to skip the command byte
+				stmtid := mysqlpackets.ReadFixedLenInt(ns.Payload, mysqlpackets.INT4, &pos)
+				cp.stmt = cp.stmts[stmtid]
+
+				// get numParams from stmtParams
+				numParams := cp.stmtParams[cp.stmt]
+				nullBitmap := []byte{}
+				paramTypes := []byte{}
+				values := []byte{}
+				var newParams bool
+				if numParams > 0 {
+					// get null_bitmap from com stmt execute packet
+					nullBitmap = mysqlpackets.ReadString(ns.Payload, mysqlpackets.VARSTR, &pos, (numParams + 7) / 8)
+					// also get the new_params_bind_flag which is 1 fixed len integer
+					if mysqlpackets.ReadFixedLenInt(ns.Payload, mysqlpackets.INT1, &pos) == 1 {
+						newParams = true
+					}
+				}
+				if newParams {
+					// get parameter types
+					paramTypes = mysqlpackets.ReadString(ns.Payload, mysqlpackets.VARSTR, &pos, numParams * 2)
+					// also get value of each parameter
+					values = mysqlpackets.ReadString(ns.Payload, mysqlpackets.EOFSTR, &pos, 0)
+				}
+
+				// Then use either Query or Exec to obtain results and/or rows.
+				if cp.stmt != nil {
+
+					if !newParams {
+						//
+						// @TODO: do we keep a flag for curent statement.
+						//
+						if cp.hasResult {
+							cp.rows, err = cp.stmt.Query()
+						} else {
+							cp.result, err = cp.stmt.Exec()
+						}
+					} else {
+						// Get the new bound parameters and send them in as arguments.
+						if cp.hasResult {
+							cp.rows, err = cp.stmt.Query(values)
+						} else {
+							cp.result, err = cp.stmt.Exec(values)
+						}
+					}
+					if err != nil {
+						cp.adapter.ProcessError(err, &cp.WorkerScope, &cp.queryScope)
+						cp.calExecErr("RC", err.Error())
+						if logger.GetLogger().V(logger.Warning) {
+							logger.GetLogger().Log(logger.Warning, "Execute error:", err.Error())
+						}
+						if cp.inTrans {
+							cp.eor(common.EORInTransaction, netstring.NewNetstringFrom(common.RcSQLError, []byte(err.Error())))
+						} else {
+							cp.eor(common.EORFree, netstring.NewNetstringFrom(common.RcSQLError, []byte(err.Error())))
+						}
+						cp.lastErr = err
+						err = nil
+						break
+					}
+					if cp.tx != nil {
+						cp.inTrans = true
+					}
+
+					cp.calExecTxn.Completed()
+					cp.calExecTxn = nil
+
+				}
+
+				// Then use rows.Scan to obtain the column values for a returned result row.
+
+
+				// Package into COM_STMT_EXECUTE response with resultsets.
+
+				// Send to conn
+
 			case common.COM_STMT_FETCH:
+				// Fetches from an existing resultset.... dude
+				pos := 1 // Start past the command byte
+				stmtid := mysqlpackets.ReadFixedLenInt(ns.Payload, mysqlpackets.INT4, &pos)
+				numRows := mysqlpackets.ReadFixedLenInt(ns.Payload, mysqlpackets.INT4, &pos)
+
+				// Fetch from existing resultset keyed in to an already executed statement
+
+			case common.COM_CREATE_DB, common.COM_DROP_DB, common.COM_INIT_DB:
+				pos := 1
+				schema_name := mysqlpackets.ReadString(ns.Payload, mysqlpackets.EOFSTR, &pos, 0)
+				// Send this directly to the db as a query.
+				var query string
+				if ns.Cmd == common.COM_CREATE_DB {
+					query = fmt.Sprintf("CREATE DATABASE %s;", schema_name)
+				} else if ns.Cmd == common.COM_DROP_DB {
+					query = fmt.Sprintf("DROP DATABASE IF EXISTS %s;", schema_name)
+				} else {
+					query = fmt.Sprintf("USE %s;", schema_name)
+				}
+				cp.result, err = cp.db.Exec(query)
+				if err != nil {
+					logger.GetLogger().Log(logger.Debug, common.SQLcmds[ns.Cmd], "failure to act on DB: ", err.Error())
+					// Construct ERRPACKET.
+					np := mysqlpackets.NewMySQLPacketFrom(ns.Sqid + 1, mysqlpackets.ERRPacket(0/* */, "0"/* */ ))
+					logger.GetLogger().Log(logger.Debug, "Wrote with serialized, sqid", np.Serialized, np.Sqid)
+					// Send ERR packet.
+					err = cp.eor(common.EORFree, np)
+				}
+				if cp.result != nil {
+					logger.GetLogger().Log(logger.Debug, "cp.result != nil case")
+					var rowcnt int64
+					rowcnt, err = cp.result.RowsAffected()
+					logger.GetLogger().Log(logger.Debug, "Got RowsAffected")
+					if err != nil {
+						if logger.GetLogger().V(logger.Debug) {
+							logger.GetLogger().Log(logger.Debug, "RowsAffected():", err.Error())
+						}
+						cp.calExecErr("RowsAffected", err.Error())
+						break
+					}
+					if logger.GetLogger().V(logger.Debug) {
+						logger.GetLogger().Log(logger.Debug, "exe row", rowcnt)
+					}
+
+					// Get the last insert id from the sql.Result
+					var liid int64
+					liid, err = cp.result.LastInsertId()
+					logger.GetLogger().Log(logger.Debug, "Got LastInsertID")
+					if err != nil {
+						if logger.GetLogger().V(logger.Debug) {
+							logger.GetLogger().Log(logger.Debug, "LastInsertId():", err.Error())
+						}
+						cp.calExecErr("LastInsertId", err.Error())
+						break
+					}
+					if logger.GetLogger().V(logger.Debug) {
+						logger.GetLogger().Log(logger.Debug, "exe LastInsertId", rowcnt)
+					}
+					logger.GetLogger().Log(logger.Debug, "Making new SQL packet, prev sqid", ns.Sqid)
+					// Set an OK packet reporting the number of rows affected and last insert id. I don't know what to put for the message though...
+					np := mysqlpackets.NewMySQLPacketFrom(ns.Sqid + 1, mysqlpackets.OKPacket(int(rowcnt), int(liid), uint32(mysqlpackets.CLIENT_PROTOCOL_41),"This packet has to be over 7 bytes."))
+					logger.GetLogger().Log(logger.Debug, "Wrote with serialized, sqid", np.Serialized, np.Sqid)
+					// Send OK packet.
+					err = cp.eor(common.EORFree, np)
+				}
+
 			case common.COM_STMT_CLOSE:
+				// Read in the stmtid from the pakcet
+				pos := 1
+				stmtid := mysqlpackets.ReadFixedLenInt(ns.Payload, mysqlpackets.INT4, &pos)
+				// Close the statement
+				err := cp.stmts[stmtid].Close()
+				if err != nil {
+					// Other cal logging and eor stuff
+					logger.GetLogger().Log(logger.Warning, "Tried to close statement but got", err.Error())
+				}
+				// Also remove the current stmtid - sttmt mapping from the stmts map
+				delete(cp.stmts, stmtid)
+
+				// No response is sent back to the client.
+
 			case common.COM_STMT_SEND_LONG_DATA:
+				// pos := 1
+				// stmtid := mysqlpackets.ReadFixedLenInt(ns.Payload, mysqlpackets.INT4, &pos)
 			}
 	} else {
 outloop:
@@ -955,7 +1202,7 @@ func (cp *CmdProcessor) preprocess(packet *encoding.Packet) string {
 			cp.numColumns = len(cp.bindOuts)
 			cp.numBindOuts = cp.numColumns
 		}
-		cp.stmts[cp.currsid] = query
+		// cp.stmts[cp.currsid] = query
 		logger.GetLogger().Log(logger.Debug, "WHICH PART FAILED")
 		return query
 	}

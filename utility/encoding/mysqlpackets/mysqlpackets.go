@@ -21,6 +21,7 @@ package mysqlpackets
 
 import (
 	"bytes"
+	"database/sql"
 	"errors"
 	"fmt"
 	"github.com/paypal/hera/utility/encoding"
@@ -94,6 +95,35 @@ const (
 	CLIENT_OPTIONAL_RESULTSET_METADATA     int = 1 << 25
 	CLIENT_REMEMBER_OPTIONS	              int = 1 << 31
 )
+
+var EnumFieldTypes = map[string]int{
+	"DECIMAL": 			0x00, // MYSQL_TYPE_DECIMAL
+	"TINYINT": 			0x01, // MYSQL_TYPE_TINY
+	"SMALLINT": 		0x02, // MYSQL_TYPE_SHORT
+	"INT": 				0x03, // MYSQL_TYPE_LONG
+	"FLOAT": 			0x04, // MYSQL_TYPE_FLOAT
+	"DOUBLE": 			0x05, // MYSQL_TYPE_DOUBLE
+	"NULL": 			0x06, // MYSQL_TYPE_NULL
+	"TIMESTAMP": 		0x07, // MYSQL_TYPE_TIMESTAMP
+	"BIGINT": 			0x08, // MYSQL_TYPE_LONGLONG
+	"MEDIUMINT": 		0x09, // MYSQL_TYPE_INT24
+	"DATE": 			0x0a, // MYSQL_TYPE_DATE
+	"TIME": 			0x0b, // MYSQL_TYPE_TIME
+	"DATETIME": 		0x0c, // MYSQL_TYPE_DATETIME
+	"YEAR": 			0x0d, // MYSQL_TYPE_YEAR
+	"NEWDATE":			0x0e, // MYSQL_TYPE_NEWDATE
+	"VARCHAR":			0x0f, // MYSQL_TYPE_VARCHAR
+	"BIT":				0x10, // MYSQL_TYPE_BIT
+	"NEWDECIMAL":		0xf6, // MYSQL_TYPE_NEWDECIMAL, likely to never get called because the type is mapped to Decimal in go-sql-driver
+	"ENUM": 			0xf7, // MYSQL_TYPE_ENUM
+	"SET": 				0xf8, // MYSQL_TYPE_SET
+	"TINYBLOB": 		0xf9, // MYSQL_TYPE_TINY_BLOB
+	"MEDIUMBLOB": 		0xfa, // MYSQL_TYPE_MEDIUM_BLOB
+	"LONGBLOB":			0xfb, // MYSQL_TYPE_LONG_BLOB
+	"BLOB": 			0xfc, // MYSQL_TYPE_BLOB
+	"VAR_STRING":		0xfd, // MYSQL_TYPE_VAR_STRING, likely to never get called because the type is mapped to VARCHAR in go-sql-driver
+	"CHAR":				0xfe, // MYSQL_TYPE_STRING
+	"GEOMETRY":			0xff} // MYSQL_TYPE_GEOMETRY
 
 type Packager struct {
 	reader 		io.Reader
@@ -335,23 +365,158 @@ func (p *Packager) ReadNext() (ns *encoding.Packet, err error) {
 	p.sqid = pkt.Sqid
 	return pkt, err
 }
-//
-//func (p *Packager) COM_STMT_RESPONSE_OK() ([]*encoding.Packet, err error) {
-//	// TODO: COM_STMT_RESPONSE_OK is the sequence of packets that is sent back to the client after COM_STMT_PREPARE
-//}
+
+// Length of length encoded string is length of the lenenc and length of the string
+func calculateLenEncStr(s string) int {
+	return calculateLenEnc(uint64(len(s))) + len(s)
+}
 
 // Result sets function
 // https://dev.mysql.com/doc/dev/mysql-server/8.0.12/page_protocol_com_query_response_text_resultset_column_definition.html
+// This is specifically for reconstructing ColumnDefinition41 packets.
+func (p *Packager) ColumnDefinition(colName string, colType *sql.ColumnType) []byte {
+	// TODO: Reconstruct column definition packet... Unsure how this will be done because what is returned from
+	//  a sql.Prepare(...) is a sql.Stmt. The sql.Rows is where we get sql.ColumnTypes from, which happens AFTER
+	//  we execute the query. But sql.Rows also does not expose all of the necessary fields to reconstruct the
+	//  original ColumnDefinition packet.
+
+	// Somehow, we will gather information from the sql.ColumnType or put in filler garbage information for now.
+	ctl := "def"
+	schema := "temp-schema"
+	table := "temp-table"
+	org_table := "temp-table"
+	name := colName
+	org_name := colType.Name()
+	totalLen := calculateLenEncStr("def") + calculateLenEncStr(schema) + calculateLenEncStr(table) + calculateLenEncStr(org_table) +
+		calculateLenEncStr(org_name) + calculateLenEnc(uint64(0x0c)) + INT2 + INT4 + INT1 + INT2 + INT1
+	payload := make([]byte, totalLen)
+	pos := 0
+	colLength, ok := colType.Length()
+	if !ok {
+		logger.GetLogger().Log(logger.Debug, "colType.Length()", colLength)
+	}
+
+	cTypeInt := EnumFieldTypes[colType.DatabaseTypeName()] // returns sql column type as an int
+
+	// The flags encode a lot of information about what the column is. If it can have NULL values, is it unique,
+	// is it a primary key, is it autoincrement, is it group, etc. This is the information that gets lost between
+	// using the go-sql-driver and communication with the MySQL database.
+
+	// This section is to determine whether or not the column is of a nullable type or not.
+	var flags int
+	nable, ok := colType.Nullable()
+	if !ok {
+		if nable {
+			flags = 0
+		} else {
+			flags = 1
+		}
+	} else {
+		flags = 1
+	}
+
+	// This section determines the precision (number of decimal digits to show) for the column.
+	var prec int
+	switch cTypeInt {
+	case 0x01 /* tiny int */ , 0x02 /* short */, 0x03 /* long */, 0x08 /* longlong */, 0x09 /* int24 */, 0xfe /* char */:
+		prec = 0x00
+	case 0xfd /* var_string */ , 0x0f /* varchar */ , 0x05 /* double */, 0x04 /* float */:
+		prec = 0x1f
+	case 0x00 /* decimal */, 0xf6 /* new_decimal*/:
+		tmp, _, ok := colType.DecimalSize()
+		if !ok {
+			logger.GetLogger().Log(logger.Warning, "Decimal size")
+		}
+		prec = int(tmp)
+	}
+
+	// Write catalog
+	WriteString(payload, ctl, LENENCSTR, &pos, 0)
+	// Write schema
+	WriteString(payload, schema, LENENCSTR, &pos, 0)
+	// Write table
+	WriteString(payload, table, LENENCSTR, &pos, 0)
+	// Write org_table
+	WriteString(payload, org_table, LENENCSTR, &pos, 0)
+	// Write name
+	WriteString(payload, name, LENENCSTR, &pos, 0)
+	// Write org_name
+	WriteString(payload, org_name, LENENCSTR, &pos, 0)
+	// write length of fixed length fields
+	WriteLenEncInt(payload, 0x0c, &pos)
+	// char set (temporarily utf8_general_ci which is 0x21)
+	WriteFixedLenInt(payload, INT2, 0x21, &pos)
+	// column-length
+	WriteFixedLenInt(payload, INT4, int(colLength), &pos)
+	// column scan type
+	WriteFixedLenInt(payload, INT1, cTypeInt, &pos)
+	// flags (mainly used for checking nullable)
+	WriteFixedLenInt(payload, INT2, flags, &pos)
+	// decimals
+	WriteFixedLenInt(payload, INT1, prec, &pos)
+	// filler
+	WriteFixedLenInt(payload, INT2, 0x00, &pos)
+
+	/*
+	* There should be a case for [if command was COM_FIELD_LIST], but that's unlikely to be supported
+	* at this time.
+	 */
+
+	return payload
+}
+
+// Stmt Prepare OK content pre-Column definition (if any)
+// https://dev.mysql.com/doc/internals/en/com-stmt-prepare-response.html#packet-COM_STMT_PREPARE_OK
 // This is specifically for ColumnDefinition41 packets.
-//func (p *Packager) ReconstructColumnDefinition() ([]*encoding.Packet, err error) {
-//
-//}
+func StmtPrepareOK(stmt_id, num_columns,  num_params int) []byte {
+	payload := make([]byte, INT1 /* status */ + INT4 /* stmtid */ + INT2 /* cols */ + INT2 /* params */ + INT1 /* filler */ + INT2 /* warnings */)
+	pos := 0
+	// Write status
+	WriteFixedLenInt(payload, INT1, 0x00, &pos)
+	// Write stmt_id
+	WriteFixedLenInt(payload, INT4, stmt_id + 1, &pos)
+	// Write num_columns
+	WriteFixedLenInt(payload, INT2, num_columns, &pos)
+	// Write num_params
+	WriteFixedLenInt(payload, INT2, num_params, &pos)
+
+	logger.GetLogger().Log(logger.Info, "Writing OK packet payload:", payload)
+	return payload
+}
 
 //
-//// Result sets function
-//func (p *Packager) ReconstructResultsetRow() ([]*encoding.Packet, err error) {
-//	// TODO: Write code out for sending binary protocol result sets and COM_QUERY_RESPONSE, and the old fashioned result sets too.
-//}
+//// Result sets function .... sigh
+func (p *Packager) ResultsetRow(rows *sql.Rows) []byte {
+	cols, err := rows.Columns()
+	if err != nil {
+		logger.GetLogger().Log(logger.Warning, err.Error())
+	}
+	// null_bitmap_length := (len(cols) + 7 + 2) / 8
+	readCols := make([]interface{}, len(cols))
+	writeCols := make([]sql.NullString, len(cols))
+	for i := range writeCols {
+		readCols[i] = &writeCols[i]
+	}
+	for rows.Next() {
+		err = rows.Scan(readCols...)
+	}
+	for i := range writeCols {
+		if writeCols[i].Valid {
+		}
+	}
+	return []byte{}
+}
+
+// Result sets function for the single packet containing the length encoded integer. Returns payload and updated
+// stmtid
+// https://dev.mysql.com/doc/internals/en/com-query-response.html#packet-ProtocolText::Resultset
+func (p *Packager) Resultset(column_count, stmtid int, rows *sql.Rows) ([]byte) {
+	cpLen := calculateLenEnc(uint64(column_count))
+	count_packet := make([]byte, cpLen)
+	pos := 0
+	WriteLenEncInt(count_packet, uint64(column_count), &pos)
+	return count_packet
+}
 
 
 /*---- COMMON PACKETS ----------------------------------------------------------
@@ -414,12 +579,16 @@ func ERRPacket(errcode int, msg string) []byte {
 }
 
 // https://dev.mysql.com/doc/internals/en/packet-EOF_Packet.html
-func EOFPacket() []byte {
+func EOFPacket(warnings, status_flags int, capabilities uint32) []byte {
 	payload := make([]byte, 1)
 	pos := 0
 	// Write EOF packet header
 	WriteFixedLenInt(payload, INT1, 0xfe, &pos)
-	// if capabilities & CLIENT_PROTOCOL_41 { warnings int<2>, status_flags <int2> }
+	if Supports(capabilities, CLIENT_PROTOCOL_41) {
+		// warnings int<2>, status_flags <int2>
+		WriteFixedLenInt(payload, INT2, warnings, &pos)
+		WriteFixedLenInt(payload, INT2, status_flags, &pos)
+	}
 	return payload
 }
 
@@ -668,7 +837,7 @@ func ReadLenEncInt(data []byte, pos *int) int {
 * EOFSTR, where the length of the string to be read in is calculated from
 * current position and remaining length of packet).
  */
-func ReadString(data []byte, stype string_t, pos *int, l int) string {
+func ReadString(data []byte, stype string_t, pos *int, l int) []byte {
 	buf := bytes.NewBuffer(data[*pos:])
 	switch stype {
 	case NULLSTR:
@@ -680,7 +849,7 @@ func ReadString(data []byte, stype string_t, pos *int, l int) string {
 			log.Fatal(err)
 		}
 		*pos += len(line)
-		return string(line)
+		return line
 
 	case LENENCSTR:
 		n := ReadLenEncInt(data, pos)
@@ -703,7 +872,7 @@ func ReadString(data []byte, stype string_t, pos *int, l int) string {
 			// log.Fatal(fmt.Sprintf("Read %d, expected %d", n2, n))
 		}
 		*pos += n
-		return string(temp)
+		return temp
 
 	case FIXEDSTR, EOFSTR:
 		temp := make([]byte, l)
@@ -721,7 +890,7 @@ func ReadString(data []byte, stype string_t, pos *int, l int) string {
 			// log.Fatal(fmt.Sprintf("Read %d, expected %d", n2, l))
 		}
 		*pos += l
-		return string(temp)
+		return temp
 	}
-	return ""
+	return []byte{}
 }

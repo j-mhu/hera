@@ -143,7 +143,7 @@ const (
 	COM_DAEMON 			// -------------------------------- 30
 )
 
-
+/* SQL commands in their string form that can be printed in error messages. */
 var SQLcmds = map[int]string{
 	COM_SLEEP: "COM_SLEEP", // 0
 	COM_QUIT:  "COM_QUIT",

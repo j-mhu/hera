@@ -48,7 +48,7 @@ func wrapNewNetstring(conn net.Conn, isMySQL bool) <-chan *encoding.Packet {
 			ns, err = mysqlpackets.NewInitSQLPacket(conn)
 
 		} else {
-			ns, err = netstring.NewNetstring(conn)
+			ns, err = netstring.NewInitNetstring(conn)
 		}
 		if err != nil {
 			if err == io.EOF {
@@ -270,7 +270,10 @@ func HandleConnection(conn net.Conn) {
 	//TODO: create a context with timeout
 	ctx, cancel := context.WithCancel(context.Background())
 
+	// Right now this is set to true. Set to false if you expect non-MySQL client.
+	// Eventually, Hera should be able to detect MySQLPacket vs OCC protocol.
 	IsMySQL := true
+
 	// For MySQL clients, the connection expects a handshake packet from the server. We'll send this outside
 	// of the coordinator in order to keep coordinator code limited to the command phase.
 
@@ -279,20 +282,12 @@ func HandleConnection(conn net.Conn) {
 		sendHandshake(conn)
 		logger.GetLogger().Log(logger.Info, "Reading handshake response")
 		readHandshakeResponse(conn)
-		//ns, err := mysqlpackets.NewInitSQLPacket(conn)
-		//if err != nil {
-		//	logger.GetLogger().Log(logger.Info, "Error from reading SQLPacket,", err.Error())
-		//}
-		//if ns != nil {
-		//	logger.GetLogger().Log(logger.Info, ns.Serialized[1:])
-		//}
 	}
 
 	logger.GetLogger().Log(logger.Info, "Created coordinator in connection handler")
 
 	crd := NewCoordinator(ctx, clientchannel, conn)
 	go crd.Run()
-	// crd.Run()
 
 	//
 	// clientchannel is a mechanism for request handler to pass over the client netstring
@@ -323,6 +318,12 @@ func HandleConnection(conn net.Conn) {
 			logger.GetLogger().Log(logger.Verbose, addr, ": Connection handler read <<<", DebugString(ns.Serialized))
 		}
 
+		// Don't send COM_QUIT, COM_SLEEP queries into
+		if ns.IsMySQL && ns.Cmd == common.COM_QUIT || ns.IsMySQL && ns.Cmd == common.COM_SLEEP || ns.IsMySQL && ns.Cmd == common.COM_SHUTDOWN {
+			logger.GetLogger().Log(logger.Info, "Client closed connection")
+			break
+		}
+
 		//
 		// coordinator is ready to go, send over the new netstring.
 		// this could block when client close the connection abruptly. e.g. when coordinator write
@@ -331,9 +332,6 @@ func HandleConnection(conn net.Conn) {
 		// listening to clientchannel anymore. to avoid blocking, give clientchannel a buffer.
 		//
 		clientchannel <- ns
-		if ns.IsMySQL && ns.Cmd == common.COM_QUIT {
-			break
-		}
 	}
 	if logger.GetLogger().V(logger.Info) {
 		logger.GetLogger().Log(logger.Info, "======== Connection handler exits", addr)

@@ -83,6 +83,9 @@ func NewCoordinator(ctx context.Context, clientchannel <-chan *encoding.Packet, 
 	if conn.RemoteAddr().Network() == "pipe" {
 		coordinator.isInternal = true
 	}
+
+	// This is currently set to false, but should follow the appcfg, opscfg. Remove this line if you're planning
+	// on using correlation IDs, but be warned that it might not work with MySQL.
 	coordinator.preppendCorrID = false
 	return coordinator
 }
@@ -166,7 +169,7 @@ func (crd *Coordinator) Run() {
 					workerCtrlChan = nil
 				}
 
-				logger.GetLogger().Log(logger.Verbose, "about to enter crd.dispatch with", ns.Serialized)
+				logger.GetLogger().Log(logger.Verbose, "Calling crd.dispatch with", ns.Serialized)
 				running = crd.dispatch(ns)
 				if crd.worker != nil {
 					workerChan = crd.worker.channel()
@@ -389,11 +392,6 @@ func (crd *Coordinator) handleMux(request *encoding.Packet) (bool, error) {
 		if request.Cmd == common.COM_STMT_PREPARE {
 			crd.isRead = crd.sqlParser.IsRead(string(request.Payload[1:]))
 			return false, nil
-		}
-
-		if request.Cmd == common.COM_QUIT {
-			crd.conn.Close()
-			return true, nil
 		}
 	}
 	return crd.processMuxCommand(request)
@@ -908,7 +906,7 @@ func (crd *Coordinator) doRequest(ctx context.Context, worker *WorkerClient, req
 			if msglen > 0 {
 				// disable timeout once response was sent to the client
 				timeout = nil
-
+				// Exclude the indicator byte when writing to client by starting array slice index at 1.
 				_, err := clientWriter.Write(msg.data[1:])
 				logger.GetLogger().Log(logger.Verbose, "Wrote to client!", msg.data[1:])
 				if err != nil {
