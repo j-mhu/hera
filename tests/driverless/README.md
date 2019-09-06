@@ -42,16 +42,16 @@ Wherever I have modified code, I have left explanations and comments to explain
 why MySQL protocol requires specific logic, different handling, etc.
 The files I've touched include
 ```
-codes.go
-config.go
-connectionhandler.go
-coordinator.go
-netstring.go
-util.go
-workerclient.go
-worker/cmdprocessor.go
-worker/common.go
-worker/workerservice.go
+[codes.go](https://github.com/j-mhu/hera/tree/master/common/codes.go)
+[config.go](https://github.com/j-mhu/hera/tree/master/config/config.go)
+[connectionhandler.go](https://github.com/j-mhu/hera/tree/master/lib/connectionhandler.go)
+[coordinator.go](https://github.com/j-mhu/hera/tree/master/lib/coordinator.go)
+[netstring.go](https://github.com/j-mhu/hera/tree/master/utility/encoding/netstring.go)
+[util.go](https://github.com/j-mhu/hera/tree/master/lib/util.go)
+[workerclient.go](https://github.com/j-mhu/hera/tree/master/lib/workerclient.go)
+[worker/cmdprocessor.go](https://github.com/j-mhu/hera/tree/master/worker/shared/cmdprocessor.go)
+[worker/common.go](https://github.com/j-mhu/hera/tree/master/worker/shared/common.go)
+[worker/workerservice.go](https://github.com/j-mhu/hera/tree/master/worker/shared/workerservice.go)
 ```
 
 Some of these files were just modified to add debugging statements to the logger.
