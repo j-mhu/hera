@@ -235,5 +235,5 @@ Recommendations and suggestions from Hera/OCC team and myself:
 
 - Hera should be able to differentiate MySQL clients by packet, port, or some other method.
 - Keep netstring encoding as original and create a separate port to receive MySQL connections.
-- Open port directly to database similar to how go-sql-driver does, and process raw packets directly.
+- Connect directly to MySQL database similar to how go-sql-driver does, and exchange raw packets directly.
      - This minimizes the overhead of rewriting response packets to the client, and all the packet data received from the database is exposed to the Hera server instead of through the limited window of the Go SQL driver.
