@@ -38,6 +38,28 @@ number set as the mock server, if you're running on localhost.
 
 ## Major modifications to Hera source code
 
+Wherever I have modified code, I have left explanations and comments to explain
+why MySQL protocol requires specific logic, different handling, etc.
+The files I've touched include
+```
+codes.go
+config.go
+connectionhandler.go
+coordinator.go
+netstring.go
+util.go
+workerclient.go
+worker/cmdprocessor.go
+worker/common.go
+worker/workerservice.go
+```
+
+Some of these files were just modified to add debugging statements to the logger.
+The most important file is `cmdprocessor.go`.
+
+The client driver located in `hera/client/gosqldriver` looks like it was modified in
+commits, but I reverted changes from a previous design. In other words, it's the same as the original.
+
 #### 1. **Handshake** ####
 
 In `lib/connectionhandler.go`, two functions were added. These are
