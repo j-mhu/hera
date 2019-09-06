@@ -42,7 +42,7 @@ Wherever I have modified code, I have left explanations and comments to explain
 why MySQL protocol requires specific logic, different handling, etc.
 The files I've touched include
 ```
-[codes.go](https://github.com/j-mhu/hera/tree/master/common/codes.go)
+<a href="https://github.com/j-mhu/hera/tree/master/common/codes.go">codes.go</a>
 [config.go](https://github.com/j-mhu/hera/tree/master/config/config.go)
 [connectionhandler.go](https://github.com/j-mhu/hera/tree/master/lib/connectionhandler.go)
 [coordinator.go](https://github.com/j-mhu/hera/tree/master/lib/coordinator.go)
