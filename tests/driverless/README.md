@@ -55,9 +55,6 @@ and authentication and connection should happen in the connection handler.
 
 #### 2. **Changes to netstring encoding and adding mysqlpacket encoding.** ####
 
-(Side note: Recommendation to keep netstring encoding as original, and
-     create a separate port to receive MySQL connections.)
-
 All packets now have the general form:
 ```go
 type Packet struct {
@@ -171,4 +168,12 @@ Currently supported commands:
 - [ ] COM_SET_OPTION
 - [ ] COM_STMT_FETCH
 - [ ] COM_RESET_CONNECTION
-- [ ] COM_DAEMON 			
+- [ ] COM_DAEMON
+
+#### 4. Moving forward for a more intelligent Hera. ####
+Recommendations and suggestions from Hera/OCC team and myself:
+
+- Hera should be able to differentiate MySQL clients by packet, port, or some other method.
+- Keep netstring encoding as original and create a separate port to receive MySQL connections.
+- Open port directly to database similar to how go-sql-driver does, and process raw packets directly.
+     - This minimizes the overhead of rewriting response packets to the client, and all the packet data received from the database is exposed to the Hera server instead of through the limited window of the Go SQL driver.
